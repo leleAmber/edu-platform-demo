@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>课伴AI｜英语课本智能学习助手</title>
+  <meta name="description" content="课伴AI英语课本智能学习助手原型演示" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --ink: #172235;
+      --muted: #718096;
+      --line: #e8ecf2;
+      --surface: #ffffff;
+      --canvas: #f6f8fb;
+      --blue: #2168f5;
+      --blue-dark: #1551c6;
+      --blue-soft: #edf4ff;
+      --mint: #0d9a86;
+      --mint-soft: #e8faf5;
+      --amber: #c47b06;
+      --amber-soft: #fff6df;
+      --rose: #d65a64;
+      --shadow: 0 12px 28px rgba(23, 34, 53, .08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--canvas); color: var(--ink); font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; }
+    body { font-size: 14px; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; border: 0; }
+    a { color: inherit; text-decoration: none; }
+    .hidden { display: none !important; }
+    .muted { color: var(--muted); }
+    .tiny-note { color: #9aa5b5; font-size: 11px; line-height: 1.6; }
+    .eyebrow { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 0 15px; border-radius: 9px; font-weight: 700; transition: .2s; }
+    .btn-primary { color: white; background: var(--blue); box-shadow: 0 7px 16px rgba(33, 104, 245, .22); }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-ghost { color: var(--ink); background: #f2f5f9; }
+    .btn-ghost:hover { background: #e7edf5; }
+    .btn-outline { color: var(--blue); border: 1px solid #c7d8fb; background: white; }
+    .btn-outline:hover { background: var(--blue-soft); }
+    .btn-danger { color: #b54049; background: #fff0f1; }
+    .full { width: 100%; }
+
+    /* ===== 登录与注册 ===== */
+    #authRoot { min-height: 100vh; display: grid; place-items: center; padding: 26px; background: #f6f9fd; }
+    .auth-layout { width: min(1120px, 100%); min-height: 690px; display: grid; grid-template-columns: 1.03fr .97fr; overflow: hidden; border: 1px solid #e6ebf3; border-radius: 22px; background: white; box-shadow: var(--shadow); }
+    .auth-visual { position: relative; padding: 60px; color: white; background: linear-gradient(145deg, #153f9f, #2382dd); overflow: hidden; }
+    .auth-visual::after { content: ""; position: absolute; width: 390px; height: 390px; right: -110px; bottom: -150px; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; box-shadow: 0 0 0 38px rgba(255,255,255,.04), 0 0 0 76px rgba(255,255,255,.04); }
+    .brand-mark { display: flex; gap: 10px; align-items: center; font-size: 18px; font-weight: 800; }
+    .brand-mark .mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 10px; color: var(--blue); background: white; font-weight: 900; }
+    .auth-visual h1 { max-width: 450px; margin: 83px 0 18px; font-size: 42px; line-height: 1.17; letter-spacing: -.04em; }
+    .auth-visual p { max-width: 420px; color: #d8e8ff; font-size: 16px; line-height: 1.9; }
+    .visual-points { position: absolute; bottom: 52px; left: 60px; display: grid; gap: 14px; color: #e2eeff; }
+    .visual-points span::before { content: "✓"; display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 9px; border-radius: 50%; color: #1762c9; background: #dceaff; font-size: 12px; font-weight: 800; }
+    .auth-panel { display: flex; align-items: center; padding: 54px 65px; }
+    .auth-form { width: 100%; max-width: 382px; margin: 0 auto; }
+    .auth-form h2 { margin: 10px 0 9px; font-size: 29px; letter-spacing: -.03em; }
+    .auth-form > p { margin: 0 0 28px; color: var(--muted); }
+    .field { display: grid; gap: 7px; margin-bottom: 16px; }
+    .field label { color: #46546a; font-size: 13px; font-weight: 700; }
+    .field input, .field textarea, .field select { width: 100%; border: 1px solid #dbe2ec; border-radius: 9px; outline: none; color: var(--ink); background: white; transition: .2s; }
+    .field input, .field select { height: 43px; padding: 0 12px; }
+    .field textarea { min-height: 120px; padding: 11px 12px; resize: vertical; }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(33,104,245,.11); }
+    .field .error { min-height: 15px; color: var(--rose); font-size: 12px; }
+    .input-with-action { display: flex; gap: 8px; }
+    .input-with-action input { flex: 1; }
+    .input-with-action .btn { flex: 0 0 auto; white-space: nowrap; padding: 0 11px; }
+    .auth-actions { display: flex; align-items: center; justify-content: space-between; margin: 5px 0 22px; color: var(--muted); font-size: 12px; }
+    .check { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+    .check input { accent-color: var(--blue); }
+    .link { color: var(--blue); cursor: pointer; }
+    .auth-bottom { margin-top: 24px; text-align: center; color: var(--muted); font-size: 13px; }
+    .demo-callout { margin-top: 22px; padding: 11px 13px; border-radius: 9px; color: #6b7688; background: #f5f7fa; font-size: 11px; line-height: 1.6; }
+
+    /* ===== 全局应用壳 ===== */
+    #appRoot { min-height: 100vh; }
+    .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; height: 68px; padding: 0 30px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.94); backdrop-filter: blur(16px); }
+    .topbar .brand-mark { flex: 0 0 auto; color: var(--ink); font-size: 16px; }
+    .topbar .brand-mark .mark { color: white; background: var(--blue); }
+    .main-nav { display: flex; align-self: stretch; gap: 3px; margin-left: 45px; }
+    .main-nav button { position: relative; padding: 0 13px; color: #748094; background: transparent; font-size: 13px; font-weight: 700; }
+    .main-nav button:hover, .main-nav button.active { color: var(--blue); }
+    .main-nav button.active::after { content: ""; position: absolute; right: 13px; bottom: 0; left: 13px; height: 3px; border-radius: 3px 3px 0 0; background: var(--blue); }
+    .topbar-spacer { flex: 1; }
+    .user-menu-wrap { position: relative; }
+    .user-trigger { display: flex; align-items: center; gap: 9px; padding: 5px 7px 5px 5px; border-radius: 25px; background: transparent; }
+    .user-trigger:hover { background: #f2f5f9; }
+    .avatar { display: grid; place-items: center; width: 33px; height: 33px; border-radius: 50%; color: white; background: linear-gradient(135deg,#276ef1,#58b2df); font-size: 13px; font-weight: 800; }
+    .user-trigger .user-label { text-align: left; }
+    .user-label strong { display: block; font-size: 12px; }
+    .user-label small { color: var(--muted); font-size: 10px; }
+    .vip-badge { display: inline-flex; align-items: center; height: 19px; padding: 0 7px; border-radius: 6px; color: #8f5b05; background: #fff0c7; font-size: 10px; font-weight: 800; }
+    .dropdown { position: absolute; top: 50px; right: 0; width: 172px; padding: 7px; border: 1px solid var(--line); border-radius: 11px; background: white; box-shadow: var(--shadow); }
+    .dropdown button { display: block; width: 100%; padding: 10px 11px; border-radius: 7px; color: #556176; background: transparent; text-align: left; font-size: 12px; }
+    .dropdown button:hover { color: var(--blue); background: var(--blue-soft); }
+    .dropdown button.danger:hover { color: var(--rose); background: #fff2f2; }
+    .page-shell { width: min(1250px, 100%); margin: 0 auto; padding: 32px 30px 70px; }
+    .page-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+    .page-head h1 { margin: 5px 0 8px; font-size: 29px; letter-spacing: -.035em; }
+    .page-head p { margin: 0; color: var(--muted); }
+    .section-title { display: flex; align-items: center; justify-content: space-between; margin: 30px 0 14px; }
+    .section-title h3 { margin: 0; font-size: 16px; }
+    .grid { display: grid; gap: 15px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 4px 12px rgba(23,34,53,.025); }
+    .pad { padding: 20px; }
+    .hero { display: grid; grid-template-columns: 1.08fr .92fr; gap: 20px; padding: 34px 38px; border-radius: 17px; color: white; background: linear-gradient(115deg, #16439f 0%, #2175d9 62%, #58bdd3 100%); overflow: hidden; }
+    .hero h1 { max-width: 560px; margin: 9px 0 13px; font-size: 33px; line-height: 1.22; letter-spacing: -.045em; }
+    .hero p { max-width: 540px; margin: 0; color: #dceaff; line-height: 1.8; }
+    .hero .eyebrow { color: #cce1ff; }
+    .hero-art { position: relative; min-height: 177px; }
+    .hero-art .book { position: absolute; right: 10%; bottom: -35px; width: 210px; height: 175px; border-radius: 10px 22px 22px 10px; transform: rotate(-11deg); background: #f8fcff; box-shadow: -11px 11px 0 rgba(8,49,133,.3), 0 22px 27px rgba(7,42,116,.23); }
+    .hero-art .book::before { content: "ENGLISH\A 必修一"; white-space: pre; position: absolute; top: 22px; left: 22px; color: #2c6fe1; font-size: 22px; line-height: 1.65; font-weight: 900; }
+    .hero-art .book::after { content: "Unit 01"; position: absolute; right: 16px; bottom: 14px; color: #7d9acd; font-size: 11px; }
+    .status-strip { display: flex; align-items: center; gap: 10px; margin-top: 22px; }
+    .status-strip .status-label { color: #e3efff; font-size: 12px; }
+    .status-strip .status-pill { color: #143b88; background: white; }
+    .status-pill { display: inline-flex; align-items: center; gap: 5px; min-height: 25px; padding: 0 9px; border-radius: 7px; color: #147764; background: var(--mint-soft); font-size: 11px; font-weight: 800; }
+    .status-pill.free { color: #68758a; background: #f0f3f7; }
+    .unit-select { min-width: 230px; }
+    .entry-card { position: relative; min-height: 157px; padding: 20px; overflow: hidden; cursor: pointer; transition: .2s; }
+    .entry-card:hover { border-color: #bfd2f7; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(33,104,245,.09); }
+    .entry-card .entry-icon { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 17px; border-radius: 10px; color: var(--blue); background: var(--blue-soft); font-size: 18px; }
+    .entry-card h4 { margin: 0 0 7px; font-size: 15px; }
+    .entry-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .entry-card .arrow { position: absolute; top: 20px; right: 20px; color: #9cabc0; font-size: 19px; }
+
+    /* ===== 业务卡片 ===== */
+    .unit-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .unit-tab { min-width: 92px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: #637086; background: white; font-size: 12px; font-weight: 700; }
+    .unit-tab.active { border-color: #afc9fb; color: var(--blue); background: var(--blue-soft); }
+    .lesson-card { padding: 22px; }
+    .lesson-card h3 { margin: 0 0 12px; font-size: 18px; }
+    .lesson-card .lesson-copy { padding: 14px 16px; border-left: 3px solid #b9cdf5; color: #526176; background: #f8faff; line-height: 1.9; }
+    .word-card { padding: 15px; }
+    .word-card strong { display: block; margin-bottom: 8px; color: #1f5ecc; font-size: 19px; }
+    .word-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .ai-callout { padding: 16px; border: 1px solid #d8e9e6; border-radius: 11px; background: #f1fbf9; }
+    .ai-callout h4 { margin: 0 0 8px; color: #137966; }
+    .ai-callout p { margin: 0; color: #55736e; line-height: 1.8; }
+    .practice-card { padding: 20px; }
+    .practice-card h4 { margin: 0 0 8px; }
+    .practice-card p { margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
+    .learning-insight-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 15px; }
+    .rating-card, .plan-card-lite { padding: 20px; }
+    .rating-card { display: flex; align-items: center; gap: 18px; }
+    .rating-score { display: grid; place-items: center; flex: 0 0 auto; width: 84px; height: 84px; border: 7px solid #cfe0ff; border-right-color: var(--blue); border-bottom-color: var(--blue); border-radius: 50%; color: var(--blue); font-size: 25px; font-weight: 900; }
+    .rating-card h4, .plan-card-lite h4 { margin: 0 0 7px; font-size: 15px; }
+    .rating-card p, .plan-card-lite p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .plan-list { display: grid; gap: 10px; margin: 13px 0 0; padding: 0; list-style: none; }
+    .plan-list li { display: flex; align-items: start; gap: 8px; color: #536177; font-size: 12px; line-height: 1.55; }
+    .plan-list li::before { content: ""; flex: 0 0 auto; width: 7px; height: 7px; margin-top: 5px; border-radius: 50%; background: var(--blue); }
+    .plan-list strong { color: var(--ink); }
+    .exercise-list { display: grid; gap: 11px; }
+    .exercise { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 9px; background: white; }
+    .exercise .result { color: #198670; font-weight: 800; }
+    .exercise .result.wrong { color: var(--rose); }
+    .locked { position: relative; }
+    .locked::after { content: "VIP"; position: absolute; top: 10px; right: 10px; padding: 3px 6px; border-radius: 5px; color: #9b650a; background: #fff0c5; font-size: 9px; font-weight: 800; }
+
+    /* ===== 会员 ===== */
+    .plan-card { position: relative; display: flex; flex-direction: column; min-height: 290px; padding: 22px; }
+    .plan-card.recommended { border: 2px solid #5f95f7; padding: 21px; }
+    .recommend { position: absolute; top: -11px; left: 18px; padding: 4px 9px; border-radius: 5px; color: white; background: var(--blue); font-size: 10px; font-weight: 800; }
+    .plan-card h3 { margin: 0 0 7px; font-size: 17px; }
+    .price { display: flex; align-items: baseline; gap: 3px; margin: 8px 0 18px; }
+    .price strong { font-size: 34px; letter-spacing: -.05em; }
+    .price small { color: var(--muted); }
+    .plan-card ul { display: grid; gap: 10px; padding: 0; margin: 0 0 22px; color: #58677e; list-style: none; font-size: 12px; }
+    .plan-card li::before { content: "✓"; margin-right: 7px; color: #17937f; font-weight: 800; }
+    .plan-card .btn { margin-top: auto; }
+    .member-note { padding: 15px 17px; color: #6d5c37; background: var(--amber-soft); border: 1px solid #f5e4b7; border-radius: 10px; line-height: 1.7; }
+
+    /* ===== 我的与后台 ===== */
+    .profile-card { display: flex; align-items: center; gap: 17px; padding: 22px; }
+    .profile-card .avatar { width: 60px; height: 60px; font-size: 20px; }
+    .profile-card h3 { margin: 0 0 5px; font-size: 19px; }
+    .profile-card p { margin: 0 0 7px; color: var(--muted); font-size: 12px; }
+    .quick-card { padding: 18px; cursor: pointer; }
+    .quick-card h4 { margin: 9px 0 6px; }
+    .quick-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .settings-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .settings-row:last-child { border-bottom: 0; }
+    .settings-row h4 { margin: 0 0 4px; font-size: 13px; }
+    .settings-row p { margin: 0; color: var(--muted); font-size: 11px; }
+    .switch { position: relative; width: 41px; height: 23px; border-radius: 20px; background: #cbd3df; cursor: pointer; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; border-radius: 50%; background: white; transition: .2s; }
+    .switch.on { background: var(--blue); }
+    .switch.on::after { left: 21px; }
+    .admin-layout { display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: start; }
+    .admin-side { padding: 10px; }
+    .admin-side button { display: block; width: 100%; padding: 12px; margin: 3px 0; border-radius: 8px; color: #67748a; background: transparent; text-align: left; font-size: 12px; font-weight: 700; }
+    .admin-side button.active, .admin-side button:hover { color: var(--blue); background: var(--blue-soft); }
+    .stat-card { padding: 17px; }
+    .stat-card .stat-label { color: var(--muted); font-size: 11px; }
+    .stat-card strong { display: block; margin-top: 7px; font-size: 26px; }
+    .table-wrap { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { padding: 13px 14px; color: #7a879a; background: #f7f9fb; font-weight: 700; text-align: left; white-space: nowrap; }
+    td { padding: 14px; border-top: 1px solid var(--line); color: #536177; white-space: nowrap; }
+    td strong { color: var(--ink); }
+    .table-search { width: 190px; height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; outline: none; }
+
+    /* ===== 浮层、客服、Toast ===== */
+    .float-service { position: fixed; right: 26px; bottom: 25px; z-index: 30; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; color: white; background: var(--blue); box-shadow: 0 10px 25px rgba(33,104,245,.28); font-size: 23px; }
+    .float-service:hover { transform: translateY(-2px); }
+    .modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(17,28,49,.48); }
+    .modal { width: min(480px, 100%); max-height: calc(100vh - 40px); overflow: auto; padding: 25px; border-radius: 15px; background: white; box-shadow: 0 20px 70px rgba(10,20,38,.25); }
+    .modal.wide { width: min(680px, 100%); }
+    .modal-head { display: flex; align-items: start; justify-content: space-between; gap: 15px; margin-bottom: 21px; }
+    .modal-head h3 { margin: 0 0 6px; font-size: 19px; }
+    .modal-head p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .modal-close { width: 27px; height: 27px; border-radius: 7px; color: #738198; background: #f3f5f8; font-size: 18px; }
+    .modal-actions { display: flex; justify-content: end; gap: 8px; margin-top: 20px; }
+    .pay-summary { display: flex; align-items: center; justify-content: space-between; padding: 15px; border: 1px solid var(--line); border-radius: 9px; background: #f8faff; }
+    .pay-summary strong { display: block; margin-bottom: 4px; }
+    .pay-amount { color: #db8c08; font-size: 25px; font-weight: 900; }
+    .payment-method { display: flex; align-items: center; gap: 10px; margin-top: 15px; padding: 12px; border: 1px solid #bdd2fb; border-radius: 8px; color: #2562c8; background: var(--blue-soft); font-weight: 700; }
+    .payment-method::before { content: "支"; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; color: white; background: #2577df; font-size: 12px; }
+    .toast { position: fixed; left: 50%; bottom: 32px; z-index: 100; padding: 12px 18px; border-radius: 9px; color: white; background: #1d293b; box-shadow: var(--shadow); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; transition: .25s; font-size: 13px; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .empty { padding: 28px; color: var(--muted); text-align: center; }
+    .footer-note { margin-top: 45px; padding: 18px 20px; border-top: 1px solid var(--line); color: #8d98a8; font-size: 11px; line-height: 1.8; }
+
+    @media (max-width: 900px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-panel { min-height: 650px; padding: 35px 25px; }
+      .main-nav { gap: 0; margin-left: 15px; overflow-x: auto; }
+      .main-nav button { padding: 0 9px; font-size: 11px; white-space: nowrap; }
+      .main-nav button.active::after { right: 9px; left: 9px; }
+      .topbar { padding: 0 15px; }
+      .user-label { display: none; }
+      .page-shell { padding: 24px 16px 58px; }
+      .hero { grid-template-columns: 1fr; padding: 27px 24px; }
+      .hero-art { display: none; }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .admin-layout { grid-template-columns: 1fr; }
+      .admin-side { display: flex; overflow: auto; }
+      .admin-side button { width: auto; min-width: 100px; margin-right: 5px; }
+    }
+    @media (max-width: 570px) {
+      .page-head { display: block; }
+      .page-head .btn, .page-head select { margin-top: 15px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .topbar .brand-mark span:last-child { display: none; }
+      .main-nav { margin-left: 6px; }
+      .main-nav button { padding: 0 7px; }
+      .float-service { right: 16px; bottom: 16px; }
+      .learning-insight-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== 认证根节点 ===== -->
+  <div id="authRoot">
+    <div class="auth-layout">
+      <section class="auth-visual">
+        <div class="brand-mark"><span class="mark">伴</span><span>课伴AI</span></div>
+        <h1>让每一次英语学习，<br />都有清晰的下一步</h1>
+        <p>围绕英语课本，把预习、复习、作业与学情诊断放在一个轻巧的学习空间里，适配小学、初中与高中阶段。</p>
+        <div class="visual-points"><span>跟着课本学，重点更清楚</span><span>AI 辅助反馈，及时找到薄弱点</span><span>学习数据只用于本次原型演示</span></div>
+      </section>
+      <section class="auth-panel">
+        <div id="loginFormWrap" class="auth-form">
+          <div class="eyebrow">WELCOME BACK</div>
+          <h2>登录课伴AI</h2>
+          <p>继续你的英语学习计划</p>
+          <form id="loginForm">
+            <div class="field"><label for="loginUsername">用户名</label><input id="loginUsername" autocomplete="username" placeholder="请输入用户名" /><div class="error" id="loginUsernameError"></div></div>
+            <div class="field"><label for="loginPassword">密码</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="请输入密码" /><div class="error" id="loginPasswordError"></div></div>
+            <div class="auth-actions"><label class="check"><input id="rememberPassword" type="checkbox" /> 记住密码</label><span class="link" data-modal="forgotModal">忘记密码？</span></div>
+            <button class="btn btn-primary full" type="submit">登录</button>
+          </form>
+          <div class="auth-bottom">还没有账号？<span class="link" id="showRegister">立即注册</span></div>
+          <div class="demo-callout">演示账号：<strong>student / 123456</strong><br />管理员：<strong>admin / 123456</strong></div>
+        </div>
+        <div id="registerFormWrap" class="auth-form hidden">
+          <div class="eyebrow">START LEARNING</div>
+          <h2>创建你的账号</h2>
+          <p>注册后即可开始课本学习</p>
+          <form id="registerForm" novalidate>
+            <div class="field"><label for="registerUsername">用户名</label><input id="registerUsername" placeholder="2-20个字符" /><div class="error" id="registerUsernameError"></div></div>
+            <div class="field"><label for="registerEmail">邮箱地址</label><input id="registerEmail" type="email" placeholder="用于接收验证码（演示）" /><div class="error" id="registerEmailError"></div></div>
+            <div class="field"><label for="registerPassword">密码</label><input id="registerPassword" type="password" placeholder="至少6位" /><div class="error" id="registerPasswordError"></div></div>
+            <div class="field"><label for="registerConfirm">确认密码</label><input id="registerConfirm" type="password" placeholder="再次输入密码" /><div class="error" id="registerConfirmError"></div></div>
+            <div class="field"><label for="registerCode">邮箱验证码</label><div class="input-with-action"><input id="registerCode" maxlength="6" placeholder="请输入6位验证码" /><button type="button" class="btn btn-outline" id="sendCode">获取验证码</button></div><div class="error" id="registerCodeError"></div></div>
+            <button class="btn btn-primary full" type="submit">注册并开始学习</button>
+          </form>
+          <div class="auth-bottom">已有账号？<span class="link" id="showLogin">返回登录</span></div>
+          <div class="demo-callout">Demo演示：生产环境密码需要后端加密存储，邮箱验证码需要对接邮件发送服务。</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ===== 应用根节点 ===== -->
+  <div id="appRoot" class="hidden">
+    <header class="topbar">
+      <a class="brand-mark" href="#" data-route="home"><span class="mark">伴</span><span>课伴AI</span></a>
+      <nav class="main-nav" aria-label="主导航">
+        <button data-route="home">首页</button><button data-route="preview">课本预习</button><button data-route="review">课本复习</button><button data-route="homework">作业中心</button><button data-route="exams">模拟试卷</button><button data-route="membership">会员中心</button><button data-route="admin" id="adminNav" class="hidden">管理后台</button>
+      </nav>
+      <div class="topbar-spacer"></div>
+      <div class="user-menu-wrap">
+        <button class="user-trigger" id="userTrigger"><span class="avatar" id="topAvatar">学</span><span class="user-label"><strong id="topUsername">学生</strong><small id="topMemberLabel">免费版</small></span><span class="muted">⌄</span></button>
+        <div class="dropdown hidden" id="userDropdown"><button data-route="my">我的</button><button data-route="membership">会员中心</button><button id="switchAccount">切换账号</button><button class="danger" id="logoutBtn">退出登录</button></div>
+      </div>
+    </header>
+    <main id="viewRoot"></main>
+    <button class="float-service" id="serviceBtn" title="联系客服">◖</button>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <!-- ===== 通用弹窗 ===== -->
+  <div id="modalRoot"></div>
+
+  <!-- ===== 页面模板 ===== -->
+  <template id="homeTemplate"><div class="page-shell">
+    <section class="hero"><div><div class="eyebrow">英语 · 学习助手</div><h1>今天，也给英语学习一个清晰的开始。</h1><p>按课本单元掌握核心词汇、句法与语篇逻辑，完成一次小而确定的进步。</p><div class="status-strip"><span class="status-label">当前状态</span><span class="status-pill" id="heroMemberStatus">免费版</span></div></div><div class="hero-art"><div class="book"></div></div></section>
+    <div class="section-title"><h3>选择学习单元</h3><select class="field unit-select" id="homeUnitSelect"><option>Unit 1 Teenage Life</option><option>Unit 2 Travelling Around</option><option>Unit 3 Sports and Fitness</option><option>Unit 4 Natural Disasters</option></select></div>
+    <div class="grid grid-4"><div class="card entry-card" data-route="preview"><span class="entry-icon">▣</span><span class="arrow">→</span><h4>课本预习</h4><p>课文、生词和长难句AI解读，先建立整体理解。</p></div><div class="card entry-card" data-route="review"><span class="entry-icon">↺</span><span class="arrow">→</span><h4>课本复习</h4><p>回顾单元知识点，搭配基础检测巩固记忆。</p></div><div class="card entry-card" data-route="homework"><span class="entry-icon">✎</span><span class="arrow">→</span><h4>作业中心</h4><p>粘贴英语作业，获得即时AI反馈和错题归因。</p></div><div class="card entry-card locked" data-route="exams"><span class="entry-icon">▤</span><span class="arrow">→</span><h4>模拟试卷</h4><p>完整英语模拟卷，检验你的综合掌握度。</p></div></div>
+    <div class="section-title"><h3>今日学习建议</h3><span class="muted">基于最近7天记录</span></div><div class="grid grid-3"><div class="card pad"><div class="eyebrow">01 · 词汇</div><h4>复习 12 个高频词</h4><p class="muted">上次 Unit 1 的词汇掌握度为 72%，再巩固一次会更稳。</p></div><div class="card pad"><div class="eyebrow">02 · 句法</div><h4>看懂一条长难句</h4><p class="muted">试着从连接词和主干入手，拆解课文中的复合句。</p></div><div class="card pad"><div class="eyebrow">03 · 记录</div><h4>保持连续学习</h4><p class="muted">本周已学习 3 天，今天完成 15 分钟即可延续节奏。</p></div></div>
+    <div class="footer-note">本页面为产品原型演示，学习记录、会员状态与操作结果均使用 localStorage 本地存储模拟。生产环境需对接后端服务实现。</div>
+  </div></template>
+
+  <template id="previewTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">TEXTBOOK PREVIEW</div><h1>课本预习</h1><p>从课文语境开始，先理解，再记忆。</p></div><select class="field unit-select" id="previewUnitSelect"><option>Unit 1 Teenage Life</option><option>Unit 2 Travelling Around</option><option>Unit 3 Sports and Fitness</option><option>Unit 4 Natural Disasters</option></select></div><div class="unit-tabs"><button class="unit-tab active">Unit 1</button><button class="unit-tab">Unit 2</button><button class="unit-tab">Unit 3</button><button class="unit-tab">Unit 4</button></div><div class="section-title"><h3>课文导读 · Adam's Teenage Life</h3><span class="status-pill">预计 12 分钟</span></div><div class="card lesson-card"><h3>Getting to know the new school</h3><div class="lesson-copy">A week after the first day of senior high school, Adam is still trying to find his way around the new campus. He joined the football team and discovered that making friends can make a new life feel much easier.</div><div class="ai-callout" style="margin-top:15px"><h4>✦ AI 长难句解读</h4><p>这句话的主干是 <strong>Adam is trying...</strong>，其中 <strong>after the first day...</strong> 是时间状语，<strong>to find his way around...</strong> 是不定式短语作宾语。先抓主干，再补充修饰信息，就能快速理解。</p></div></div><div class="section-title"><h3>本单元核心词汇</h3><span class="muted">共 18 个</span></div><div class="grid grid-3"><div class="card word-card"><strong>challenge</strong><p>n. 挑战；艰巨任务<br />Taking on a new challenge can be exciting.</p></div><div class="card word-card"><strong>confused</strong><p>adj. 糊涂的；迷惑的<br />I felt a little confused at first.</p></div><div class="card word-card"><strong>recommend</strong><p>vt. 建议；推荐<br />I recommend joining a school club.</p></div><div class="card word-card"><strong>responsible</strong><p>adj. 负责的；有责任的<br />You are responsible for your own learning.</p></div><div class="card word-card"><strong>schedule</strong><p>n. 工作计划；日程安排<br />Make a realistic study schedule.</p></div><div class="card word-card"><strong>improve</strong><p>vi. & vt. 改进；改善<br />Practice helps you improve.</p></div></div><div class="section-title"><h3>预习检测</h3></div><div class="grid grid-3"><div class="card practice-card"><h4>单词听写</h4><p>随机抽取 10 个核心词汇，检查拼写和词义。</p><button class="btn btn-outline full" data-toast="听写练习已准备好">开始听写 →</button></div><div class="card practice-card"><h4>发音检测</h4><p>跟读课文词汇，获得发音提示。</p><span class="tiny-note">二期迭代 · 语音识别能力暂未实现</span><button class="btn btn-ghost full" style="margin-top:15px" data-toast="发音检测将在二期迭代开放">敬请期待</button></div><div class="card practice-card"><h4>听力小练习</h4><p>听一段校园生活对话，完成 3 道理解题。</p><button class="btn btn-primary full" data-toast="听力练习已开始">开始练习 →</button></div></div><div class="footer-note">课文与词汇内容为演示文本，本为原型演示；生产环境需对接正版教材内容与后端服务实现。</div></div></template>
+
+  <template id="reviewTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">TEXTBOOK REVIEW</div><h1>课本复习</h1><p>把知识点串起来，再用练习确认掌握。</p></div><select class="field unit-select"><option>Unit 1 Teenage Life</option><option>Unit 2 Travelling Around</option><option>Unit 3 Sports and Fitness</option></select></div><div class="grid grid-2"><div class="card pad"><div class="eyebrow">KNOWLEDGE MAP</div><h3>Unit 1 知识点回顾</h3><div class="exercise-list"><div class="exercise"><span><strong>语法</strong><br /><small class="muted">名词短语与定语从句</small></span><span class="status-pill">已掌握</span></div><div class="exercise"><span><strong>词汇</strong><br /><small class="muted">teenager · volunteer · debate</small></span><span class="status-pill">进行中</span></div><div class="exercise"><span><strong>语篇</strong><br /><small class="muted">校园生活类记叙文结构</small></span><span class="status-pill free">待复习</span></div></div></div><div class="card pad"><div class="eyebrow">QUICK CHECK</div><h3>基础检测练习</h3><p class="muted">共 5 题 · 预计 5 分钟</p><div class="exercise-list"><div class="exercise"><span>01 &nbsp;Adam joined the football ___.</span><span class="result">√</span></div><div class="exercise"><span>02 &nbsp;The word "challenge" means...</span><span class="result">√</span></div><div class="exercise"><span>03 &nbsp;Find the subject of the sentence.</span><span class="result wrong">×</span></div></div><button class="btn btn-primary full" style="margin-top:16px" data-toast="检测已完成，得分 80 分">继续检测</button></div></div><div class="section-title"><h3>单词听写</h3><span class="muted">上次正确率 80%</span></div><div class="card pad"><div class="grid grid-3"><div><div class="eyebrow">掌握较好</div><h3>12 个</h3><p class="muted">challenge, schedule...</p></div><div><div class="eyebrow">需要巩固</div><h3 style="color:var(--rose)">6 个</h3><p class="muted">confused, responsible...</p></div><div style="display:flex;align-items:center"><button class="btn btn-outline full" data-toast="复习听写已开始">开始复习听写 →</button></div></div></div><div class="footer-note">检测结果为本地模拟数据，本为原型演示；生产环境需对接真实题库与学习记录服务。</div></div></template>
+
+  <template id="homeworkTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">AI HOMEWORK</div><h1>作业中心</h1><p>粘贴英语作业，快速得到错题反馈。</p></div><span id="homeworkMemberBadge" class="status-pill free">免费版</span></div><div class="grid grid-2"><div class="card pad"><h3 style="margin-top:0">录入英语作业</h3><div class="field"><label for="homeworkText">作业文本</label><textarea id="homeworkText" placeholder="例如：1. I am confusing about the schedule...\n2. Please correct the following sentences..."></textarea></div><div style="display:flex;gap:10px;align-items:center"><button class="btn btn-primary" id="gradeHomework">提交AI批改</button><button class="btn btn-ghost" data-toast="拍照上传功能将在二期迭代开放">▧ 拍照上传</button></div><div class="tiny-note" style="margin-top:13px">拍照上传：二期迭代暂未实现。AI批改为本地模拟结果，生产环境需对接AI模型服务。</div></div><div class="card pad" id="homeworkResult"><div class="empty">提交一段作业后，这里会出现批改结果。</div></div></div><div class="footer-note">免费用户可查看简略对错；VIP用户解锁逐题完整讲解与四维能力评级。全部结果仅用于原型演示。</div></div></template>
+
+  <template id="examsTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">MOCK EXAM</div><h1>英语模拟试卷</h1><p>在完整题型中，检验你的阶段性掌握。</p></div><span class="status-pill">VIP 专属</span></div><div class="card pad"><div class="pay-summary"><div><strong>英语阶段模拟卷（一）</strong><span class="muted">听力 · 阅读 · 语言运用 · 写作　共 120 分</span></div><span class="muted">预计 45 分钟</span></div><div class="section-title"><h3>试卷结构</h3><span class="muted">尚未开始</span></div><div class="grid grid-3"><div class="card pad"><div class="eyebrow">PART A</div><h4>阅读理解</h4><p class="muted">4 篇短文 · 15 题</p></div><div class="card pad"><div class="eyebrow">PART B</div><h4>语言运用</h4><p class="muted">完形填空 · 语法填空</p></div><div class="card pad"><div class="eyebrow">PART C</div><h4>写作输出</h4><p class="muted">应用文写作 · 15 分</p></div></div><button class="btn btn-primary" id="startExam" style="margin-top:21px">开始模拟考试 →</button></div><div class="member-note" style="margin-top:18px">模拟试卷为 VIP 专属权益，完成会员开通后即可访问全套英语模拟试卷与解析。</div><div class="footer-note">试卷内容为原型演示，本为模拟题库；生产环境需对接正版题库、计时与成绩服务。</div></div></template>
+
+  <template id="membershipTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">MEMBERSHIP</div><h1>选择你的学习方案</h1><p>解锁完整AI讲解与英语学习资源。</p></div><span class="tiny-note">原型演示 · 模拟支付宝支付</span></div><div id="currentVipBanner" class="member-note hidden" style="margin-bottom:18px"></div><div class="grid grid-3"><div class="card plan-card"><h3>月卡</h3><p class="muted">灵活体验，随时开始</p><div class="price"><strong>10</strong><small>元 / 月</small></div><ul><li>AI作业逐题讲解</li><li>四维学习能力评级</li><li>模拟试卷与拓展听力</li></ul><button class="btn btn-outline buy-plan" data-plan="月卡" data-price="10">立即开通</button></div><div class="card plan-card recommended"><span class="recommend">推荐 · 性价比最高</span><h3>年卡</h3><p class="muted">一次开通，全年安心学</p><div class="price"><strong>60</strong><small>元 / 年</small></div><ul><li>AI作业逐题讲解</li><li>四维学习能力评级</li><li>全套英语模拟试卷</li><li>拓展听力学习资源</li></ul><button class="btn btn-primary buy-plan" data-plan="年卡" data-price="60">立即开通</button></div><div class="card plan-card"><h3>季卡</h3><p class="muted">阶段冲刺，集中提升</p><div class="price"><strong>20</strong><small>元 / 季</small></div><ul><li>AI作业逐题讲解</li><li>四维学习能力评级</li><li>模拟试卷与拓展听力</li></ul><button class="btn btn-outline buy-plan" data-plan="季卡" data-price="20">立即开通</button></div></div><div class="section-title"><h3>会员权益对比</h3></div><div class="card table-wrap"><table><thead><tr><th>权益</th><th>免费版</th><th>VIP会员</th></tr></thead><tbody><tr><td>课本基础预习 / 单元复习</td><td>✓</td><td>✓</td></tr><tr><td>简单单词听写</td><td>✓</td><td>✓</td></tr><tr><td>AI作业完整逐题讲解</td><td>—</td><td>✓</td></tr><tr><td>四维学习能力评级报告</td><td>—</td><td>✓</td></tr><tr><td>全套英语模拟试卷</td><td>—</td><td>✓</td></tr><tr><td>拓展听力学习资源</td><td>—</td><td>✓</td></tr></tbody></table></div><div class="footer-note">原型演示；真实交易需要申请支付宝商户，对接后端接口与支付回调服务。价格与权益均为演示固定配置。</div></div></template>
+
+  <template id="myTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">MY SPACE</div><h1>我的</h1><p>管理你的个人信息与学习设置。</p></div></div><div class="card profile-card"><span class="avatar" id="myAvatar">学</span><div><h3 id="myName">学生</h3><p id="myEmail">student@example.com</p><span id="myStatus" class="status-pill free">免费版</span></div><div class="topbar-spacer"></div><button class="btn btn-outline" data-modal="passwordModal">修改密码</button></div><div class="section-title"><h3>快捷功能</h3></div><div class="grid grid-3"><div class="card quick-card" data-route="diagnosis"><div class="eyebrow">LEARNING LOG</div><h4>我的学习记录 →</h4><p>查看连续学习天数与四维能力评级</p></div><div class="card quick-card" data-toast="订单记录已在本地模拟保存"><div class="eyebrow">ORDERS</div><h4>我的订单 →</h4><p>查看会员购买与交易记录</p></div><div class="card quick-card" data-route="membership"><div class="eyebrow">MEMBERSHIP</div><h4>会员中心 →</h4><p>续费或查看当前会员权益</p></div></div><div class="section-title"><h3>设置</h3></div><div class="card pad"><div class="settings-row"><div><h4>消息通知</h4><p>接收学习提醒与客服回复通知</p></div><div class="switch on" id="noticeSwitch"></div></div><div class="settings-row"><div><h4>清除本地缓存</h4><p>仅清除本设备上的 Demo 数据与登录状态</p></div><button class="btn btn-ghost" id="clearCache">清除缓存</button></div><div class="settings-row"><div><h4>退出登录</h4><p>返回登录页面</p></div><button class="btn btn-danger" id="myLogout">退出登录</button></div></div><div class="footer-note">修改密码生产环境需要后端接口支持。本页面所有信息为 localStorage 本地模拟。</div></div></template>
+
+  <template id="diagnosisTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">LEARNING DIAGNOSIS</div><h1>学情诊断</h1><p>用四个维度看见自己的学习进度与下一步。</p></div><span class="status-pill">VIP学习报告</span></div><div class="grid grid-2"><div class="card pad" style="min-height:410px"><div class="section-title" style="margin-top:0"><h3>四维学习能力</h3><span class="muted">最近一次检测</span></div><div style="height:315px;position:relative"><canvas id="abilityRadar" aria-label="四维学习能力雷达图"></canvas><div id="chartFallback" class="empty hidden">Chart.js加载中，请稍后刷新页面。</div></div></div><div class="card pad"><div class="eyebrow">INSIGHT</div><h3>本次诊断摘要</h3><div class="exercise-list" style="margin-top:16px"><div class="exercise"><span><strong>优势维度</strong><br /><small class="muted">词汇识别与积累较稳定</small></span><span class="status-pill">78</span></div><div class="exercise"><span><strong>优先提升</strong><br /><small class="muted">写作输出需要更多练习</small></span><span class="status-pill free">56</span></div><div class="exercise"><span><strong>建议动作</strong><br /><small class="muted">本周完成 2 次段落仿写</small></span><span class="status-pill">行动</span></div></div><div class="ai-callout" style="margin-top:18px"><h4>✦ AI学习建议</h4><p>先用课本范文积累表达，再尝试替换关键词完成仿写。每次写作后复盘 1 个句式，持续四周会更容易看到提升。</p></div></div></div><div class="section-title"><h3>错题根因标签</h3><span class="muted">共 8 个待复盘</span></div><div class="grid grid-4"><div class="card pad"><div class="eyebrow">词汇</div><h4>词义辨析</h4><p class="muted">confused / confusing</p></div><div class="card pad"><div class="eyebrow">句法</div><h4>从句边界</h4><p class="muted">定语从句识别</p></div><div class="card pad"><div class="eyebrow">语篇逻辑</div><h4>连接词选择</h4><p class="muted">因果与转折关系</p></div><div class="card pad"><div class="eyebrow">写作输出</div><h4>句式单一</h4><p class="muted">缺少复合句表达</p></div></div><div class="footer-note">四维能力报告为原型演示数据，生产环境需对接真实学习记录、AI评估模型与后端服务。</div></div></template>
+
+  <template id="adminTemplate"><div class="page-shell"><div class="page-head"><div><div class="eyebrow">ADMIN CONSOLE</div><h1>管理后台</h1><p>管理演示账号、订单与客服留言。</p></div><span class="status-pill">管理员模式</span></div><div class="admin-layout"><aside class="card admin-side"><button class="active" data-admin-tab="users">用户管理</button><button data-admin-tab="orders">消费记录</button><button data-admin-tab="messages">客服留言</button></aside><section id="adminContent"></section></div><div class="footer-note">管理员后台仅对内置 admin 账号开放。数据全部读取 localStorage，本为原型演示，生产环境需完善权限校验与后端数据库。</div></div></template>
+
+  <script>
+    /* ===== 数据层：localStorage 模拟后端 ===== */
+    const DB_KEY = 'keBanAiDemoDB_v1';
+    const SESSION_KEY = 'keBanAiSession';
+    const defaultDB = { users: [
+      { username: 'admin', email: 'admin@keban.ai', password: '123456', role: 'admin', vipUntil: null, createdAt: '2026-01-01' },
+      { username: 'student', email: 'student@example.com', password: '123456', role: 'student', vipUntil: null, createdAt: '2026-02-15' }
+    ], orders: [], messages: [] };
+    function readDB() { try { return JSON.parse(localStorage.getItem(DB_KEY)) || structuredClone(defaultDB); } catch (e) { return structuredClone(defaultDB); } }
+    function saveDB(db) { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+    function getSession() { return localStorage.getItem(SESSION_KEY); }
+    function getUser() { const db = readDB(); return db.users.find(u => u.username === getSession()) || null; }
+    function isVip(user = getUser()) { return !!(user && user.vipUntil && new Date(user.vipUntil) > new Date()); }
+    function escapeHtml(s) { return String(s || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+    function formatDate(iso) { return iso ? new Date(iso).toLocaleDateString('zh-CN') : '-'; }
+    if (!localStorage.getItem(DB_KEY)) saveDB(defaultDB);
+
+    /* ===== 认证流程 ===== */
+    const authRoot = document.getElementById('authRoot');
+    const appRoot = document.getElementById('appRoot');
+    const modalRoot = document.getElementById('modalRoot');
+    const viewRoot = document.getElementById('viewRoot');
+    function showAuth(register = false) { authRoot.classList.remove('hidden'); appRoot.classList.add('hidden'); document.getElementById('loginFormWrap').classList.toggle('hidden', register); document.getElementById('registerFormWrap').classList.toggle('hidden', !register); }
+    function showApp() { if (!getUser()) return showAuth(); authRoot.classList.add('hidden'); appRoot.classList.remove('hidden'); updateTopbar(); renderRoute('home'); }
+    function login(username, password) { const user = readDB().users.find(u => u.username === username && u.password === password); if (!user) return false; localStorage.setItem(SESSION_KEY, username); return true; }
+    function logout() { localStorage.removeItem(SESSION_KEY); document.getElementById('userDropdown').classList.add('hidden'); showAuth(); }
+    document.getElementById('loginForm').addEventListener('submit', e => { e.preventDefault(); const username = document.getElementById('loginUsername').value.trim(); const password = document.getElementById('loginPassword').value; let ok = true; document.getElementById('loginUsernameError').textContent = username ? '' : '请输入用户名'; document.getElementById('loginPasswordError').textContent = password ? '' : '请输入密码'; if (!username || !password) return; if (!login(username,password)) { document.getElementById('loginPasswordError').textContent = '用户名或密码不正确'; ok = false; } if (ok) { if (document.getElementById('rememberPassword').checked) localStorage.setItem('rememberedPassword', password); showApp(); toast('登录成功，欢迎回来'); } });
+    document.getElementById('showRegister').onclick = () => showAuth(true);
+    document.getElementById('showLogin').onclick = () => showAuth(false);
+    const remembered = localStorage.getItem('rememberedPassword'); if (remembered) { document.getElementById('loginPassword').value = remembered; document.getElementById('rememberPassword').checked = true; }
+    ['registerUsername','registerEmail','registerPassword','registerConfirm','registerCode'].forEach(id => document.getElementById(id).addEventListener('input', validateRegister));
+    function validateRegister() { const values = { u: document.getElementById('registerUsername').value.trim(), e: document.getElementById('registerEmail').value.trim(), p: document.getElementById('registerPassword').value, c: document.getElementById('registerConfirm').value, code: document.getElementById('registerCode').value.trim() }; const set = (id,msg) => document.getElementById(id+'Error').textContent = msg; set('registerUsername', values.u.length < 2 ? '用户名至少2个字符' : ''); set('registerEmail', !/^\S+@\S+\.\S+$/.test(values.e) ? '请输入有效邮箱' : ''); set('registerPassword', values.p.length < 6 ? '密码至少6位' : ''); set('registerConfirm', values.c !== values.p ? '两次密码不一致' : ''); set('registerCode', !values.code ? '请输入验证码' : !/^\d{6}$/.test(values.code) ? '请输入6位数字验证码' : ''); return values; }
+    document.getElementById('sendCode').onclick = () => { const email = document.getElementById('registerEmail').value.trim(); if (!/^\S+@\S+\.\S+$/.test(email)) { document.getElementById('registerEmailError').textContent = '请先填写有效邮箱'; return; } document.getElementById('registerCode').value = '123456'; openModal('codeSentModal'); };
+    document.getElementById('registerForm').addEventListener('submit', e => { e.preventDefault(); const v = validateRegister(); const db = readDB(); if (db.users.some(u => u.username === v.u)) { document.getElementById('registerUsernameError').textContent = '用户名已存在'; return; } if (!v.u || !/^\S+@\S+\.\S+$/.test(v.e) || v.p.length < 6 || v.c !== v.p || !/^\d{6}$/.test(v.code)) return; db.users.push({ username:v.u, email:v.e, password:v.p, role:'student', vipUntil:null, createdAt:new Date().toISOString() }); saveDB(db); document.getElementById('loginUsername').value = v.u; document.getElementById('loginPassword').value = ''; showAuth(false); openModal('registerSuccessModal'); });
+
+    /* ===== 顶部导航与路由 ===== */
+    function updateTopbar() { const user = getUser(); if (!user) return; document.getElementById('topUsername').textContent = user.username; document.getElementById('topAvatar').textContent = user.username.slice(0,1).toUpperCase(); document.getElementById('topMemberLabel').textContent = isVip(user) ? 'VIP会员' : '免费版'; document.getElementById('adminNav').classList.toggle('hidden', user.role !== 'admin'); document.getElementById('topMemberLabel').classList.toggle('vip-badge', isVip(user)); }
+    document.querySelectorAll('[data-route]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); routeTo(el.dataset.route); }));
+    function routeTo(route) { if (!getUser()) { openModal('loginGuideModal'); return; } if (route === 'admin' && getUser().role !== 'admin') { toast('你没有权限访问管理后台'); return; } if (['exams','diagnosis'].includes(route) && !isVip()) { openVipModal(); return; } renderRoute(route); document.getElementById('userDropdown').classList.add('hidden'); }
+    function renderRoute(route) { const template = document.getElementById(route + 'Template'); if (!template) return; viewRoot.innerHTML = template.innerHTML; document.querySelectorAll('.main-nav button').forEach(b => b.classList.toggle('active', b.dataset.route === route)); bindView(route); }
+    function bindView(route) { if (route === 'home') { const u = getUser(); document.getElementById('heroMemberStatus').textContent = isVip(u) ? 'VIP会员 · 有效至 ' + formatDate(u.vipUntil) : '免费版'; document.getElementById('heroMemberStatus').classList.toggle('free', !isVip(u)); } if (route === 'homework') bindHomework(); if (route === 'membership') bindMembership(); if (route === 'my') bindMy(); if (route === 'diagnosis') bindDiagnosis(); if (route === 'admin') bindAdmin(); if (route === 'exams') document.getElementById('startExam').onclick = () => toast('模拟考试已开始，计时功能为演示状态'); enhanceLearningView(route); viewRoot.querySelectorAll('[data-route]').forEach(el => el.addEventListener('click', () => routeTo(el.dataset.route))); viewRoot.querySelectorAll('[data-modal]').forEach(el => el.addEventListener('click', () => openModal(el.dataset.modal))); viewRoot.querySelectorAll('[data-toast]').forEach(el => el.addEventListener('click', () => toast(el.dataset.toast))); }
+
+    /* ===== 预习 / 复习 / 检测：评级与个性化短期规划 ===== */
+    function enhanceLearningView(route) { if (!['preview','review'].includes(route)) return; const footer = viewRoot.querySelector('.footer-note'); if (!footer) return; const preview = route === 'preview'; const html = preview ? '<div class="section-title"><h3>本次预习评级与学习规划</h3><span class="status-pill">AI个性化建议</span></div><div class="learning-insight-grid"><div class="card rating-card"><div class="rating-score">72</div><div><h4>预习完成度 · 良好</h4><p>课文理解已建立，核心词汇和长难句还需要一次针对性巩固。</p><span class="tiny-note">评级依据：词汇识别、语篇理解、预习检测</span></div></div><div class="card plan-card-lite"><h4>未来 3 天预习计划</h4><p>根据本次错题与易错知识点自动生成，可随时调整。</p><ul class="plan-list"><li><strong>今天 · 15 分钟：</strong>复习 confused / confusing 等 6 个易混词，并完成一次听写。</li><li><strong>明天 · 20 分钟：</strong>重新拆解课文 2 个长难句，标出主干与从句边界。</li><li><strong>第 3 天 · 10 分钟：</strong>完成听力小练习，错题加入复习清单。</li></ul></div></div>' : '<div class="section-title"><h3>复习与检测评级</h3><span class="status-pill">本单元得分 80</span></div><div class="learning-insight-grid"><div class="card rating-card"><div class="rating-score">80</div><div><h4>掌握度 · 稳步提升</h4><p>词汇表现较稳定，句法与语篇逻辑是下一阶段的重点。</p><span class="tiny-note">评级依据：知识点回顾、基础检测、单词听写</span></div></div><div class="card plan-card-lite"><h4>错题专项 · 7 天巩固计划</h4><p>围绕本次检测暴露的问题，安排短周期、可执行的练习。</p><ul class="plan-list"><li><strong>错题回炉：</strong>订正“从句边界”错题 3 题，写出每题的判断依据。</li><li><strong>易错巩固：</strong>每天复习 6 个词，连续 3 天正确率达到 90% 后进入已掌握。</li><li><strong>个性化输出：</strong>周末完成 80 词校园生活段落仿写，重点使用本单元句式。</li></ul></div></div>'; footer.insertAdjacentHTML('beforebegin', html); }
+    document.getElementById('userTrigger').onclick = () => document.getElementById('userDropdown').classList.toggle('hidden');
+    document.getElementById('logoutBtn').onclick = logout;
+    document.getElementById('switchAccount').onclick = () => { logout(); toast('已切换账号'); };
+
+    /* ===== 作业中心与 VIP 权限 ===== */
+    function bindHomework() { document.getElementById('homeworkMemberBadge').textContent = isVip() ? 'VIP会员' : '免费版'; document.getElementById('homeworkMemberBadge').classList.toggle('free', !isVip()); document.getElementById('gradeHomework').onclick = () => { const text = document.getElementById('homeworkText').value.trim(); if (!text) return toast('请先粘贴一段英语作业'); const result = document.getElementById('homeworkResult'); if (isVip()) result.innerHTML = '<div class="eyebrow">AI GRADING · VIP</div><h3>作业批改完成</h3><div class="exercise-list"><div class="exercise"><span><strong>01</strong> I am confusing about the schedule.</span><span class="result wrong">需修改</span></div><div class="ai-callout"><h4>逐题讲解</h4><p>confusing 表示“令人困惑的”，描述人的感受应使用 confused。建议改为：<strong>I am confused about the schedule.</strong></p></div><div class="exercise"><span><strong>02</strong> I recommend joining the club.</span><span class="result">正确</span></div></div><button class="btn btn-outline full" style="margin-top:15px" data-route="diagnosis">查看四维能力评级 →</button>'; else result.innerHTML = '<div class="eyebrow">AI GRADING · 免费版</div><h3>简略批改完成</h3><div class="exercise-list"><div class="exercise"><span>第 1 题</span><span class="result wrong">需修改</span></div><div class="exercise"><span>第 2 题</span><span class="result">正确</span></div></div><div class="member-note" style="margin-top:16px">开通 VIP 解锁逐题完整讲解与四维能力评级。</div>'; if (isVip()) result.querySelector('[data-route]').onclick = () => routeTo('diagnosis'); }; }
+    function openVipModal() { openModal('vipGuideModal'); }
+    function bindDiagnosis() { const canvas = document.getElementById('abilityRadar'); if (window.Chart) { new Chart(canvas, { type: 'radar', data: { labels: ['词汇','句法','语篇逻辑','写作输出'], datasets: [{ label: '当前能力', data: [78, 68, 64, 56], fill: true, backgroundColor: 'rgba(33,104,245,.16)', borderColor: '#2168f5', pointBackgroundColor: '#2168f5', pointBorderColor: '#fff', pointRadius: 4, borderWidth: 2 }] }, options: { maintainAspectRatio: false, scales: { r: { min: 0, max: 100, ticks: { stepSize: 20, color: '#9aa5b5', backdropColor: 'transparent' }, grid: { color: '#e6ebf2' }, angleLines: { color: '#e6ebf2' }, pointLabels: { color: '#536177', font: { size: 12, weight: '600' } } } }, plugins: { legend: { display: false } } } }); } else { canvas.classList.add('hidden'); document.getElementById('chartFallback').classList.remove('hidden'); } }
+
+    /* ===== 会员购买 ===== */
+    let pendingPlan = null;
+    function bindMembership() { const user = getUser(); const banner = document.getElementById('currentVipBanner'); if (isVip(user)) { banner.classList.remove('hidden'); banner.textContent = '当前会员有效期至 ' + formatDate(user.vipUntil) + '，感谢你选择课伴AI。'; } document.querySelectorAll('.buy-plan').forEach(btn => btn.onclick = () => { pendingPlan = { plan: btn.dataset.plan, price: Number(btn.dataset.price) }; openModal('payConfirmModal'); }); }
+    function completePayment() { const db = readDB(); const user = db.users.find(u => u.username === getSession()); const days = pendingPlan.plan === '月卡' ? 30 : pendingPlan.plan === '季卡' ? 90 : 365; const base = isVip(user) ? new Date(user.vipUntil) : new Date(); base.setDate(base.getDate() + days); user.vipUntil = base.toISOString(); db.orders.push({ username:user.username, plan:pendingPlan.plan, price:pendingPlan.price, time:new Date().toISOString() }); saveDB(db); closeModal(); updateTopbar(); toast('会员开通成功'); renderRoute('membership'); }
+
+    /* ===== 我的、客服和后台 ===== */
+    function bindMy() { const user = getUser(); document.getElementById('myName').textContent = user.username; document.getElementById('myAvatar').textContent = user.username.slice(0,1).toUpperCase(); document.getElementById('myEmail').textContent = user.email; document.getElementById('myStatus').textContent = isVip(user) ? 'VIP会员 · 有效至 ' + formatDate(user.vipUntil) : '免费版'; document.getElementById('myStatus').classList.toggle('free', !isVip(user)); document.getElementById('noticeSwitch').onclick = e => e.currentTarget.classList.toggle('on'); document.getElementById('clearCache').onclick = () => { localStorage.removeItem(DB_KEY); localStorage.removeItem(SESSION_KEY); localStorage.removeItem('rememberedPassword'); saveDB(defaultDB); showAuth(false); toast('本地缓存已清除'); }; document.getElementById('myLogout').onclick = logout; }
+    document.getElementById('serviceBtn').onclick = () => openModal('serviceModal');
+    function submitMessage() { const text = document.getElementById('serviceMessage').value.trim(); if (!text) return toast('请填写留言内容'); const db = readDB(); db.messages.push({ username:getSession(), content:text, time:new Date().toISOString(), replied:false, reply:'' }); saveDB(db); closeModal(); toast('留言已提交，管理员1个工作日内回复'); }
+    function bindAdmin() { let active = 'users'; const draw = () => { document.querySelectorAll('[data-admin-tab]').forEach(b => b.classList.toggle('active', b.dataset.adminTab === active)); const box = document.getElementById('adminContent'); const db = readDB(); if (active === 'users') { box.innerHTML = '<div class="card pad"><div class="section-title" style="margin-top:0"><h3>用户列表</h3><input class="table-search" id="userSearch" placeholder="搜索用户名或邮箱" /></div><div class="table-wrap"><table><thead><tr><th>用户名</th><th>邮箱</th><th>会员状态</th><th>注册时间</th></tr></thead><tbody id="usersBody"></tbody></table></div></div>'; const fill = () => { const q = (document.getElementById('userSearch').value || '').toLowerCase(); document.getElementById('usersBody').innerHTML = db.users.filter(u => (u.username+u.email).toLowerCase().includes(q)).map(u => '<tr><td><strong>'+escapeHtml(u.username)+'</strong></td><td>'+escapeHtml(u.email)+'</td><td><span class="status-pill '+(isVip(u)?'':'free')+'">'+(isVip(u)?'VIP至 '+formatDate(u.vipUntil):'免费版')+'</span></td><td>'+formatDate(u.createdAt)+'</td></tr>').join(''); }; document.getElementById('userSearch').oninput = fill; fill(); } else if (active === 'orders') { const total = db.orders.reduce((s,o)=>s+Number(o.price),0); box.innerHTML = '<div class="grid grid-2" style="margin-bottom:15px"><div class="card stat-card"><span class="stat-label">总订单数量</span><strong>'+db.orders.length+'</strong></div><div class="card stat-card"><span class="stat-label">累计营收金额</span><strong>¥ '+total+'</strong></div></div><div class="card table-wrap"><table><thead><tr><th>用户名</th><th>购买套餐类型</th><th>支付金额</th><th>交易时间</th></tr></thead><tbody>'+(db.orders.length ? db.orders.map(o=>'<tr><td><strong>'+escapeHtml(o.username)+'</strong></td><td>'+o.plan+'</td><td>¥ '+o.price+'</td><td>'+new Date(o.time).toLocaleString('zh-CN')+'</td></tr>').join('') : '<tr><td colspan="4" class="empty">暂无消费记录</td></tr>')+'</tbody></table></div>'; } else { box.innerHTML = '<div class="card table-wrap"><table><thead><tr><th>留言用户</th><th>留言内容</th><th>提交时间</th><th>状态 / 操作</th></tr></thead><tbody>'+(db.messages.length ? db.messages.map((m,i)=>'<tr><td><strong>'+escapeHtml(m.username)+'</strong></td><td style="white-space:normal;min-width:250px">'+escapeHtml(m.content)+'</td><td>'+new Date(m.time).toLocaleString('zh-CN')+'</td><td>'+(m.replied ? '<span class="status-pill">已回复</span>' : '<button class="btn btn-outline reply-message" data-index="'+i+'">回复</button>')+'</td></tr>').join('') : '<tr><td colspan="4" class="empty">暂无客服留言</td></tr>')+'</tbody></table></div>'; box.querySelectorAll('.reply-message').forEach(btn => btn.onclick = () => { const reply = prompt('请输入回复内容（演示）'); if (reply) { db.messages[btn.dataset.index].replied = true; db.messages[btn.dataset.index].reply = reply; saveDB(db); draw(); toast('已标记为回复'); } }); } }; document.querySelectorAll('[data-admin-tab]').forEach(b => b.onclick = () => { active = b.dataset.adminTab; draw(); }); draw(); }
+
+    /* ===== 弹窗系统 ===== */
+    const modalTemplates = {
+      codeSentModal: '<div class="modal"><div class="modal-head"><div><h3>验证码已发送</h3><p>验证码已发送到您的邮箱，演示验证码已自动填入输入框。</p></div><button class="modal-close" data-close>×</button></div><div class="modal-actions"><button class="btn btn-primary" data-close>知道了</button></div></div>',
+      registerSuccessModal: '<div class="modal"><div class="modal-head"><div><h3>注册成功</h3><p>账号已创建，请使用新账号登录课伴AI。</p></div><button class="modal-close" data-close>×</button></div><div class="modal-actions"><button class="btn btn-primary" data-close>去登录</button></div></div>',
+      forgotModal: '<div class="modal"><div class="modal-head"><div><h3>找回密码</h3><p>输入注册邮箱，我们会发送找回指引（仅UI演示）。</p></div><button class="modal-close" data-close>×</button></div><div class="field"><label>注册邮箱</label><input type="email" placeholder="name@example.com" /></div><div class="modal-actions"><button class="btn btn-ghost" data-close>取消</button><button class="btn btn-primary" data-action="forgot">发送找回邮件</button></div></div>',
+      loginGuideModal: '<div class="modal"><div class="modal-head"><div><h3>请先登录</h3><p>登录后才能访问课伴AI的学习功能。</p></div><button class="modal-close" data-close>×</button></div><div class="modal-actions"><button class="btn btn-primary" data-action="goLogin">去登录</button></div></div>',
+      vipGuideModal: '<div class="modal"><div class="modal-head"><div><h3>这是会员专属功能</h3><p>开通 VIP 后即可解锁完整内容，包括AI作业逐题讲解、四维能力评级和模拟试卷。</p></div><button class="modal-close" data-close>×</button></div><div class="modal-actions"><button class="btn btn-ghost" data-close>暂不</button><button class="btn btn-primary" data-action="goMembership">查看会员方案</button></div></div>',
+      serviceModal: '<div class="modal"><div class="modal-head"><div><h3>联系课伴AI客服</h3><p>告诉我们你在学习中的问题或建议。</p></div><button class="modal-close" data-close>×</button></div><div class="field"><label>留言内容</label><textarea id="serviceMessage" placeholder="请输入留言内容"></textarea></div><div class="modal-actions"><button class="btn btn-ghost" data-close>取消</button><button class="btn btn-primary" data-action="submitMessage">提交留言</button></div></div>',
+      passwordModal: '<div class="modal"><div class="modal-head"><div><h3>修改密码</h3><p>仅UI模拟，生产环境需要后端接口支持。</p></div><button class="modal-close" data-close>×</button></div><div class="field"><label>新密码</label><input type="password" placeholder="请输入新密码" /></div><div class="field"><label>确认新密码</label><input type="password" placeholder="再次输入新密码" /></div><div class="modal-actions"><button class="btn btn-ghost" data-close>取消</button><button class="btn btn-primary" data-action="fakePassword">保存修改</button></div></div>',
+      payConfirmModal: '<div class="modal"><div class="modal-head"><div><h3>确认开通会员</h3><p>支付方式默认使用支付宝（模拟）。</p></div><button class="modal-close" data-close>×</button></div><div class="pay-summary"><div><strong id="confirmPlan">会员套餐</strong><span class="muted">立即生效 · 自动记录到本地</span></div><span class="pay-amount" id="confirmPrice">¥0</span></div><div class="payment-method">支付宝</div><div class="modal-actions"><button class="btn btn-ghost" data-close>取消</button><button class="btn btn-primary" data-action="openCashier">确认支付</button></div></div>',
+      cashierModal: '<div class="modal"><div class="modal-head"><div><h3>支付宝收银台</h3><p>这是用于产品演示的模拟支付页面。</p></div><button class="modal-close" data-close>×</button></div><div class="pay-summary"><div><strong id="cashierPlan">会员套餐</strong><span class="muted">课伴AI｜英语课本智能学习助手</span></div><span class="pay-amount" id="cashierPrice">¥0</span></div><div class="member-note" style="margin-top:16px">请点击下方按钮模拟支付成功。不会产生真实扣款。</div><div class="modal-actions"><button class="btn btn-primary full" data-action="completePayment">模拟支付成功</button></div></div>'
+    };
+    function openModal(name) { modalRoot.innerHTML = '<div class="modal-backdrop" data-backdrop><div class="modal-host">'+(modalTemplates[name] || '')+'</div></div>'; modalRoot.querySelectorAll('[data-close], [data-backdrop]').forEach(el => el.onclick = e => { if (e.target === el) closeModal(); }); modalRoot.querySelectorAll('[data-action]').forEach(el => el.onclick = () => modalAction(el.dataset.action)); if (name === 'payConfirmModal' && pendingPlan) { document.getElementById('confirmPlan').textContent = pendingPlan.plan; document.getElementById('confirmPrice').textContent = '¥'+pendingPlan.price; } }
+    function closeModal() { modalRoot.innerHTML = ''; }
+    function modalAction(action) { if (action === 'forgot') { closeModal(); toast('找回邮件已发送（演示）'); } if (action === 'goLogin') { closeModal(); showAuth(false); } if (action === 'goMembership') { closeModal(); renderRoute('membership'); } if (action === 'submitMessage') submitMessage(); if (action === 'fakePassword') { closeModal(); toast('密码修改已保存（演示）'); } if (action === 'openCashier') { openModal('cashierModal'); document.getElementById('cashierPlan').textContent = pendingPlan.plan; document.getElementById('cashierPrice').textContent = '¥'+pendingPlan.price; } if (action === 'completePayment') completePayment(); }
+    function toast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); clearTimeout(window.__toastTimer); window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2500); }
+
+    /* ===== 初始化 ===== */
+    document.querySelectorAll('[data-modal]').forEach(el => el.addEventListener('click', () => openModal(el.dataset.modal)));
+    document.addEventListener('click', e => { if (!e.target.closest('.user-menu-wrap')) document.getElementById('userDropdown').classList.add('hidden'); });
+    if (getUser()) showApp(); else showAuth(false);
+  </script>
+  <!--
+    ===== 原型操作步骤说明 =====
+    1. 普通学生账号：使用 student / 123456 登录，进入首页后可浏览课本预习、课本复习和作业中心；访问模拟试卷或学情诊断会出现会员拦截。
+    2. 会员购买演示：进入“会员中心”选择月卡、季卡或年卡，点击“立即开通”→“确认支付”→“模拟支付成功”；localStorage 会记录 VIP 到期时间和订单，顶部出现 VIP 标识。
+    3. 管理员后台：退出或切换账号后使用 admin / 123456 登录，顶部会出现“管理后台”；可查看用户管理、消费记录和客服留言，并可对留言进行回复标记。
+    4. 客服留言：登录后点击右下角耳机图标提交留言，管理员在后台客服留言 Tab 中可以看到并回复。
+    5. 优化后的产品提示词：请生成完整可运行的单文件HTML原型，产品名称“课伴AI｜英语课本智能学习助手”，面向小学、初中、高中英语学习者。使用div显示/隐藏模拟路由，所有账号、学习记录、评级、错题标签、短期计划、会员与客服数据使用localStorage模拟。预习、复习、检测模块在完成后分别展示学习评级、评级依据、错题与易错知识点，并自动生成可执行的短期个性化计划（今日、未来3天或7天），计划内容应与学生当前问题关联；保留登录注册、VIP、管理员后台、客服悬浮窗、Chart.js学情雷达图和生产环境对接说明。
+  -->
+</body>
+</html>
