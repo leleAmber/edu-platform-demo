@@ -694,6 +694,185 @@ def homework_correct(text: str, include_details: bool | None = None) -> dict:
 
 
 # --------------------------------------------------------------------------- #
+# 作业批改（多题型 + 大模型/本地规则双引擎）
+# --------------------------------------------------------------------------- #
+def classify_homework(text: str) -> str:
+    """判断作业类型：choice（选择题）/ blank（填空题）/ reading（阅读理解）/ writing（作文）。
+
+    阅读理解 = 有成段文章 + 后面有题目（题号/选项），按「题目之前的英文词数」判断。
+    """
+    lines = [line.strip() for line in re.split(r"\n+", (text or "")) if line.strip()]
+    option_lines = [line for line in lines if re.match(r"^[A-Da-d][.、:：)）]\s*\S", line)]
+
+    # 找到第一个题目行（题号或选项），它前面若有成段英文，则视为阅读理解的文章
+    first_question_idx = next(
+        (
+            i
+            for i, line in enumerate(lines)
+            if re.match(r"^\d{1,2}[.、:：)）]", line)
+            or re.match(r"^[A-Da-d][.、:：)）]", line)
+        ),
+        None,
+    )
+    if first_question_idx is not None and first_question_idx > 0:
+        passage_words = sum(
+            len(re.findall(r"[A-Za-z']+", line)) for line in lines[:first_question_idx]
+        )
+        if passage_words >= 30:
+            return "reading"
+
+    if len(option_lines) >= 3:
+        return "choice"
+    if re.search(r"_{2,}|（\s*）|\(\s*\)|【\s*】|\[\s*\]", text or ""):
+        return "blank"
+    return "writing"
+
+
+def _local_writing_result(text: str) -> dict:
+    """作文走本地规则引擎，转换为统一结构。"""
+    local = homework_correct(text, include_details=True)
+    details = [
+        {
+            "index": item["index"],
+            "question": item["original"],
+            "your_answer": "",
+            "correct_answer": item["corrected"],
+            "is_right": False,
+            "error_type": item["error_type"],
+            "explain": item["explain"],
+        }
+        for item in local.get("details", [])
+    ]
+    return {
+        "mode": "local",
+        "total_score": local["total_score"],
+        "right_count": local["right_count"],
+        "wrong_count": local["wrong_count"],
+        "question_count": local.get("sentence_count", local["right_count"] + local["wrong_count"]),
+        "comment": local.get("comment", ""),
+        "details": details,
+        "error_types": local.get("error_types", {}),
+        "source": "本地规则引擎",
+        "note": "本地规则引擎逐句批改（覆盖常见语法/标点规则）。配置大模型后可获得更精准的批改。",
+    }
+
+
+def _objective_local_fallback(text: str, qtype: str) -> dict:
+    """选择/填空题在未配置大模型时的兜底：只列出题目，无法自动判对错。"""
+    lines = [line.strip() for line in re.split(r"\n+", (text or "")) if line.strip()]
+    qtype_label = {"choice": "选择题", "blank": "填空题", "reading": "阅读理解"}.get(qtype, "客观题")
+    details = [
+        {
+            "index": i,
+            "question": line,
+            "your_answer": "",
+            "correct_answer": "",
+            "is_right": None,
+            "error_type": "",
+            "explain": "该题暂无法自动判对错，请人工核对。",
+        }
+        for i, line in enumerate(lines, 1)
+    ]
+    return {
+        "mode": "local",
+        "total_score": 0,
+        "right_count": 0,
+        "wrong_count": 0,
+        "question_count": len(details),
+        "comment": "",
+        "details": details,
+        "error_types": {},
+        "source": "本地规则引擎",
+        "note": f"{qtype_label}需要精确比对标准答案，本地引擎暂无法自动判对错。配置大模型后即可自动批改。",
+    }
+
+
+def _llm_result(llm_out: dict, qtype: str) -> dict:
+    """把大模型返回结果转换成统一结构，并统计对错数量。"""
+    details = llm_out.get("details", [])
+    right_count = sum(1 for d in details if d.get("is_right"))
+    wrong_count = sum(1 for d in details if d.get("is_right") is False)
+    error_types: dict[str, int] = {}
+    for d in details:
+        et = d.get("error_type")
+        if et:
+            error_types[et] = error_types.get(et, 0) + 1
+    question_count = len(details) or right_count + wrong_count or 1
+    if qtype == "writing":
+        # 作文是综合评分，直接用模型给的分
+        total_score = llm_out.get("total_score", 0)
+    else:
+        # 客观题按答对比例折算成百分制，避免模型把总分当成小题得分（如 1 题给 1 分）
+        total_score = round(right_count / question_count * 100)
+    return {
+        "mode": "llm",
+        "total_score": total_score,
+        "right_count": right_count,
+        "wrong_count": wrong_count,
+        "question_count": question_count,
+        "comment": llm_out.get("comment", ""),
+        "details": details,
+        "error_types": error_types,
+        "source": "大模型批改",
+        "note": "",
+    }
+
+
+def grade_homework(text: str) -> dict:
+    """统一批改入口：作文/选择/填空均可，优先大模型，未配置时退回本地规则引擎。
+
+    返回结构：
+    {mode, total_score, right_count, wrong_count, question_count,
+     comment, details[], error_types, source, note}
+    """
+    text = (text or "").strip()
+    qtype = classify_homework(text)
+
+    from core import llm  # 局部导入，避免顶部依赖
+
+    if qtype == "writing":
+        # 作文按句子并行批改（跨 key 池），过滤掉称呼/落款等过短片段；
+        # 同时并行做一次整篇总评（综合分 + 总评语），不额外拖慢时间。
+        sentences = [
+            s for s in _split_sentences(text)
+            if len(re.findall(r"[A-Za-z']+", s)) >= 4
+        ]
+        if sentences:
+            from concurrent.futures import ThreadPoolExecutor
+
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                sentence_future = pool.submit(llm.grade_writing, sentences)
+                overall_future = pool.submit(llm.grade_writing_overall, text)
+                llm_out = sentence_future.result()
+                overall = overall_future.result()
+
+            if llm_out:
+                result = _llm_result(llm_out, "writing")
+                if overall:
+                    result["total_score"] = overall["total_score"]
+                    result["comment"] = overall["comment"]
+                else:
+                    result["comment"] = _comment_for(result["total_score"])
+                return result
+
+            if overall:
+                # 逐句解析失败，但拿到了整篇总评
+                result = _llm_result(
+                    {"total_score": overall["total_score"], "comment": overall["comment"], "details": []},
+                    "writing",
+                )
+                result["note"] = "逐句解析暂不可用，仅展示整体评价。"
+                return result
+
+        return _local_writing_result(text)
+
+    llm_out = llm.grade_homework(text, qtype)
+    if llm_out:
+        return _llm_result(llm_out, qtype)
+    return _objective_local_fallback(text, qtype)
+
+
+# --------------------------------------------------------------------------- #
 # 掌握度评分
 # --------------------------------------------------------------------------- #
 def get_mastery_score(seed: str | int | None = None, base: int | None = None) -> tuple[int, str]:
