@@ -155,7 +155,7 @@ def render_auth_page() -> None:
 
     _apply_remembered_login()
     tab_login, tab_register = st.tabs(
-        ["登录", "注册"], default="登录", key="auth_tab"
+        ["登录", "注册"], default="登录", key="auth_tab", on_change="rerun"
     )
 
     with tab_login:
