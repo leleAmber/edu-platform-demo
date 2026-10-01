@@ -1,0 +1,10 @@
+# 课伴AI 本地运行配置（可提交到仓库，不含任何敏感信息）
+# 敏感的发件邮箱配置在 secrets.toml 中，已被 .gitignore 忽略。
+
+[browser]
+# 关闭使用统计上报，同时跳过首次运行时的邮箱收集提示
+gatherUsageStats = false
+
+[server]
+# 开发时改代码自动重载
+runOnSave = true
