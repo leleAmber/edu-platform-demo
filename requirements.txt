@@ -1,4 +1,7 @@
-streamlit>=1.30.0
+# 不能低于 1.55：代码里用了 st.tabs(default=..., key=...)，
+# 这两个参数分别从 1.50 / 1.55 才开始支持，装到旧版会在启动页直接 TypeError。
+# 这里按实际验证过的 1.64 作为下限。
+streamlit>=1.64.0
 plotly>=5.18.0
 pandas>=2.1.0
 SQLAlchemy>=2.0.0

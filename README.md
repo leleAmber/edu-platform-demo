@@ -62,8 +62,10 @@
 
 ## 快速开始
 
-**环境要求**：Python 3.9+、MySQL 8.0+
+**环境要求**：Python 3.9+、MySQL 8.0+、**Streamlit 1.64+**
 （开发与验证环境：Python 3.13 / Streamlit 1.64 / Plotly 7.1 / pandas 3.0 / MySQL 8.4.8）
+
+> ⚠️ **Streamlit 版本必须对上。** 代码用了 `st.tabs(default=..., key=...)`、`width="stretch"` 等较新的 API，这些参数在 1.55 之前并不存在。如果直接拿系统里已有的旧版 Streamlit 跑，会在启动页（`app.py` 的登录/注册标签页）直接抛 `TypeError: LayoutsMixin.tabs() got an unexpected keyword argument 'key'`。**务必用下面第 3 步的虚拟环境安装依赖，不要复用 Anaconda 等环境里自带的 Streamlit。**
 
 ### 第 1 步：准备数据库
 
@@ -110,6 +112,15 @@ streamlit run app.py
 浏览器会自动打开 `http://localhost:8501`。
 
 > 端口被占用时可指定：`streamlit run app.py --server.port 8502`
+
+**装了 Anaconda / 全局装过 Streamlit 的机器要注意**：旧版 Streamlit 可能抢先生效，导致启动就 `TypeError`。先确认版本，或干脆不激活环境、直接用 venv 里的解释器启动：
+
+```bash
+python -c "import streamlit; print(streamlit.__version__)"   # 必须 >= 1.64
+
+# Windows：不激活也能跑，最不容易出环境串味
+.venv\Scripts\python.exe -m streamlit run app.py
+```
 
 **连不上数据库怎么办？** 在项目目录执行下面这行，会返回具体的失败原因（认证失败 / 库不存在 / 网络不通）：
 
