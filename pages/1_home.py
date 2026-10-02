@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+from components import book_selector
 from components.cards import func_card, status_tag
 from core import auth, database, tutor_ai, vip
 
@@ -45,14 +46,8 @@ def render_student_home() -> None:
 
     st.divider()
 
-    st.selectbox(
-        "选择学习单元",
-        tutor_ai.UNITS,
-        key="current_unit",
-        help="这里选择的单元会在预习、复习、学情诊断页面中同步生效",
-    )
-    unit = st.session_state["current_unit"]
-    st.caption(f"当前单元主题：{tutor_ai.get_unit_content(unit)['theme']}")
+    book, unit = book_selector.render_selectors()
+    st.caption(f"当前单元主题：{tutor_ai.get_unit_content(book, unit)['theme']}")
 
     st.subheader("学习功能")
     columns = st.columns(4)

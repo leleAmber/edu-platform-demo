@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import os
 import re
 from collections import OrderedDict
 
@@ -77,18 +78,49 @@ def _cache_put(key: str, value) -> None:
         _result_cache.popitem(last=False)
 
 
-def _providers() -> list[dict]:
-    """读取所有可用的模型配置，未配置任何 key 时返回空列表。"""
-    try:
-        base_url = str(st.secrets.get("LLM_BASE_URL", DEFAULT_BASE_URL) or DEFAULT_BASE_URL).strip().rstrip("/")
-        model = str(st.secrets.get("LLM_MODEL", DEFAULT_MODEL) or DEFAULT_MODEL).strip()
-        vision_model = str(st.secrets.get("LLM_VISION_MODEL", DEFAULT_VISION_MODEL) or DEFAULT_VISION_MODEL).strip()
+def _env(name: str) -> str | None:
+    """读取环境变量（去除首尾空白）；未设置或为空返回 None。"""
+    value = os.environ.get(name)
+    return value.strip() if value and value.strip() else None
 
-        keys = st.secrets.get("LLM_API_KEYS")
+
+def _providers() -> list[dict]:
+    """读取所有可用的模型配置，未配置任何 key 时返回空列表。
+
+    环境变量优先（便于离线脚本/cron 在非 Streamlit 运行时读取），
+    缺失时回落 st.secrets（Streamlit 正常运行路径）。LLM_API_KEYS 在环境变量里
+    用 JSON 字符串表示，例如 '["key1","key2"]'。
+    """
+    try:
+        base_url = (
+            _env("LLM_BASE_URL")
+            or str(st.secrets.get("LLM_BASE_URL", DEFAULT_BASE_URL) or DEFAULT_BASE_URL)
+        ).strip().rstrip("/")
+        model = (
+            _env("LLM_MODEL")
+            or str(st.secrets.get("LLM_MODEL", DEFAULT_MODEL) or DEFAULT_MODEL)
+        ).strip()
+        vision_model = (
+            _env("LLM_VISION_MODEL")
+            or str(st.secrets.get("LLM_VISION_MODEL", DEFAULT_VISION_MODEL) or DEFAULT_VISION_MODEL)
+        ).strip()
+
+        keys_raw = _env("LLM_API_KEYS")
+        if keys_raw:
+            try:
+                keys = json.loads(keys_raw)
+            except ValueError:
+                keys = None
+        else:
+            keys = st.secrets.get("LLM_API_KEYS")
+
         if keys:
             api_keys = [str(k).strip() for k in keys if str(k).strip()]
         else:
-            single = str(st.secrets.get("LLM_API_KEY", "") or "").strip()
+            single = (
+                _env("LLM_API_KEY")
+                or str(st.secrets.get("LLM_API_KEY", "") or "")
+            ).strip()
             api_keys = [single] if single else []
     except Exception:
         return []
@@ -145,8 +177,8 @@ def _chat(payload: dict, model_key: str = "model") -> str | None:
     return None
 
 
-def _parse_json(text: str) -> dict | None:
-    """从模型输出里提取 JSON，容忍代码块包裹与多余文字。"""
+def _parse_json(text: str):
+    """从模型输出里提取 JSON（dict 或 list），容忍代码块包裹与多余文字。"""
     if not text:
         return None
     text = text.strip()
@@ -161,6 +193,13 @@ def _parse_json(text: str) -> dict | None:
         pass
 
     start, end = text.find("{"), text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        try:
+            return json.loads(text[start : end + 1])
+        except json.JSONDecodeError:
+            pass
+
+    start, end = text.find("["), text.rfind("]")
     if start != -1 and end != -1 and end > start:
         try:
             return json.loads(text[start : end + 1])
@@ -435,3 +474,60 @@ def recognize_image(image_bytes: bytes) -> str | None:
     result = content.strip()
     _cache_put(cache_key, result)
     return result
+
+
+def generate_questions(system: str, user: str) -> list[dict] | None:
+    """批量生成原创题，返回解析后的 questions 列表；失败/未配置返回 None。
+
+    约定模型输出 {"questions": [{...}, ...]}。生成不做结果缓存——每次调用都应是
+    全新的原创题，避免重复消耗同一请求。
+    """
+    providers = _providers()
+    if not providers:
+        return None
+
+    payload = {
+        "model": providers[0]["model"],
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        "temperature": 0.7,
+        "max_tokens": 3000,
+    }
+    content = _chat(payload)
+    if not content:
+        return None
+
+    parsed = _parse_json(content)
+    if not isinstance(parsed, dict):
+        return None
+    questions = parsed.get("questions")
+    if not isinstance(questions, list):
+        return None
+    return [q for q in questions if isinstance(q, dict)]
+
+
+def structure(system: str, user: str, temperature: float = 0.2, max_tokens: int = 3000):
+    """通用结构化接口：把文本转成 JSON（dict 或 list），失败/未配置返回 None。
+
+    供离线脚本复用（教材单词表/句型解析等）。约定模型严格只输出 JSON，
+    不输出解释或代码块。不做结果缓存——每次调用输入不同。
+    """
+    providers = _providers()
+    if not providers:
+        return None
+
+    payload = {
+        "model": providers[0]["model"],
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    content = _chat(payload)
+    if not content:
+        return None
+    return _parse_json(content)

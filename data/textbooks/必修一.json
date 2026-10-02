@@ -1,0 +1,2502 @@
+{
+  "key": "必修一",
+  "name": "人教版必修第一册",
+  "grade": "高一",
+  "units": [
+    {
+      "unit": "Unit1 Teenage Life",
+      "theme": "校园生活 · 社团与时间管理",
+      "words": [
+        {
+          "word": "teenage",
+          "pos": "adj.",
+          "explain": "十几岁的（指13 至19 岁）；青少年的"
+        },
+        {
+          "word": "teenager",
+          "pos": "n.",
+          "explain": "（13 至19 岁之间的）青少年"
+        },
+        {
+          "word": "ballet",
+          "pos": "n.",
+          "explain": "芭蕾舞"
+        },
+        {
+          "word": "volunteer",
+          "pos": "n.",
+          "explain": "志愿者"
+        },
+        {
+          "word": "debate",
+          "pos": "n.",
+          "explain": "辩论；争论"
+        },
+        {
+          "word": "debate",
+          "pos": "vt. & vi.",
+          "explain": "辩论；争论"
+        },
+        {
+          "word": "prefer",
+          "pos": "vt.",
+          "explain": "较喜欢"
+        },
+        {
+          "word": "prefer … to …",
+          "pos": "",
+          "explain": "喜欢……多于……"
+        },
+        {
+          "word": "content",
+          "pos": "n.",
+          "explain": "内容；[pl.] 目录；（书、讲话、节目等的）主题"
+        },
+        {
+          "word": "movement",
+          "pos": "n.",
+          "explain": "动作；运动；活动"
+        },
+        {
+          "word": "greenhouse",
+          "pos": "n.",
+          "explain": "温室；暖房"
+        },
+        {
+          "word": "clean up",
+          "pos": "",
+          "explain": "打扫（或清除）干净"
+        },
+        {
+          "word": "suitable",
+          "pos": "adj.",
+          "explain": "合适的；适用的"
+        },
+        {
+          "word": "suitable for",
+          "pos": "",
+          "explain": "对……适合的"
+        },
+        {
+          "word": "actually",
+          "pos": "adv.",
+          "explain": "事实上；的确"
+        },
+        {
+          "word": "challenge",
+          "pos": "n.",
+          "explain": "挑战；艰巨任务"
+        },
+        {
+          "word": "challenge",
+          "pos": "vt.",
+          "explain": "怀疑；向……挑战"
+        },
+        {
+          "word": "title",
+          "pos": "n.",
+          "explain": "（书、诗歌等的）名称；标题；职称；头衔"
+        },
+        {
+          "word": "topic",
+          "pos": "n.",
+          "explain": "话题；标题"
+        },
+        {
+          "word": "freshman",
+          "pos": "n.",
+          "explain": "（especially NAmE）（大学或高中）一年级新生"
+        },
+        {
+          "word": "confusing",
+          "pos": "adj.",
+          "explain": "难以理解的；不清楚的"
+        },
+        {
+          "word": "confuse",
+          "pos": "vt.",
+          "explain": "使糊涂；使迷惑"
+        },
+        {
+          "word": "confused",
+          "pos": "adj.",
+          "explain": "糊涂的；迷惑的"
+        },
+        {
+          "word": "fluent",
+          "pos": "adj.",
+          "explain": "（尤指外语）流利的；熟练的"
+        },
+        {
+          "word": "graduate",
+          "pos": "vi. & vt.",
+          "explain": "毕业；获得学位"
+        },
+        {
+          "word": "graduate",
+          "pos": "n.",
+          "explain": "毕业生"
+        },
+        {
+          "word": "recommend",
+          "pos": "vt.",
+          "explain": "建议；推荐；介绍"
+        },
+        {
+          "word": "sign up (for sth)",
+          "pos": "",
+          "explain": "报名（参加课程）"
+        },
+        {
+          "word": "advanced",
+          "pos": "adj.",
+          "explain": "高级的；高等的；先进的"
+        },
+        {
+          "word": "advance",
+          "pos": "n.",
+          "explain": "前进；发展"
+        },
+        {
+          "word": "advance",
+          "pos": "vi.",
+          "explain": "前进；发展"
+        },
+        {
+          "word": "advance",
+          "pos": "vt.",
+          "explain": "发展；促进"
+        },
+        {
+          "word": "literature",
+          "pos": "n.",
+          "explain": "文学；文学作品"
+        },
+        {
+          "word": "extra-curricular",
+          "pos": "adj.",
+          "explain": "课外的；课程以外的"
+        },
+        {
+          "word": "extra",
+          "pos": "adj.",
+          "explain": "额外的；附加的"
+        },
+        {
+          "word": "obviously",
+          "pos": "adv.",
+          "explain": "显然；明显地"
+        },
+        {
+          "word": "quit",
+          "pos": "vi. & vt.",
+          "explain": "（quit quitted）停止；戒掉；离开（工作职位、学校等）"
+        },
+        {
+          "word": "responsible",
+          "pos": "adj.",
+          "explain": "负责的；有责任的"
+        },
+        {
+          "word": "responsibility",
+          "pos": "n.",
+          "explain": "责任；义务"
+        },
+        {
+          "word": "be responsible for",
+          "pos": "",
+          "explain": "对……负责"
+        },
+        {
+          "word": "solution",
+          "pos": "n.",
+          "explain": "解决办法；答案"
+        },
+        {
+          "word": "schedule",
+          "pos": "n.",
+          "explain": "工作计划；日程安排"
+        },
+        {
+          "word": "schedule",
+          "pos": "vt.",
+          "explain": "安排；预定"
+        },
+        {
+          "word": "editor",
+          "pos": "n.",
+          "explain": "主编；编辑；编者"
+        },
+        {
+          "word": "plate",
+          "pos": "n.",
+          "explain": "盘子；碟子"
+        },
+        {
+          "word": "adventure",
+          "pos": "n.",
+          "explain": "冒险；奇遇"
+        },
+        {
+          "word": "youth",
+          "pos": "n.",
+          "explain": "青年时期；青春"
+        },
+        {
+          "word": "survival",
+          "pos": "n.",
+          "explain": "生存；幸存；幸存事物"
+        },
+        {
+          "word": "expert",
+          "pos": "n.",
+          "explain": "专家；行家"
+        },
+        {
+          "word": "expert",
+          "pos": "adj.",
+          "explain": "熟练的；内行的；专家的"
+        },
+        {
+          "word": "behaviour",
+          "pos": "n.",
+          "explain": "行为；举止"
+        },
+        {
+          "word": "generation",
+          "pos": "n.",
+          "explain": "一代（人）"
+        },
+        {
+          "word": "attract",
+          "pos": "vt.",
+          "explain": "吸引；引起……的注意（或兴趣）"
+        },
+        {
+          "word": "be attracted to",
+          "pos": "",
+          "explain": "喜爱"
+        },
+        {
+          "word": "focus",
+          "pos": "vi. & vt.",
+          "explain": "集中（精力、注意力等）；（使）调节焦距"
+        },
+        {
+          "word": "focus",
+          "pos": "n.",
+          "explain": "中心；重点；焦点"
+        },
+        {
+          "word": "focus on",
+          "pos": "",
+          "explain": "集中；特别关注"
+        },
+        {
+          "word": "addicted",
+          "pos": "adj.",
+          "explain": "有瘾的；上瘾的；入迷的"
+        },
+        {
+          "word": "addict",
+          "pos": "n.",
+          "explain": "对……入迷的人；吸毒成瘾的人"
+        },
+        {
+          "word": "addicted to",
+          "pos": "",
+          "explain": "对……很入迷"
+        },
+        {
+          "word": "adult",
+          "pos": "n.",
+          "explain": "成年人"
+        },
+        {
+          "word": "adult",
+          "pos": "adj.",
+          "explain": "成年的；成熟的"
+        },
+        {
+          "word": "Chicago",
+          "pos": "",
+          "explain": "芝加哥（美国城市）"
+        },
+        {
+          "word": "Seoul",
+          "pos": "",
+          "explain": "首尔（韩国首都）"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "Going from junior high school to senior high school is a really big challenge.",
+          "explain": "动词-ing形式作主语",
+          "example": "Seeing is believing.",
+          "translation": "百闻不如一见。"
+        },
+        {
+          "pattern": "The school adviser helped me choose the suitable ones: maths, English, chemistry, world history, and Chinese.",
+          "explain": "课程设置和学分制",
+          "example": "美国高中学制多为四年，采取学分制，不分文理科，一般按要求完成相应学分可以获得高中毕业证书。",
+          "translation": "美国高中学制多为四年，采取学分制，不分文理科，一般按要求完成相应学分可以获得高中毕业证书。"
+        },
+        {
+          "pattern": "My adviser recommended that I should sign up for advanced literature because I like English and I’m good at it.",
+          "explain": "recommend的用法和that从句",
+          "example": "We highly recommend that students (should) read some real-life materials from the English-speaking countries.",
+          "translation": "我们强烈建议学生读一些来自英语国家的真实生活读物。"
+        },
+        {
+          "pattern": "Every Wednesday, we work at a soup kitchen and hand out food to homeless people in the community.",
+          "explain": "soup kitchen的用法",
+          "example": "soup kitchen是为救济贫民、灾民而设的食品施舍场所，这里通常有志愿者团体承办的、向救济对象免费发放或低于市价出售食品的活动。",
+          "translation": "soup kitchen是为救济贫民、灾民而设的食品施舍场所，这里通常有志愿者团体承办的、向救济对象免费发放或低于市价出售食品的活动。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "校园生活 · 社团与时间管理",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 64
+      }
+    },
+    {
+      "unit": "Unit2 Travelling Around",
+      "theme": "旅行 · 行程规划与文化遗产",
+      "words": [
+        {
+          "word": "castle",
+          "pos": "n.",
+          "explain": "城堡；堡垒"
+        },
+        {
+          "word": "apply",
+          "pos": "vi. & vt.",
+          "explain": "申请；请求"
+        },
+        {
+          "word": "apply",
+          "pos": "vt.",
+          "explain": "应用；涂（油漆、乳剂）"
+        },
+        {
+          "word": "apply for",
+          "pos": "",
+          "explain": "申请"
+        },
+        {
+          "word": "visa",
+          "pos": "n.",
+          "explain": "签证"
+        },
+        {
+          "word": "rent",
+          "pos": "vt.",
+          "explain": "租用；出租"
+        },
+        {
+          "word": "rent",
+          "pos": "vi.",
+          "explain": "租用；租金为"
+        },
+        {
+          "word": "rent",
+          "pos": "n.",
+          "explain": "租金"
+        },
+        {
+          "word": "pack",
+          "pos": "vi. & vt.",
+          "explain": "收拾（行李）"
+        },
+        {
+          "word": "pack",
+          "pos": "vt.",
+          "explain": "包装"
+        },
+        {
+          "word": "pack",
+          "pos": "n.",
+          "explain": "（商品的）纸包；纸袋；大包"
+        },
+        {
+          "word": "amazing",
+          "pos": "adj.",
+          "explain": "令人惊奇的；令人惊喜的"
+        },
+        {
+          "word": "amazed",
+          "pos": "adj.",
+          "explain": "惊奇的；惊喜的"
+        },
+        {
+          "word": "arrangement",
+          "pos": "n.",
+          "explain": "安排；筹备"
+        },
+        {
+          "word": "extremely",
+          "pos": "adv.",
+          "explain": "极其；非常"
+        },
+        {
+          "word": "source",
+          "pos": "n.",
+          "explain": "来源；出处"
+        },
+        {
+          "word": "narrow",
+          "pos": "adj.",
+          "explain": "狭窄的"
+        },
+        {
+          "word": "narrow",
+          "pos": "vi. & vt.",
+          "explain": "（使）变窄"
+        },
+        {
+          "word": "flat",
+          "pos": "adj.",
+          "explain": "平坦的；扁平的"
+        },
+        {
+          "word": "flat",
+          "pos": "n.",
+          "explain": "公寓；单元房"
+        },
+        {
+          "word": "powerful",
+          "pos": "adj.",
+          "explain": "强有力的；有权势的；有影响力的"
+        },
+        {
+          "word": "empire",
+          "pos": "n.",
+          "explain": "帝国"
+        },
+        {
+          "word": "emperor",
+          "pos": "n.",
+          "explain": "皇帝"
+        },
+        {
+          "word": "site",
+          "pos": "n.",
+          "explain": "地点；位置；现场"
+        },
+        {
+          "word": "take control of",
+          "pos": "",
+          "explain": "控制；接管"
+        },
+        {
+          "word": "official",
+          "pos": "adj.",
+          "explain": "官方的；正式的；公务的"
+        },
+        {
+          "word": "official",
+          "pos": "n.",
+          "explain": "官员；要员"
+        },
+        {
+          "word": "recognise (NAmE -ize)",
+          "pos": "vt.",
+          "explain": "辨别出；承认；认可"
+        },
+        {
+          "word": "type",
+          "pos": "n.",
+          "explain": "类型；种类"
+        },
+        {
+          "word": "type",
+          "pos": "vi. & vt.",
+          "explain": "打字"
+        },
+        {
+          "word": "flight",
+          "pos": "n.",
+          "explain": "空中航行；航班；航程"
+        },
+        {
+          "word": "accommodation",
+          "pos": "n.",
+          "explain": "住处；停留处；膳宿"
+        },
+        {
+          "word": "unique",
+          "pos": "adj.",
+          "explain": "唯一的；独特的；特有的"
+        },
+        {
+          "word": "path",
+          "pos": "n.",
+          "explain": "小路；路线；道路"
+        },
+        {
+          "word": "destination",
+          "pos": "n.",
+          "explain": "目的地；终点"
+        },
+        {
+          "word": "other than",
+          "pos": "",
+          "explain": "除……以外"
+        },
+        {
+          "word": "admire",
+          "pos": "vt.",
+          "explain": "钦佩；赞赏"
+        },
+        {
+          "word": "architecture",
+          "pos": "n.",
+          "explain": "建筑设计；建筑学"
+        },
+        {
+          "word": "architect",
+          "pos": "n.",
+          "explain": "建筑设计师"
+        },
+        {
+          "word": "brochure",
+          "pos": "n.",
+          "explain": "资料（或广告）手册"
+        },
+        {
+          "word": "package",
+          "pos": "n.",
+          "explain": "包裹；包装盒"
+        },
+        {
+          "word": "package",
+          "pos": "vt.",
+          "explain": "将……包装好"
+        },
+        {
+          "word": "package tour",
+          "pos": "",
+          "explain": "包价旅游"
+        },
+        {
+          "word": "contact",
+          "pos": "vt.",
+          "explain": "联络；联系"
+        },
+        {
+          "word": "contact",
+          "pos": "n.",
+          "explain": "联系；接触"
+        },
+        {
+          "word": "civilisation (NAmE -ization)",
+          "pos": "n.",
+          "explain": "文明；文明世界"
+        },
+        {
+          "word": "make up",
+          "pos": "",
+          "explain": "构成；形成"
+        },
+        {
+          "word": "soldier",
+          "pos": "n.",
+          "explain": "士兵；军人"
+        },
+        {
+          "word": "transport",
+          "pos": "n.",
+          "explain": "（especially BrE）（NAmE usually transportation）交通运输系统"
+        },
+        {
+          "word": "transport",
+          "pos": "vt.",
+          "explain": "运输；运送"
+        },
+        {
+          "word": "hike",
+          "pos": "vi.",
+          "explain": "徒步旅行"
+        },
+        {
+          "word": "hike",
+          "pos": "vt.",
+          "explain": "去……远足"
+        },
+        {
+          "word": "hike",
+          "pos": "n.",
+          "explain": "远足；徒步旅行"
+        },
+        {
+          "word": "economy",
+          "pos": "n.",
+          "explain": "经济；节约"
+        },
+        {
+          "word": "economic",
+          "pos": "adj.",
+          "explain": "经济（上）的；经济学的"
+        },
+        {
+          "word": "credit",
+          "pos": "n.",
+          "explain": "借款；信用；称赞；学分"
+        },
+        {
+          "word": "credit card",
+          "pos": "",
+          "explain": "信用卡"
+        },
+        {
+          "word": "detail",
+          "pos": "n.",
+          "explain": "细节；详情；细微之处"
+        },
+        {
+          "word": "check in",
+          "pos": "",
+          "explain": "（在旅馆、机场等）登记"
+        },
+        {
+          "word": "check out",
+          "pos": "",
+          "explain": "结账离开（旅馆等）"
+        },
+        {
+          "word": "request",
+          "pos": "n.",
+          "explain": "（正式或礼貌的）要求；请求"
+        },
+        {
+          "word": "request",
+          "pos": "vt.",
+          "explain": "（正式或礼貌地）要求；请求"
+        },
+        {
+          "word": "view",
+          "pos": "n.",
+          "explain": "视野；景色；看法"
+        },
+        {
+          "word": "sight",
+          "pos": "n.",
+          "explain": "景象；视野；视力"
+        },
+        {
+          "word": "statue",
+          "pos": "n.",
+          "explain": "雕塑；雕像"
+        },
+        {
+          "word": "BCE",
+          "pos": "",
+          "explain": "（= before the Common Era） 公元前"
+        },
+        {
+          "word": "tomb",
+          "pos": "n.",
+          "explain": "坟墓"
+        },
+        {
+          "word": "unearth",
+          "pos": "vt.",
+          "explain": "挖掘；发掘"
+        },
+        {
+          "word": "comment",
+          "pos": "n.",
+          "explain": "议论；评论"
+        },
+        {
+          "word": "comment",
+          "pos": "vi. & vt.",
+          "explain": "发表意见；评论"
+        },
+        {
+          "word": "the Eiffel Tower",
+          "pos": "",
+          "explain": "埃菲尔铁塔新天鹅堡"
+        },
+        {
+          "word": "Iceland",
+          "pos": "",
+          "explain": "冰岛（国家名）"
+        },
+        {
+          "word": "Disneyland",
+          "pos": "",
+          "explain": "迪士尼乐园"
+        },
+        {
+          "word": "Peru",
+          "pos": "",
+          "explain": "秘鲁（国家名）"
+        },
+        {
+          "word": "the Andes Mountains",
+          "pos": "",
+          "explain": "安第斯山脉"
+        },
+        {
+          "word": "the Amazon rainforest",
+          "pos": "",
+          "explain": "亚马孙雨林"
+        },
+        {
+          "word": "the Inca Empire",
+          "pos": "",
+          "explain": "印加帝国"
+        },
+        {
+          "word": "Machu Picchu",
+          "pos": "",
+          "explain": "马丘比丘"
+        },
+        {
+          "word": "Spain",
+          "pos": "",
+          "explain": "西班牙（国家名）"
+        },
+        {
+          "word": "Spanish",
+          "pos": "n.",
+          "explain": "西班牙语；西班牙人"
+        },
+        {
+          "word": "Spanish",
+          "pos": "adj.",
+          "explain": "西班牙的"
+        },
+        {
+          "word": "Cusco",
+          "pos": "",
+          "explain": "库斯科（秘鲁城市）"
+        },
+        {
+          "word": "Lake Titicaca",
+          "pos": "",
+          "explain": "的的喀喀湖"
+        },
+        {
+          "word": "the Uros",
+          "pos": "",
+          "explain": "乌鲁斯人"
+        },
+        {
+          "word": "the Terracotta Army",
+          "pos": "",
+          "explain": "兵马俑"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "the Eiffel Tower 埃菲尔铁塔",
+          "explain": "专有名词，指代特定的地标建筑。",
+          "example": "the Eiffel Tower",
+          "translation": "埃菲尔铁塔"
+        },
+        {
+          "pattern": "Neuschwanstein Castle 新天鹅堡",
+          "explain": "专有名词，指代特定的地标建筑。",
+          "example": "Neuschwanstein Castle",
+          "translation": "新天鹅堡"
+        },
+        {
+          "pattern": "Peru 秘鲁",
+          "explain": "专有名词，指代特定的国家。",
+          "example": "Peru",
+          "translation": "秘鲁"
+        },
+        {
+          "pattern": "the Andes Mountains 安第斯山脉",
+          "explain": "专有名词，指代特定的山脉。",
+          "example": "the Andes Mountains",
+          "translation": "安第斯山脉"
+        },
+        {
+          "pattern": "the Amazon rainforest 亚马孙热带雨林",
+          "explain": "专有名词，指代特定的热带雨林。",
+          "example": "the Amazon rainforest",
+          "translation": "亚马孙热带雨林"
+        },
+        {
+          "pattern": "the Inca Empire 印加帝国",
+          "explain": "专有名词，指代特定的古代帝国。",
+          "example": "the Inca Empire",
+          "translation": "印加帝国"
+        },
+        {
+          "pattern": "You can then spend three days exploring the rainforest with a local guide and enjoying the plants and animals unique to the rainforest.",
+          "explain": "条件状语从句，表示接下来的动作。",
+          "example": "You can then spend three days exploring the rainforest with a local guide and enjoying the plants and animals unique to the rainforest.",
+          "translation": "在接下来的三天里，您可以在当地导游的陪同下，深入雨林进行探索，欣赏雨林特有的动植物。"
+        },
+        {
+          "pattern": "Especially amazing is the Incas’ dry stone method of building.",
+          "explain": "倒装句，强调句型。",
+          "example": "Especially amazing is the Incas’ dry stone method of building.",
+          "translation": "特别令人惊叹的是印加人的干式石头搭砌的建造方法。"
+        },
+        {
+          "pattern": "Inca builders cut stones to exact sizes so that nothing was needed to hold walls together other than the perfect fit of the stones.",
+          "explain": "结果状语从句，表示结果。",
+          "example": "Inca builders cut stones to exact sizes so that nothing was needed to hold walls together other than the perfect fit of the stones.",
+          "translation": "印加的建筑工人将石头切割成精确的尺寸，仅仅凭着石头间的完美契合，即可稳固墙体。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "旅行 · 行程规划与文化遗产",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 85
+      }
+    },
+    {
+      "unit": "Unit3 Sports and Fitness",
+      "theme": "运动与健康 · 坚持与团队精神",
+      "words": [
+        {
+          "word": "fitness",
+          "pos": "n.",
+          "explain": "健康；健壮；适合"
+        },
+        {
+          "word": "soccer",
+          "pos": "n.",
+          "explain": "足球；足球运动"
+        },
+        {
+          "word": "stadium",
+          "pos": "n.",
+          "explain": "（pl. stadiums or stadia）体育场；运动场"
+        },
+        {
+          "word": "boxing",
+          "pos": "n.",
+          "explain": "拳击（运动）"
+        },
+        {
+          "word": "badminton",
+          "pos": "n.",
+          "explain": "羽毛球运动"
+        },
+        {
+          "word": "marathon",
+          "pos": "n.",
+          "explain": "马拉松赛跑"
+        },
+        {
+          "word": "event",
+          "pos": "n.",
+          "explain": "比赛项目；大事；公开活动"
+        },
+        {
+          "word": "come along",
+          "pos": "",
+          "explain": "跟随；到达；进步；赶快"
+        },
+        {
+          "word": "ski",
+          "pos": "adj.",
+          "explain": "滑雪的"
+        },
+        {
+          "word": "ski",
+          "pos": "vi.",
+          "explain": "滑雪"
+        },
+        {
+          "word": "host",
+          "pos": "vt.",
+          "explain": "主办；主持"
+        },
+        {
+          "word": "host",
+          "pos": "n.",
+          "explain": "主人；东道主；节目主持人"
+        },
+        {
+          "word": "track",
+          "pos": "n.",
+          "explain": "跑道；足迹；铁路轨道"
+        },
+        {
+          "word": "track",
+          "pos": "vt. & vi.",
+          "explain": "追踪；跟踪"
+        },
+        {
+          "word": "track and field",
+          "pos": "",
+          "explain": "田径"
+        },
+        {
+          "word": "gym",
+          "pos": "n.",
+          "explain": "健身房；体育馆"
+        },
+        {
+          "word": "gymnastics",
+          "pos": "n.",
+          "explain": "体操（训练）"
+        },
+        {
+          "word": "work out",
+          "pos": "",
+          "explain": "锻炼；计算出；解决"
+        },
+        {
+          "word": "sweat",
+          "pos": "vt.",
+          "explain": "使出汗；出汗弄湿"
+        },
+        {
+          "word": "sweat",
+          "pos": "vi.",
+          "explain": "出汗；流汗"
+        },
+        {
+          "word": "sweat",
+          "pos": "n.",
+          "explain": "汗水；出汗"
+        },
+        {
+          "word": "make it",
+          "pos": "",
+          "explain": "获得成功；准时到达"
+        },
+        {
+          "word": "legend",
+          "pos": "n.",
+          "explain": "传奇故事（或人物） ；传说"
+        },
+        {
+          "word": "athlete",
+          "pos": "n.",
+          "explain": "运动员；运动健儿"
+        },
+        {
+          "word": "master",
+          "pos": "n.",
+          "explain": "高手；主人"
+        },
+        {
+          "word": "master",
+          "pos": "vt.",
+          "explain": "精通；掌握"
+        },
+        {
+          "word": "set an example",
+          "pos": "",
+          "explain": "树立榜样"
+        },
+        {
+          "word": "honour (NAmE -or)",
+          "pos": "n.",
+          "explain": "荣誉；尊敬；荣幸"
+        },
+        {
+          "word": "glory",
+          "pos": "n.",
+          "explain": "荣誉；光荣；赞美"
+        },
+        {
+          "word": "medal",
+          "pos": "n.",
+          "explain": "奖章；勋章"
+        },
+        {
+          "word": "championship",
+          "pos": "n.",
+          "explain": "锦标赛；冠军赛；冠军称号"
+        },
+        {
+          "word": "champion",
+          "pos": "n.",
+          "explain": "冠军；优胜者"
+        },
+        {
+          "word": "determination",
+          "pos": "n.",
+          "explain": "决心；决定"
+        },
+        {
+          "word": "apart",
+          "pos": "adv.",
+          "explain": "分离；分开；成碎片"
+        },
+        {
+          "word": "fall apart",
+          "pos": "",
+          "explain": "破裂；破碎；崩溃"
+        },
+        {
+          "word": "injure",
+          "pos": "vt.",
+          "explain": "使受伤；损害"
+        },
+        {
+          "word": "injured",
+          "pos": "adj.",
+          "explain": "受伤的；有伤的"
+        },
+        {
+          "word": "injury",
+          "pos": "n.",
+          "explain": "伤害；损伤"
+        },
+        {
+          "word": "captain",
+          "pos": "n.",
+          "explain": "（运动队）队长；船长；机长"
+        },
+        {
+          "word": "lose heart",
+          "pos": "",
+          "explain": "丧失信心；泄气"
+        },
+        {
+          "word": "graceful",
+          "pos": "adj.",
+          "explain": "优美的；优雅的"
+        },
+        {
+          "word": "strength",
+          "pos": "n.",
+          "explain": "力量；体力"
+        },
+        {
+          "word": "failure",
+          "pos": "n.",
+          "explain": "失败；失败的人（或事物）"
+        },
+        {
+          "word": "give up",
+          "pos": "",
+          "explain": "放弃；投降"
+        },
+        {
+          "word": "compete",
+          "pos": "vi.",
+          "explain": "竞争；对抗"
+        },
+        {
+          "word": "make sense",
+          "pos": "",
+          "explain": "有道理；合乎情理；表述清楚"
+        },
+        {
+          "word": "pretend",
+          "pos": "vi. & vt.",
+          "explain": "假装；装扮"
+        },
+        {
+          "word": "pretend to do sth",
+          "pos": "",
+          "explain": "假装做某事"
+        },
+        {
+          "word": "even if/though",
+          "pos": "",
+          "explain": "即使；虽然"
+        },
+        {
+          "word": "million",
+          "pos": "num.",
+          "explain": "一百万"
+        },
+        {
+          "word": "cheat",
+          "pos": "vi.",
+          "explain": "作弊；舞弊"
+        },
+        {
+          "word": "cheat",
+          "pos": "vt.",
+          "explain": "欺骗；蒙骗"
+        },
+        {
+          "word": "cheat",
+          "pos": "n.",
+          "explain": "欺骗手段；骗子"
+        },
+        {
+          "word": "audience",
+          "pos": "n.",
+          "explain": "观众；听众"
+        },
+        {
+          "word": "positive",
+          "pos": "adj.",
+          "explain": "积极的；正面的；乐观的；肯定的"
+        },
+        {
+          "word": "slim",
+          "pos": "adj.",
+          "explain": "苗条的；单薄的"
+        },
+        {
+          "word": "diet",
+          "pos": "n.",
+          "explain": "规定饮食；日常饮食"
+        },
+        {
+          "word": "diet",
+          "pos": "vi.",
+          "explain": "节食"
+        },
+        {
+          "word": "make a difference",
+          "pos": "",
+          "explain": "有作用或影响"
+        },
+        {
+          "word": "rather",
+          "pos": "adv.",
+          "explain": "相当；有点儿"
+        },
+        {
+          "word": "rather than",
+          "pos": "",
+          "explain": "而不是"
+        },
+        {
+          "word": "push-up",
+          "pos": "n.",
+          "explain": "（especially NAmE） 俯卧撑"
+        },
+        {
+          "word": "cut … out",
+          "pos": "",
+          "explain": "停止做（或使用、食用）；剪下"
+        },
+        {
+          "word": "now and then",
+          "pos": "",
+          "explain": "有时；偶尔"
+        },
+        {
+          "word": "compare … with/to …",
+          "pos": "",
+          "explain": "与……比较"
+        },
+        {
+          "word": "jog",
+          "pos": "vi.",
+          "explain": "慢跑"
+        },
+        {
+          "word": "jog",
+          "pos": "n.",
+          "explain": "慢跑"
+        },
+        {
+          "word": "stress",
+          "pos": "n.",
+          "explain": "压力；紧张；重音"
+        },
+        {
+          "word": "stress",
+          "pos": "vt.",
+          "explain": "强调；重读；使焦虑不安"
+        },
+        {
+          "word": "stress",
+          "pos": "vi.",
+          "explain": "焦虑不安"
+        },
+        {
+          "word": "error",
+          "pos": "n.",
+          "explain": "错误；差错"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "Would you like to go to the soccer game?",
+          "explain": "询问对方是否愿意做某事。",
+          "example": "Would you like to go to the soccer game?",
+          "translation": "你想去看足球比赛吗？"
+        },
+        {
+          "pattern": "e-sports",
+          "explain": "电子竞技的全称是electronic sports，也译作‘电子体育’。",
+          "example": "e-sports",
+          "translation": "电子竞技"
+        },
+        {
+          "pattern": "One of the best players had been injured, and the team captain had to leave because of heart problems.",
+          "explain": "过去完成时态表示先于过去某动作发生前完成的动作。",
+          "example": "One of the best players had been injured, and the team captain had to leave because of heart problems.",
+          "translation": "最优秀的队员中有一人受伤了，而且队长也因心脏问题离队。"
+        },
+        {
+          "pattern": "The Boys and Girls Club which he started in Chicago has been helping young people since 1996.",
+          "explain": "现在完成进行时态表示过去开始并一直延续的动作。",
+          "example": "The Boys and Girls Club which he started in Chicago has been helping young people since 1996.",
+          "translation": "他（乔丹）在芝加哥所创建的‘男孩女孩俱乐部’从1996年至今一直在帮助年轻人。"
+        },
+        {
+          "pattern": "I tried no-fat, low-fat, 5:2, only bananas, no bananas—I almost went bananas, too.",
+          "explain": "短语动词转化为名词的构词方式。",
+          "example": "I tried no-fat, low-fat, 5:2, only bananas, no bananas—I almost went bananas, too.",
+          "translation": "我尝试了无脂肪、低脂肪、5:2饮食法、只吃香蕉、不吃香蕉 ——我也几近疯狂。"
+        },
+        {
+          "pattern": "I want to be able to do 30 push-ups.",
+          "explain": "短语动词push up转化为名词push-up。",
+          "example": "I want to be able to do 30 push-ups.",
+          "translation": "我希望能做30个俯卧撑。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "运动与健康 · 坚持与团队精神",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 71
+      }
+    },
+    {
+      "unit": "Unit4 Natural Disasters",
+      "theme": "自然灾害 · 救援与重建",
+      "words": [
+        {
+          "word": "disaster",
+          "pos": "n.",
+          "explain": "灾难；灾害"
+        },
+        {
+          "word": "tornado",
+          "pos": "n.",
+          "explain": "（pl. -oes or -os）龙卷风；旋风"
+        },
+        {
+          "word": "drought",
+          "pos": "n.",
+          "explain": "旱灾；久旱"
+        },
+        {
+          "word": "landslide",
+          "pos": "n.",
+          "explain": "（also landfall）（山地或悬崖的）崩塌；滑坡"
+        },
+        {
+          "word": "slide",
+          "pos": "vi. & vt.",
+          "explain": "（slid, slid）（使） 滑行；滑动"
+        },
+        {
+          "word": "tsunami",
+          "pos": "n.",
+          "explain": "海啸"
+        },
+        {
+          "word": "flood",
+          "pos": "n.",
+          "explain": "洪水；大量"
+        },
+        {
+          "word": "flood",
+          "pos": "vi.",
+          "explain": "淹没；大量涌入"
+        },
+        {
+          "word": "flood",
+          "pos": "vt.",
+          "explain": "使灌满水；淹没火山喷发"
+        },
+        {
+          "word": "magnitude",
+          "pos": "n.",
+          "explain": "震级；重大"
+        },
+        {
+          "word": "rescue",
+          "pos": "n. & vt.",
+          "explain": "营救；救援"
+        },
+        {
+          "word": "damage",
+          "pos": "vt.",
+          "explain": "损害；破坏"
+        },
+        {
+          "word": "damage",
+          "pos": "n.",
+          "explain": "损坏；损失"
+        },
+        {
+          "word": "destroy",
+          "pos": "vt.",
+          "explain": "摧毁；毁灭"
+        },
+        {
+          "word": "evacuate",
+          "pos": "vt.",
+          "explain": "疏散；撤出"
+        },
+        {
+          "word": "evacuate",
+          "pos": "vi.",
+          "explain": "撤离"
+        },
+        {
+          "word": "helicopter",
+          "pos": "n.",
+          "explain": "直升机"
+        },
+        {
+          "word": "death",
+          "pos": "n.",
+          "explain": "死；死亡"
+        },
+        {
+          "word": "affect",
+          "pos": "vt.",
+          "explain": "影响；（疾病）侵袭；深深打动"
+        },
+        {
+          "word": "shelter",
+          "pos": "n.",
+          "explain": "避难处；居所；庇护"
+        },
+        {
+          "word": "shelter",
+          "pos": "vt.",
+          "explain": "保护；掩蔽"
+        },
+        {
+          "word": "shelter",
+          "pos": "vi.",
+          "explain": "躲避（风雨或危险）"
+        },
+        {
+          "word": "crack",
+          "pos": "n.",
+          "explain": "裂纹；裂缝"
+        },
+        {
+          "word": "crack",
+          "pos": "vi. & vt.",
+          "explain": "（使）破裂"
+        },
+        {
+          "word": "gas",
+          "pos": "n.",
+          "explain": "气体；燃气；汽油"
+        },
+        {
+          "word": "as if",
+          "pos": "",
+          "explain": "似乎；好像；仿佛"
+        },
+        {
+          "word": "ruin",
+          "pos": "n. & vt.",
+          "explain": "破坏；毁坏"
+        },
+        {
+          "word": "in ruins",
+          "pos": "",
+          "explain": "严重受损；破败不堪"
+        },
+        {
+          "word": "percent",
+          "pos": "n.",
+          "explain": "百分之……"
+        },
+        {
+          "word": "percent",
+          "pos": "adj. & adv.",
+          "explain": "每一百中"
+        },
+        {
+          "word": "brick",
+          "pos": "n.",
+          "explain": "砖；砖块"
+        },
+        {
+          "word": "metal",
+          "pos": "n.",
+          "explain": "金属"
+        },
+        {
+          "word": "shock",
+          "pos": "n.",
+          "explain": "震惊；令人震惊的事；休克"
+        },
+        {
+          "word": "shock",
+          "pos": "vt.",
+          "explain": "（使）震惊"
+        },
+        {
+          "word": "in shock",
+          "pos": "",
+          "explain": "震惊；吃惊"
+        },
+        {
+          "word": "electricity",
+          "pos": "n.",
+          "explain": "电；电能"
+        },
+        {
+          "word": "trap",
+          "pos": "vt.",
+          "explain": "使落入险境；使陷入圈套"
+        },
+        {
+          "word": "trap",
+          "pos": "n.",
+          "explain": "险境；陷阱"
+        },
+        {
+          "word": "bury",
+          "pos": "vt.",
+          "explain": "埋葬；安葬"
+        },
+        {
+          "word": "breathe",
+          "pos": "vi. & vt.",
+          "explain": "呼吸"
+        },
+        {
+          "word": "revive",
+          "pos": "vt. & vi.",
+          "explain": "复活；（使）苏醒"
+        },
+        {
+          "word": "revival",
+          "pos": "n.",
+          "explain": "振兴；复苏"
+        },
+        {
+          "word": "effort",
+          "pos": "n.",
+          "explain": "努力；艰难的尝试；尽力"
+        },
+        {
+          "word": "unify",
+          "pos": "vi. & vt.",
+          "explain": "统一；（使）成一体"
+        },
+        {
+          "word": "wisdom",
+          "pos": "n.",
+          "explain": "智慧；才智"
+        },
+        {
+          "word": "context",
+          "pos": "n.",
+          "explain": "上下文；语境；背景"
+        },
+        {
+          "word": "suffer",
+          "pos": "vt.",
+          "explain": "遭受；蒙受"
+        },
+        {
+          "word": "suffer",
+          "pos": "vi.",
+          "explain": "（因疾病、痛苦、悲伤等）受苦"
+        },
+        {
+          "word": "volcano",
+          "pos": "n.",
+          "explain": "（pl. -oes or -os）火山"
+        },
+        {
+          "word": "erupt",
+          "pos": "vi. & vt.",
+          "explain": "（火山）爆发；（岩浆、烟等）喷出"
+        },
+        {
+          "word": "supply",
+          "pos": "n.",
+          "explain": "供应（量）；补给；[pl.] 补给品"
+        },
+        {
+          "word": "supply",
+          "pos": "vt.",
+          "explain": "供应；供给"
+        },
+        {
+          "word": "typhoon",
+          "pos": "n.",
+          "explain": "台风"
+        },
+        {
+          "word": "in the open air",
+          "pos": "",
+          "explain": "露天；在户外"
+        },
+        {
+          "word": "hurricane",
+          "pos": "n.",
+          "explain": "（尤指西大西洋的）飓风"
+        },
+        {
+          "word": "survive",
+          "pos": "vi.",
+          "explain": "生存；存活"
+        },
+        {
+          "word": "survive",
+          "pos": "vt.",
+          "explain": "幸存；艰难度过"
+        },
+        {
+          "word": "power",
+          "pos": "n.",
+          "explain": "电力供应；能量；力量；控制力"
+        },
+        {
+          "word": "tap",
+          "pos": "vi. & vt.",
+          "explain": "轻叩；轻敲；轻拍"
+        },
+        {
+          "word": "tap",
+          "pos": "n.",
+          "explain": "水龙头；轻叩；轻敲"
+        },
+        {
+          "word": "pipe",
+          "pos": "n.",
+          "explain": "管子；管道"
+        },
+        {
+          "word": "whistle",
+          "pos": "vi.",
+          "explain": "吹口哨；发出笛声"
+        },
+        {
+          "word": "whistle",
+          "pos": "vt.",
+          "explain": "吹口哨"
+        },
+        {
+          "word": "whistle",
+          "pos": "n.",
+          "explain": "哨子（声）；呼啸声"
+        },
+        {
+          "word": "emergency",
+          "pos": "n.",
+          "explain": "突发事件；紧急情况"
+        },
+        {
+          "word": "calm",
+          "pos": "adj.",
+          "explain": "镇静的；沉着的"
+        },
+        {
+          "word": "calm",
+          "pos": "vt.",
+          "explain": "使平静；使镇静"
+        },
+        {
+          "word": "aid",
+          "pos": "n.",
+          "explain": "援助；帮助；救援物资"
+        },
+        {
+          "word": "aid",
+          "pos": "vi. & vt.",
+          "explain": "（formal）帮助；援助"
+        },
+        {
+          "word": "kit",
+          "pos": "n.",
+          "explain": "成套工具；成套设备"
+        },
+        {
+          "word": "first aid kit",
+          "pos": "",
+          "explain": "急救箱"
+        },
+        {
+          "word": "on hand",
+          "pos": "",
+          "explain": "现有（尤指帮助）"
+        },
+        {
+          "word": "crash",
+          "pos": "vt. & vi.",
+          "explain": "碰撞；撞击"
+        },
+        {
+          "word": "crash",
+          "pos": "n.",
+          "explain": "撞车；碰撞"
+        },
+        {
+          "word": "sweep",
+          "pos": "vt. & vi.",
+          "explain": "（swept, swept）打扫；清扫"
+        },
+        {
+          "word": "sweep away",
+          "pos": "",
+          "explain": "消灭；彻底消除"
+        },
+        {
+          "word": "wave",
+          "pos": "n.",
+          "explain": "海浪；波浪"
+        },
+        {
+          "word": "wave",
+          "pos": "vi. & vt.",
+          "explain": "挥手；招手"
+        },
+        {
+          "word": "strike",
+          "pos": "vi. & vt.",
+          "explain": "（struck, struck/stricken）侵袭；突击；击打"
+        },
+        {
+          "word": "strike",
+          "pos": "n.",
+          "explain": "罢工；罢课；袭击"
+        },
+        {
+          "word": "deliver",
+          "pos": "vt. & vi.",
+          "explain": "递送；传达"
+        },
+        {
+          "word": "deliver",
+          "pos": "vt.",
+          "explain": "发表"
+        },
+        {
+          "word": "summary",
+          "pos": "n.",
+          "explain": "总结；概括；概要"
+        },
+        {
+          "word": "effect",
+          "pos": "n.",
+          "explain": "影响；结果；效果"
+        },
+        {
+          "word": "length",
+          "pos": "n.",
+          "explain": "长；长度"
+        },
+        {
+          "word": "Ecuador",
+          "pos": "",
+          "explain": "厄瓜多尔（国家名）"
+        },
+        {
+          "word": "Memphis",
+          "pos": "",
+          "explain": "孟菲斯（美国城市）"
+        },
+        {
+          "word": "Alberta",
+          "pos": "",
+          "explain": "艾伯塔省（加拿大省份）"
+        },
+        {
+          "word": "Colombo",
+          "pos": "",
+          "explain": "科伦坡（斯里兰卡首都）"
+        },
+        {
+          "word": "Sri Lanka",
+          "pos": "",
+          "explain": "斯里兰卡（国家名）"
+        },
+        {
+          "word": "Indonesia",
+          "pos": "",
+          "explain": "印度尼西亚（国家名）"
+        },
+        {
+          "word": "Thailand",
+          "pos": "",
+          "explain": "泰国（国家名）"
+        },
+        {
+          "word": "Malaysia",
+          "pos": "",
+          "explain": "马来西亚 （国家名）苏门答腊岛钱德拉·特拉维"
+        },
+        {
+          "word": "calligraphy",
+          "pos": "n.",
+          "explain": "书法；书法艺术"
+        },
+        {
+          "word": "global",
+          "pos": "adj.",
+          "explain": "全球的；全世界的"
+        },
+        {
+          "word": "affair",
+          "pos": "n.",
+          "explain": "公共事务；事件；关系"
+        },
+        {
+          "word": "appreciate",
+          "pos": "vt.",
+          "explain": "欣赏；重视；感激；领会"
+        },
+        {
+          "word": "appreciate",
+          "pos": "vi.",
+          "explain": "增值"
+        },
+        {
+          "word": "specific",
+          "pos": "adj.",
+          "explain": "特定的；明确的；具体的"
+        },
+        {
+          "word": "CE",
+          "pos": "",
+          "explain": "（= Common Era）公元"
+        },
+        {
+          "word": "struggle",
+          "pos": "n. & vi.",
+          "explain": "斗争；奋斗；搏斗"
+        },
+        {
+          "word": "tongue",
+          "pos": "n.",
+          "explain": "舌头；语言"
+        },
+        {
+          "word": "point of view",
+          "pos": "",
+          "explain": "观点；看法"
+        },
+        {
+          "word": "semester",
+          "pos": "n.",
+          "explain": "学期"
+        },
+        {
+          "word": "petrol",
+          "pos": "n.",
+          "explain": "（NAmE gas）汽油"
+        },
+        {
+          "word": "subway",
+          "pos": "n.",
+          "explain": "（BrE underground）地铁"
+        },
+        {
+          "word": "apartment",
+          "pos": "n.",
+          "explain": "（especially NAmE）公寓套房"
+        },
+        {
+          "word": "pants n. [pl.]",
+          "pos": "",
+          "explain": "（BrE） 内裤；短裤；（especially NAmE）裤子"
+        },
+        {
+          "word": "beg",
+          "pos": "vt.",
+          "explain": "恳求；祈求；哀求"
+        },
+        {
+          "word": "equal",
+          "pos": "n.",
+          "explain": "同等的人；相等物"
+        },
+        {
+          "word": "equal",
+          "pos": "adj.",
+          "explain": "相同的；同样的"
+        },
+        {
+          "word": "gap",
+          "pos": "n.",
+          "explain": "间隔；开口；差距"
+        },
+        {
+          "word": "demand",
+          "pos": "n.",
+          "explain": "要求；需求"
+        },
+        {
+          "word": "demand",
+          "pos": "vt.",
+          "explain": "强烈要求；需要"
+        },
+        {
+          "word": "demand",
+          "pos": "vi.",
+          "explain": "查问"
+        },
+        {
+          "word": "vocabulary",
+          "pos": "n.",
+          "explain": "词汇"
+        },
+        {
+          "word": "description",
+          "pos": "n.",
+          "explain": "描写（文字）；形容"
+        },
+        {
+          "word": "relate",
+          "pos": "vt.",
+          "explain": "联系；讲述"
+        },
+        {
+          "word": "relate to",
+          "pos": "",
+          "explain": "与……相关；涉及；谈到"
+        },
+        {
+          "word": "Korean",
+          "pos": "n.",
+          "explain": "朝鲜（或韩国）语；朝鲜（或韩国）人"
+        },
+        {
+          "word": "Korean",
+          "pos": "adj.",
+          "explain": "朝鲜（或韩国）的"
+        },
+        {
+          "word": "Danish",
+          "pos": "n.",
+          "explain": "丹麦语；丹麦人"
+        },
+        {
+          "word": "Danish",
+          "pos": "adj.",
+          "explain": "丹麦的"
+        },
+        {
+          "word": "Denmark",
+          "pos": "",
+          "explain": "丹麦（国家名）"
+        },
+        {
+          "word": "Arabic",
+          "pos": "n.",
+          "explain": "阿拉伯语"
+        },
+        {
+          "word": "Arabic",
+          "pos": "adj.",
+          "explain": "阿拉伯语的；阿拉伯文学的"
+        },
+        {
+          "word": "FIFA abbr. (",
+          "pos": "",
+          "explain": "源自法语) 国际足联；国际足球联合会"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "It seemed as if the world were coming to an end!",
+          "explain": "As if is a conjunction used to introduce a clause meaning 'as though; it looks as if'. The clause can be in indicative or subjunctive mood depending on the truth or possibility of the statement.",
+          "example": "The pot is smoking. It looks as if the food is overcooked.",
+          "translation": "锅在冒烟，看样子食物都煮过头啦。"
+        },
+        {
+          "pattern": "Nearly one third of the whole nation felt it!",
+          "explain": "One third is used to express 'one third'. In English, fractions are formed by combining a cardinal number (one, two, ...) with an ordinal number (first, second, ...). When the numerator is greater than one, the ordinal number is pluralized.",
+          "example": "If an apple is cut into six equal slices, each slice is called one sixth. If you eat two slices, you eat two sixths or one third.",
+          "translation": "如果一个苹果被平分为六块，每块就是六分之一。如果你吃掉两块，就是吃掉了六分之二或三分之一。"
+        },
+        {
+          "pattern": "Everywhere survivors looked, there was nothing but ruins.",
+          "explain": "Everywhere is used as a conjunction to introduce a subordinate clause. It means 'every place; anywhere'.",
+          "example": "Everywhere we go, we hear people predicting the election results.",
+          "translation": "无论我们走到哪里，都听见人们在预测选举结果。"
+        },
+        {
+          "pattern": "the dead",
+          "explain": "The + adjective form of a noun is used to express a person or thing with the characteristics or state indicated by the adjective. These nouns are collective concepts and are used without plural endings, often treated as plural.",
+          "example": "The old sometimes help the young to enrich their social experiences.",
+          "translation": "长者有时帮助年轻人丰富社会阅历。"
+        },
+        {
+          "pattern": "the number of deaths stood at 2,498",
+          "explain": "Stand at sth is used to indicate reaching a certain level (or quantity, height, etc.).",
+          "example": "It is said that the highest death toll caused by a lightning strike stands at 91.",
+          "translation": "据说，被雷电击中造成死亡的最高纪录为91人。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "自然灾害 · 救援与重建",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 127
+      }
+    },
+    {
+      "unit": "Unit5 Languages Around the World",
+      "theme": "世界语言 · 汉字与文化",
+      "words": [
+        {
+          "word": "billion",
+          "pos": "num.",
+          "explain": "十亿"
+        },
+        {
+          "word": "native",
+          "pos": "adj.",
+          "explain": "出生地的；本地的；土著的"
+        },
+        {
+          "word": "native",
+          "pos": "n.",
+          "explain": "本地人"
+        },
+        {
+          "word": "attitude",
+          "pos": "n.",
+          "explain": "态度；看法"
+        },
+        {
+          "word": "reference",
+          "pos": "n.",
+          "explain": "指称关系；参考"
+        },
+        {
+          "word": "refer",
+          "pos": "vi.",
+          "explain": "提到；参考；查阅"
+        },
+        {
+          "word": "refer",
+          "pos": "vt.",
+          "explain": "查询；叫……求助于"
+        },
+        {
+          "word": "refer to",
+          "pos": "",
+          "explain": "指的是；描述；提到；查阅"
+        },
+        {
+          "word": "system",
+          "pos": "n.",
+          "explain": "体系；制度；系统"
+        },
+        {
+          "word": "despite",
+          "pos": "prep.",
+          "explain": "即使；尽管"
+        },
+        {
+          "word": "ups and downs",
+          "pos": "",
+          "explain": "浮沉；兴衰；荣辱"
+        },
+        {
+          "word": "factor",
+          "pos": "n.",
+          "explain": "因素；要素"
+        },
+        {
+          "word": "based",
+          "pos": "adj.",
+          "explain": "以（某事）为基础的；以……为重要部分（或特征）的"
+        },
+        {
+          "word": "base",
+          "pos": "vt.",
+          "explain": "以……为据点；以……为基础"
+        },
+        {
+          "word": "base",
+          "pos": "n.",
+          "explain": "底部；根据"
+        },
+        {
+          "word": "date back (to …)",
+          "pos": "",
+          "explain": "追溯到"
+        },
+        {
+          "word": "bone",
+          "pos": "n.",
+          "explain": "骨头；骨（质）"
+        },
+        {
+          "word": "shell",
+          "pos": "n.",
+          "explain": "壳；壳状物"
+        },
+        {
+          "word": "symbol",
+          "pos": "n.",
+          "explain": "符号；象征"
+        },
+        {
+          "word": "carve",
+          "pos": "vt. & vi.",
+          "explain": "雕刻"
+        },
+        {
+          "word": "dynasty",
+          "pos": "n.",
+          "explain": "王朝；朝代"
+        },
+        {
+          "word": "variety",
+          "pos": "n.",
+          "explain": "（植物、语言等的）变体；异体；多样化"
+        },
+        {
+          "word": "major",
+          "pos": "adj.",
+          "explain": "主要的；重要的；大的"
+        },
+        {
+          "word": "major",
+          "pos": "n.",
+          "explain": "主修课程；主修学生"
+        },
+        {
+          "word": "major",
+          "pos": "vi.",
+          "explain": "主修；专门研究不论……；不管……"
+        },
+        {
+          "word": "dialect",
+          "pos": "n.",
+          "explain": "地方话；方言"
+        },
+        {
+          "word": "means",
+          "pos": "n.",
+          "explain": "方式；方法；途径"
+        },
+        {
+          "word": "classic",
+          "pos": "adj.",
+          "explain": "传统的；最优秀的；典型的"
+        },
+        {
+          "word": "classic",
+          "pos": "n.",
+          "explain": "经典作品；名著"
+        },
+        {
+          "word": "regard",
+          "pos": "n.",
+          "explain": "尊重；关注"
+        },
+        {
+          "word": "regard",
+          "pos": "vt.",
+          "explain": "把……视为；看待"
+        },
+        {
+          "word": "character",
+          "pos": "n.",
+          "explain": "文字；符号；角色；品质；特点"
+        },
+        {
+          "word": "accommodation",
+          "pos": "n.",
+          "explain": "住处；停留处；膳宿(2)"
+        },
+        {
+          "word": "actually",
+          "pos": "adv.",
+          "explain": "事实上；的确(1)"
+        },
+        {
+          "word": "addict",
+          "pos": "n.",
+          "explain": "对……入迷的人；吸毒成瘾的人(1)"
+        },
+        {
+          "word": "addicted",
+          "pos": "adj.",
+          "explain": "有瘾的；上瘾的；入迷的 (1)"
+        },
+        {
+          "word": "addicted to",
+          "pos": "",
+          "explain": "对……很入迷(1)"
+        },
+        {
+          "word": "admire",
+          "pos": "vt.",
+          "explain": "钦佩；赞赏(2)"
+        },
+        {
+          "word": "adult",
+          "pos": "n.",
+          "explain": "成年人"
+        },
+        {
+          "word": "adult",
+          "pos": "adj.",
+          "explain": "成年的；成熟的(1)"
+        },
+        {
+          "word": "advance",
+          "pos": "n.",
+          "explain": "前进；发展"
+        },
+        {
+          "word": "advance",
+          "pos": "vi.",
+          "explain": "前进；发展"
+        },
+        {
+          "word": "advance",
+          "pos": "vt.",
+          "explain": "发展；促进(1)"
+        },
+        {
+          "word": "advanced",
+          "pos": "adj.",
+          "explain": "高级的；高等的；先进的(1)"
+        },
+        {
+          "word": "adventure",
+          "pos": "n.",
+          "explain": "冒险；奇遇(1)"
+        },
+        {
+          "word": "affair",
+          "pos": "n.",
+          "explain": "公共事务；事件；关系(5)"
+        },
+        {
+          "word": "affect",
+          "pos": "vt.",
+          "explain": "影响；（疾病）侵袭；深深打动 (4)"
+        },
+        {
+          "word": "aid",
+          "pos": "n.",
+          "explain": "援助；帮助；救援物资"
+        },
+        {
+          "word": "aid",
+          "pos": "vi. & vt.",
+          "explain": "（formal）帮助；援助(4)△Alberta 艾伯塔省（加拿大省份）(4)（源自拉丁语）上午；午前；午夜至正午(w)"
+        },
+        {
+          "word": "amazed",
+          "pos": "adj.",
+          "explain": "惊奇的；惊喜的(2)"
+        },
+        {
+          "word": "amazing",
+          "pos": "adj.",
+          "explain": "令人惊奇的；令人惊喜的(2)"
+        },
+        {
+          "word": "annoy",
+          "pos": "vt.",
+          "explain": "使恼怒；打扰(w)"
+        },
+        {
+          "word": "annoyed",
+          "pos": "adj.",
+          "explain": "恼怒的；生气的(w)"
+        },
+        {
+          "word": "anxious",
+          "pos": "adj.",
+          "explain": "焦虑的；不安的(w)"
+        },
+        {
+          "word": "apart",
+          "pos": "adv.",
+          "explain": "分离；分开；成碎片(3)"
+        },
+        {
+          "word": "apartment",
+          "pos": "n.",
+          "explain": "（especially NAmE）公寓套房(5)"
+        },
+        {
+          "word": "apply",
+          "pos": "vi. & vt.",
+          "explain": "申请；请求"
+        },
+        {
+          "word": "apply",
+          "pos": "vt.",
+          "explain": "应用；涂（油漆、乳剂）(2)"
+        },
+        {
+          "word": "apply for",
+          "pos": "",
+          "explain": "申请(2)"
+        },
+        {
+          "word": "appreciate",
+          "pos": "vt.",
+          "explain": "欣赏；重视；感激；领会"
+        },
+        {
+          "word": "appreciate",
+          "pos": "vi.",
+          "explain": "增值(5)△Arabic n. 阿拉伯语"
+        },
+        {
+          "word": "appreciate",
+          "pos": "adj.",
+          "explain": "阿拉伯语的；阿拉伯文学的 (5)"
+        },
+        {
+          "word": "architect",
+          "pos": "n.",
+          "explain": "建筑设计师(2)"
+        },
+        {
+          "word": "architecture",
+          "pos": "n.",
+          "explain": "建筑设计；建筑学(2)"
+        },
+        {
+          "word": "arrangement",
+          "pos": "n.",
+          "explain": "安排；筹备(2)"
+        },
+        {
+          "word": "as if",
+          "pos": "",
+          "explain": "似乎；好像；仿佛(4)"
+        },
+        {
+          "word": "at last",
+          "pos": "",
+          "explain": "终于；最终(w)"
+        },
+        {
+          "word": "athlete",
+          "pos": "n.",
+          "explain": "运动员；运动健儿(3)"
+        },
+        {
+          "word": "attitude",
+          "pos": "n.",
+          "explain": "态度；看法(5)"
+        },
+        {
+          "word": "attract",
+          "pos": "vt.",
+          "explain": "吸引；引起……的注意（或兴趣）(1)"
+        },
+        {
+          "word": "be attracted to",
+          "pos": "",
+          "explain": "喜爱(1)"
+        },
+        {
+          "word": "audience",
+          "pos": "n.",
+          "explain": "观众；听众(3)"
+        },
+        {
+          "word": "awkward",
+          "pos": "adj.",
+          "explain": "令人尴尬的；难对付的 (w)"
+        },
+        {
+          "word": "badminton",
+          "pos": "n.",
+          "explain": "羽毛球运动(3)"
+        },
+        {
+          "word": "ballet",
+          "pos": "n.",
+          "explain": "芭蕾舞(1)"
+        },
+        {
+          "word": "base",
+          "pos": "vt.",
+          "explain": "以……为据点；以……为基础"
+        },
+        {
+          "word": "base",
+          "pos": "n.",
+          "explain": "底部；根据(5)"
+        },
+        {
+          "word": "based",
+          "pos": "adj.",
+          "explain": "以（某事）为基础的；以……为重要部分（或特征）的(5)"
+        },
+        {
+          "word": "BCE",
+          "pos": "",
+          "explain": "（= before the Common Era） 公元前 (2)"
+        },
+        {
+          "word": "beg",
+          "pos": "vt.",
+          "explain": "恳求；祈求；哀求(5)"
+        },
+        {
+          "word": "behaviour",
+          "pos": "n.",
+          "explain": "行为；举止(1)"
+        },
+        {
+          "word": "billion",
+          "pos": "num.",
+          "explain": "十亿(5)"
+        },
+        {
+          "word": "bone",
+          "pos": "n.",
+          "explain": "骨头；骨（质）(5)"
+        },
+        {
+          "word": "boxing",
+          "pos": "n.",
+          "explain": "拳击（运动）(3)"
+        },
+        {
+          "word": "breathe",
+          "pos": "vi. & vt.",
+          "explain": "呼吸(4)"
+        },
+        {
+          "word": "brick",
+          "pos": "n.",
+          "explain": "砖；砖块(4)词汇表"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "It dates back several thousand years to the use of longgu ...",
+          "explain": "date back常和to搭配，意为“追溯到……”，相当于date from。",
+          "example": "His family history dates back to the 1700s.",
+          "translation": "他的家族历史可以追溯到18世纪。"
+        },
+        {
+          "pattern": "no matter (what/how/where/when/whether) …",
+          "explain": "是一个引导让步状语从句的连词结构，意为“无论（什么、怎样、哪里、何时、是否等）……”，可置于句首、句中和句尾。",
+          "example": "No matter how fast the rabbit ran, it could not escape the big grey wolf.",
+          "translation": "无论这兔子跑多快，都无法逃过那大灰狼。"
+        },
+        {
+          "pattern": "Chinese calligraphy",
+          "explain": "书法是使书写优美的艺术。中国书法具有独特的艺术价值和悠久的历史，早在两千多年前就发展为一种艺术形式。",
+          "example": "书法字体多样，最为知名的有楷书、行书、草书、隶书、篆书等。",
+          "translation": "书法字体多样，最为知名的有楷书、行书、草书、隶书、篆书等。"
+        },
+        {
+          "pattern": "a number of",
+          "explain": "意为“很多；好些”，这时number 还可被large、small、good、growing 等形容词修饰。",
+          "example": "A good number of my classmates agree with me.",
+          "translation": "我班上的不少同学都赞同我（的意见）。"
+        },
+        {
+          "pattern": "I can never quite get the main idea.",
+          "explain": "这是英语口语中的常用表达，句中never quite get sth意指说话人往往能听懂部分词句，但不敢保证完全听明白了。",
+          "example": "I’m afraid I can’t always quite get what he says.",
+          "translation": "我担心自己总是不能完全听懂他说的话。"
+        },
+        {
+          "pattern": "so I only need a few words to bridge the gap between us.",
+          "explain": "句中bridge作动词，表示“减小、消除两者间的隔阂、鸿沟或分歧”。",
+          "example": "The differences between two cultures can always be bridged if the people of these areas continue to communicate.",
+          "translation": "只要两种文化地域的人们不断交流沟通，两种文化间的差异总是可以缩小的。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "世界语言 · 汉字与文化",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 86
+      }
+    }
+  ]
+}

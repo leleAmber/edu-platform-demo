@@ -86,3 +86,41 @@ CREATE TABLE IF NOT EXISTS learning_records (
   PRIMARY KEY (id),
   KEY idx_records_user_time (username, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学习记录表';
+
+
+-- ---------------------------------------------------------------------------
+-- 题库表
+-- 由离线脚本批量生成、页面按题型随机抽取组卷。一题一行：
+-- - book 为教材维度（必修一/必修二/必修三/选一/选二/选三/选四），7 本书之间题目隔离；
+-- - reading / blank（完形/语法填空）每道题一行，同一篇文章的 passage 会重复存储；
+-- - answer 存完整选项文本（不是 A/B/C/D），与现有判分的精确字符串比较一致；
+-- - content_hash 为题目归一化文本的 SHA-1，唯一键挡重复。
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS question_bank (
+  id                  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '内部主键',
+  content_hash        CHAR(40)        NOT NULL                COMMENT '题目归一化文本的 SHA-1，去重',
+  book                VARCHAR(50)     NULL                    COMMENT '教材：必修一~必修三 / 选一~选四',
+  grade               VARCHAR(20)     NOT NULL DEFAULT '高一' COMMENT '年级：高一 / 高二 / 高三',
+  module              VARCHAR(20)     NOT NULL                COMMENT '模块：preview / review / mock',
+  unit                VARCHAR(100)    NULL                    COMMENT '单元名（preview/review）；mock 为 NULL',
+  qtype               VARCHAR(20)     NOT NULL                COMMENT '题型：choice/reading/seven_five/cloze/grammar_blank/writing_practical/writing_continuation',
+  passage             TEXT            NULL                    COMMENT '阅读/完形/语法填空/七选五的文章',
+  question            TEXT            NOT NULL                COMMENT '题干',
+  options             TEXT            NULL                    COMMENT 'JSON 数组（选择题/带选项的填空）',
+  answer              TEXT            NULL                    COMMENT '正确答案（选择题存完整选项文本）',
+  explanation         TEXT            NULL                    COMMENT '中文解析',
+  writing_prompt      TEXT            NULL                    COMMENT '写作题题目',
+  writing_requirements TEXT           NULL                    COMMENT 'JSON 数组（写作要求）',
+  score               INT             NOT NULL DEFAULT 1      COMMENT '分值（组卷用）',
+  difficulty          TINYINT         NOT NULL DEFAULT 2      COMMENT '难度 1~5',
+  status              TINYINT(1)      NOT NULL DEFAULT 1      COMMENT '1 启用 / 0 停用',
+  source              VARCHAR(20)     NOT NULL DEFAULT 'llm'  COMMENT '来源：llm / manual',
+  created_at          DATETIME        NOT NULL                COMMENT '入库时间',
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_qb_hash (content_hash),
+  KEY idx_qb_book (book),
+  KEY idx_qb_grade_module (grade, module),
+  KEY idx_qb_unit (unit),
+  KEY idx_qb_qtype (qtype),
+  KEY idx_qb_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题库表';

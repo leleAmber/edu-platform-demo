@@ -10,7 +10,7 @@ from __future__ import annotations
 import random
 import re
 
-from core import auth, database
+from core import auth, database, textbook
 
 # --------------------------------------------------------------------------- #
 # 单元内容（人教版必修一 4 个单元，课文为贴合单元主题的改编选段）
@@ -419,18 +419,94 @@ CONTENT: dict[str, dict] = {
 
 DEFAULT_UNIT = UNITS[0]
 
+# 题库覆盖缓存：key=(book, unit, quiz_type)。get_questions 每次随机/按序返回可能不同，
+# 缓存保证「渲染题目」与「批改」用的是同一组题（两者都走 get_unit_content）。
+_QUIZ_CACHE: dict[tuple[str, str, str], list[dict]] = {}
+
+
+def get_units(book: str | None = None) -> list[str]:
+    """某册教材的单元名列表；未指定或教材缺失时回退内置必修一 4 单元。"""
+    if book:
+        units = textbook.get_units(book)
+        if units:
+            return units
+    return list(UNITS)
+
+
+def _normalize_content(c: dict) -> dict:
+    """把教材/内置单元内容统一成页面期望的键结构（缺失键给默认值）。"""
+    return {
+        "theme": c.get("theme", ""),
+        "passages": c.get("passages", []) or [],
+        "long_sentences": c.get("long_sentences", []) or [],
+        "words": c.get("words", []) or [],
+        "sentence_patterns": c.get("sentence_patterns", []) or [],
+        "preview_quiz": c.get("preview_quiz", []) or [],
+        "review_quiz": c.get("review_quiz", []) or [],
+        "knowledge": c.get("knowledge") or {"vocab": {}, "grammar": {}, "discourse": {}},
+        "vocab_stats": c.get("vocab_stats") or {"mastered": 0, "to_review": 0},
+    }
+
+
+def _to_choice(row: dict, qid: str | None = None) -> dict:
+    """把题库中的单选题行转成与内置 quiz 相同的结构。"""
+    question = {
+        "question": row["question"],
+        "options": row["options"],
+        "answer": row["answer"],
+        "explain": row["explain"] or "",
+    }
+    if qid is not None:
+        question["id"] = qid
+    return question
+
+
+def _db_quiz(book: str | None, unit: str, quiz_type: str) -> list[dict]:
+    """优先从题库取该教材该单元的单选题；不足 5 题时返回空列表（由调用方回退内置题）。
+
+    quiz_type 为 preview / review，对应 question_bank.module。目前只取 choice（单选题），
+    因为预习/复习页用 st.radio 渲染 4 选项；blank/reading/writing 接入是后续扩展。
+    """
+    key = (book or "", unit, quiz_type)
+    if key in _QUIZ_CACHE:
+        return _QUIZ_CACHE[key]
+
+    result: list[dict] = []
+    try:
+        rows = database.get_questions(
+            book=book or None, module=quiz_type, unit=unit, qtype="choice", limit=200
+        )
+        usable = [r for r in rows if len(r["options"]) == 4 and r["answer"]]
+        if len(usable) >= 5:
+            result = [_to_choice(r) for r in random.sample(usable, 5)]
+    except Exception:
+        result = []
+    _QUIZ_CACHE[key] = result
+    return result
+
 
 # --------------------------------------------------------------------------- #
 # 单元内容读取
 # --------------------------------------------------------------------------- #
-def get_unit_content(unit: str) -> dict:
-    """获取指定单元的内容，单元不存在时回退到第一个单元。"""
-    return CONTENT.get(unit) or CONTENT[DEFAULT_UNIT]
+def get_unit_content(book: str | None, unit: str) -> dict:
+    """获取指定教材某单元的内容；教材/单元缺失时回退内置必修一内容。
+
+    预习/复习练习优先读题库（该单元在 question_bank 中的单选题），题库不足时回退内置题。
+    """
+    base = textbook.get_unit_content(book, unit) if book else None
+    if base is None:
+        base = CONTENT.get(unit) or CONTENT[DEFAULT_UNIT]
+    content = _normalize_content(base)
+    for quiz_type in ("preview", "review"):
+        db_quiz = _db_quiz(book, unit, quiz_type)
+        if db_quiz:
+            content[f"{quiz_type}_quiz"] = db_quiz
+    return content
 
 
-def grade_quiz(unit: str, quiz_type: str, answers: dict) -> dict:
+def grade_quiz(book: str | None, unit: str, quiz_type: str, answers: dict) -> dict:
     """批改预习 / 复习练习。answers 形如 {"0": "选项文本", ...}。"""
-    content = get_unit_content(unit)
+    content = get_unit_content(book, unit)
     questions = content.get(f"{quiz_type}_quiz", [])
     details = []
     correct_count = 0
@@ -906,19 +982,25 @@ def level_tag_type(level: str) -> str:
 # --------------------------------------------------------------------------- #
 # 学习计划
 # --------------------------------------------------------------------------- #
-def gen_study_plan(plan_type: str, unit: str | None = None) -> dict:
+def gen_study_plan(plan_type: str, unit: str | None = None, book: str | None = None) -> dict:
     """生成学习计划：preview = 3 天预习计划，review = 7 天错题巩固计划。"""
-    unit = unit if unit in CONTENT else DEFAULT_UNIT
+    units = get_units(book) if book else list(CONTENT)
+    if unit not in units:
+        unit = units[0] if units else DEFAULT_UNIT
     if plan_type == "review":
-        return _review_plan(unit)
-    return _preview_plan(unit)
+        return _review_plan(book, unit)
+    return _preview_plan(book, unit)
 
 
-def _preview_plan(unit: str) -> dict:
-    content = get_unit_content(unit)
-    words = [item["word"] for item in content["words"]]
-    grammar_points = content["knowledge"]["grammar"]["points"]
-    long_sentence = content["long_sentences"][0]["sentence"]
+def _preview_plan(book: str | None, unit: str) -> dict:
+    content = get_unit_content(book, unit)
+    words = [item.get("word", "") for item in content["words"] if item.get("word")] or ["本单元核心词汇"]
+    grammar_points = (content["knowledge"].get("grammar") or {}).get("points") or ["本单元重点语法"]
+    patterns = [p.get("pattern", "") for p in content.get("sentence_patterns", []) if p.get("pattern")]
+    long_sentence = patterns[0] if patterns else "本单元的重点句型"
+
+    head = words[:3]
+    tail = words[3:] if len(words) > 3 else words
 
     days = [
         {
@@ -927,10 +1009,10 @@ def _preview_plan(unit: str) -> dict:
             "minutes": 25,
             "tasks": [
                 f"朗读《{unit}》课文两段各 2 遍，遇到生词先猜词义再查证",
-                f"圈出核心词汇：{' / '.join(words[:3])}",
+                f"圈出核心词汇：{' / '.join(head)}",
                 "用 3 句英文复述段落大意，不看原文",
             ],
-            "unit_points": words[:3],
+            "unit_points": head,
         },
         {
             "day": 2,
@@ -938,7 +1020,7 @@ def _preview_plan(unit: str) -> dict:
             "minutes": 30,
             "tasks": [
                 "找出课文中所有含从句的句子并标出引导词",
-                f"重点拆解：{long_sentence[:38]}…",
+                f"重点拆解：{long_sentence[:38]}",
                 f"整理语法点：{'；'.join(grammar_points[:2])}",
             ],
             "unit_points": grammar_points[:3],
@@ -949,10 +1031,10 @@ def _preview_plan(unit: str) -> dict:
             "minutes": 20,
             "tasks": [
                 f"完成《{unit}》预习练习 5 题，目标正确率 80% 以上",
-                f"把仍不熟悉的词汇（{' / '.join(words[3:])}）抄写并造句",
+                f"把仍不熟悉的词汇（{' / '.join(tail)}）抄写并造句",
                 "回看错题解析，用一句话写下今天的收获",
             ],
-            "unit_points": words[3:],
+            "unit_points": tail,
         },
     ]
     return {
@@ -964,11 +1046,11 @@ def _preview_plan(unit: str) -> dict:
     }
 
 
-def _review_plan(unit: str) -> dict:
-    content = get_unit_content(unit)
-    words = [item["word"] for item in content["words"]]
-    grammar_points = content["knowledge"]["grammar"]["points"]
-    review_questions = content["review_quiz"]
+def _review_plan(book: str | None, unit: str) -> dict:
+    content = get_unit_content(book, unit)
+    words = [item.get("word", "") for item in content["words"] if item.get("word")] or ["核心词汇"]
+    grammar_points = (content["knowledge"].get("grammar") or {}).get("points") or ["重点语法"]
+    review_questions = content["review_quiz"] or [{"question": "本单元练习题"}]
     templates = [
         "I have learned that ...",
         "It is important for me to ...",
@@ -1074,80 +1156,252 @@ def error_analysis(seed: str | None = None) -> dict:
 
 
 # --------------------------------------------------------------------------- #
-# 模拟试卷
+# 模拟试卷（完整新高考题型：阅读理解 / 七选五 / 完形填空 / 语法填空 / 应用文写作 / 读后续写）
 # --------------------------------------------------------------------------- #
 MOCK_EXAM: dict = {
     "title": "英语综合模拟试卷（演示版）",
     "duration": 45,
     "sections": (
         {
-            "key": "reading",
-            "name": "一、阅读理解",
-            "score": 45,
-            "per_question": 15,
-            "passage": (
-                "Many students believe that the best way to remember new words is to repeat them again and "
-                "again. However, a study of 300 senior high students suggests something different. The "
-                "students who wrote a short story with the new words remembered nearly twice as many words "
-                "as those who simply copied them ten times.\n\n"
-                "Why? Because writing a story forces the brain to connect a new word with a situation, a "
-                "feeling and a character. The word is no longer a lonely item on a list; it becomes part of "
-                "an experience. The study also found that students who shared their stories with classmates "
-                "kept the words even longer, since explaining an idea to others is itself a powerful way of "
-                "learning."
-            ),
-            "questions": (
-                {"id": "r1", "question": "What does the study suggest is the best way to remember new words?",
-                 "options": ["Copying them ten times.", "Using them in a short story.",
-                             "Reading them aloud.", "Listening to them every day."],
-                 "answer": "Using them in a short story.",
-                 "explain": "第二段指出写故事能让大脑把生词与情境、情感和人物联系起来。"},
-                {"id": "r2", "question": "Why does writing a story help memory according to the passage?",
-                 "options": ["It makes the word list shorter.", "It connects the word with an experience.",
-                             "It is faster than copying.", "It requires no grammar."],
-                 "answer": "It connects the word with an experience.",
-                 "explain": "原文指出「it becomes part of an experience」。"},
-                {"id": "r3", "question": "What can be inferred about sharing stories with classmates?",
-                 "options": ["It wastes learning time.", "It helps students keep words longer.",
-                             "It only works for top students.", "It replaces the need for review."],
-                 "answer": "It helps students keep words longer.",
-                 "explain": "原文最后一句提到分享故事的学生「kept the words even longer」。"},
-            ),
-        },
-        {
-            "key": "language",
-            "name": "二、语言运用",
-            "score": 30,
-            "per_question": 10,
-            "questions": (
-                {"id": "l1", "question": "The teacher suggested ______ a story with the new words.",
-                 "options": ["write", "writing", "to write", "wrote"],
-                 "answer": "writing", "explain": "suggest doing sth，后接动名词。"},
-                {"id": "l2", "question": "The students ______ wrote stories remembered more words.",
-                 "options": ["what", "who", "which", "whose"],
-                 "answer": "who", "explain": "先行词 students 指人，从句缺主语，用 who。"},
-                {"id": "l3", "question": "It was the first time that I ______ a story in English.",
-                 "options": ["write", "wrote", "had written", "have written"],
-                 "answer": "had written", "explain": "It was the first time that 后接过去完成时。"},
+            "key": "reading", "name": "第一节 阅读理解", "score": 20, "per_question": 2.5,
+            "passages": (
+                {
+                    "passage": (
+                        "Many students believe that the best way to remember new words is to repeat them again and "
+                        "again. However, a study of 300 senior high students suggests something different. The "
+                        "students who wrote a short story with the new words remembered nearly twice as many words "
+                        "as those who simply copied them ten times."
+                    ),
+                    "questions": (
+                        {"id": "r1", "question": "What does the study suggest is the best way to remember new words?",
+                         "options": ["Copying them ten times.", "Using them in a short story.",
+                                     "Reading them aloud.", "Listening to them every day."],
+                         "answer": "Using them in a short story.",
+                         "explain": "写故事能把生词与情境联系起来。"},
+                        {"id": "r2", "question": "Why does writing a story help memory?",
+                         "options": ["It makes the list shorter.", "It connects words with an experience.",
+                                     "It is faster than copying.", "It requires no grammar."],
+                         "answer": "It connects words with an experience.",
+                         "explain": "原文指出「it becomes part of an experience」。"},
+                        {"id": "r3", "question": "What did the study find about sharing stories?",
+                         "options": ["It wastes time.", "It helps students keep words longer.",
+                                     "It only works for top students.", "It replaces review."],
+                         "answer": "It helps students keep words longer.",
+                         "explain": "原文末句提到「kept the words even longer」。"},
+                        {"id": "r4", "question": "Which word can best describe the passage?",
+                         "options": ["Scientific.", "Fictional.", "Humorous.", "Historical."],
+                         "answer": "Scientific.",
+                         "explain": "文章引用一项研究结论，属说明性文体。"},
+                    ),
+                },
             ),
         },
         {
-            "key": "writing",
-            "name": "三、书面写作",
-            "score": 25,
-            "per_question": 25,
-            "prompt": "请以 “My Favourite Way to Learn English” 为题，写一篇 80 词左右的英语短文。",
-            "requirements": ("写明你最喜欢的英语学习方式（如背单词、看剧、写日记等）",
-                             "说明这种方式为什么有效，举一个具体例子",
-                             "至少使用 2 个连接词，词数不少于 70 词"),
+            "key": "seven_five", "name": "第二节 七选五", "score": 10, "per_question": 2,
+            "passage": "How can you make your study time more effective? ____1____ Here are a few ideas.\n\n"
+                       "First, set a clear goal before you begin. ____2____ This helps your brain know what to focus on.\n\n"
+                       "Second, break a big task into smaller ones. ____3____\n\n"
+                       "Finally, review what you have learned before you go to bed. ____4____\n\n"
+                       "In short, good study habits come from small, repeated actions. ____5____",
+            "options": (
+                "For example, you can finish ten words in five minutes.",
+                "Many students waste time because they study without a plan.",
+                "This keeps the new knowledge fresh in your mind.",
+                "Then you will see real progress over time.",
+                "A goal like “finish ten words” is much clearer than “study English”.",
+                "Talking with classmates is the only way to learn.",
+                "However, taking a long rest always helps you focus.",
+            ),
+            "questions": (
+                {"id": "s1", "question": "____1____", "answer": "Many students waste time because they study without a plan.", "explain": "后文引出建议，此空引出话题。"},
+                {"id": "s2", "question": "____2____", "answer": "A goal like “finish ten words” is much clearer than “study English”.", "explain": "承接「明确目标」，举例说明。"},
+                {"id": "s3", "question": "____3____", "answer": "For example, you can finish ten words in five minutes.", "explain": "举例说明把大任务拆小。"},
+                {"id": "s4", "question": "____4____", "answer": "This keeps the new knowledge fresh in your mind.", "explain": "解释睡前复习的作用。"},
+                {"id": "s5", "question": "____5____", "answer": "Then you will see real progress over time.", "explain": "总结段，收束全文。"},
+            ),
+        },
+        {
+            "key": "cloze", "name": "第一节 完形填空", "score": 15, "per_question": 1.5,
+            "passage": "Tom was nervous about his first speech. He had ___1___ in front of a big crowd before. "
+                       "His teacher ___2___ him to practise every day. At last, he ___3___ his fear and spoke clearly. "
+                       "Everyone was ___4___ by his performance.",
+            "questions": (
+                {"id": "c1", "question": "He had ___1___ in front of a big crowd before.", "options": ["never spoken", "never speak", "not spoken", "never speaking"], "answer": "never spoken", "explain": "过去完成时 had never spoken。"},
+                {"id": "c2", "question": "His teacher ___2___ him to practise every day.", "options": ["advised", "agreed", "allowed", "arrived"], "answer": "advised", "explain": "advise sb to do sth。"},
+                {"id": "c3", "question": "At last, he ___3___ his fear and spoke clearly.", "options": ["overcame", "overlooked", "overtook", "overheard"], "answer": "overcame", "explain": "overcome 克服。"},
+                {"id": "c4", "question": "Everyone was ___4___ by his performance.", "options": ["impressed", "expressed", "depressed", "stressed"], "answer": "impressed", "explain": "be impressed by 对……印象深刻。"},
+            ),
+        },
+        {
+            "key": "grammar_blank", "name": "第二节 语法填空", "score": 15, "per_question": 1.5,
+            "passage": "Learning a language ___1___ (be) a long journey. The more you practise, the ___2___ (good) you become. "
+                       "Students who keep reading every day ___3___ (make) faster progress than those who do not. "
+                       "So never give ___4___ when you meet difficulties.",
+            "questions": (
+                {"id": "g1", "question": "Learning a language ___1___ (be) a long journey.", "answer": "is", "explain": "动名词短语作主语，谓语用单数。"},
+                {"id": "g2", "question": "The ___2___ (good) you become.", "answer": "better", "explain": "the + 比较级, the + 比较级。"},
+                {"id": "g3", "question": "Students who keep reading every day ___3___ (make) faster progress.", "answer": "make", "explain": "主语 students 复数，谓语用原形。"},
+                {"id": "g4", "question": "So never give ___4___ when you meet difficulties.", "answer": "up", "explain": "give up 放弃。"},
+            ),
+        },
+        {
+            "key": "writing_practical", "name": "第一节 应用文写作", "score": 15, "per_question": 15,
+            "prompt": "假定你是李华，你的英国朋友 Peter 来信询问你的高中生活。请给他写一封回信，介绍你最喜欢的一门课程并说明理由。",
+            "requirements": ("词数 80 左右", "介绍课程并说明喜欢的理由", "可适当增加细节，使行文连贯"),
+        },
+        {
+            "key": "writing_continuation", "name": "第二节 读后续写", "score": 25, "per_question": 25,
+            "passage": "When I was little, my grandmother often told me stories under the big tree in our yard. "
+                       "Years later, I went back to the old house and saw the tree again. It was still there, strong and quiet.",
+            "prompt": "续写一段，描述你回到老屋后的所见所感。",
+            "requirements": ("续写词数 100 左右", "至少使用 2 个连接词", "情节合理、情感真挚"),
         },
     ),
 }
 
+_MOCK_CACHE: dict[str, dict] = {}
 
-def get_mock_exam() -> dict:
-    """获取模拟试卷内容。"""
-    return MOCK_EXAM
+
+def _group_by_passage(rows: list[dict]) -> list[tuple[str, list[dict]]]:
+    """按 passage 把题目分组（同一篇文章的题目重复存了相同 passage），按题数降序。"""
+    groups: dict[str, list[dict]] = {}
+    for r in rows:
+        if r.get("passage"):
+            groups.setdefault(r["passage"], []).append(r)
+    return sorted(groups.items(), key=lambda kv: -len(kv[1]))
+
+
+def _reading_section(readings: list[dict]) -> dict | None:
+    """组「第一节 阅读理解」：需 2 篇各 ≥4 题（每篇取 4 题，共 8 题 × 2.5 分）。"""
+    passages = []
+    for passage, qs in _group_by_passage(readings):
+        if len(qs) >= 4:
+            passages.append({
+                "passage": passage,
+                "questions": tuple(_to_choice(r, f"r{len(passages) * 4 + i}") for i, r in enumerate(qs[:4], 1)),
+            })
+        if len(passages) >= 2:
+            break
+    if len(passages) < 2:
+        return None
+    return {"key": "reading", "name": "第一节 阅读理解", "score": 20, "per_question": 2.5, "passages": tuple(passages)}
+
+
+def _seven_five_section(rows: list[dict]) -> dict | None:
+    """组「七选五」：一篇文章 ≥5 空，7 个选项在 section 级共享，每题从 7 项里选 1。"""
+    for passage, qs in _group_by_passage(rows):
+        usable = [q for q in qs if len(q["options"]) == 7 and q["answer"]]
+        if len(usable) >= 5:
+            options = tuple(usable[0]["options"])
+            questions = tuple(
+                {"id": f"s{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
+                for i, q in enumerate(usable[:5], 1)
+            )
+            return {
+                "key": "seven_five", "name": "第二节 七选五", "score": 10, "per_question": 2,
+                "passage": passage, "options": options, "questions": questions,
+            }
+    return None
+
+
+def _cloze_section(rows: list[dict]) -> dict | None:
+    """组「完形填空」：一篇文章 ≥10 空，每空 4 个选项。"""
+    for passage, qs in _group_by_passage(rows):
+        usable = [q for q in qs if len(q["options"]) == 4 and q["answer"]]
+        if len(usable) >= 10:
+            return {
+                "key": "cloze", "name": "第一节 完形填空", "score": 15, "per_question": 1.5,
+                "passage": passage,
+                "questions": tuple(_to_choice(q, f"c{i}") for i, q in enumerate(usable[:10], 1)),
+            }
+    return None
+
+
+def _blank_section(rows: list[dict], need: int) -> dict | None:
+    """组「语法填空」：一篇文章 need 空，每空自由填词（无选项）。"""
+    for passage, qs in _group_by_passage(rows):
+        qs = [q for q in qs if q["answer"]]
+        if len(qs) >= need:
+            questions = tuple(
+                {"id": f"g{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
+                for i, q in enumerate(qs[:need], 1)
+            )
+            return {
+                "key": "grammar_blank", "name": "第二节 语法填空", "score": 15, "per_question": 1.5,
+                "passage": passage, "questions": questions,
+            }
+    return None
+
+
+def assemble_mock_exam(book: str | None) -> dict | None:
+    """从当前教材的题库随机组一套模拟试卷；题库不足时返回 None（由 get_mock_exam 回退内置卷）。"""
+    try:
+        readings = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="reading", limit=300)
+            if len(r["options"]) == 4 and r["answer"] and r["passage"]
+        ]
+        seven_five = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="seven_five", limit=300)
+            if r["passage"]
+        ]
+        cloze = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="cloze", limit=300)
+            if r["passage"]
+        ]
+        blanks = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="grammar_blank", limit=300)
+            if r["passage"]
+        ]
+        practical = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="writing_practical", limit=50)
+            if r["writing_prompt"]
+        ]
+        continuation = [
+            r for r in database.get_questions(book=book or None, module="mock", qtype="writing_continuation", limit=50)
+            if r["writing_prompt"]
+        ]
+    except Exception:
+        return None
+
+    reading = _reading_section(readings)
+    seven = _seven_five_section(seven_five)
+    cloze_sec = _cloze_section(cloze)
+    blank_sec = _blank_section(blanks, 10)
+    if not (reading and seven and cloze_sec and blank_sec and practical and continuation):
+        return None
+
+    practical_q = practical[0]
+    continuation_q = continuation[0]
+
+    return {
+        "title": "英语综合模拟试卷（题库随机组卷）",
+        "duration": 45,
+        "sections": (
+            reading,
+            seven,
+            cloze_sec,
+            blank_sec,
+            {
+                "key": "writing_practical", "name": "第一节 应用文写作", "score": 15, "per_question": 15,
+                "prompt": practical_q["writing_prompt"],
+                "requirements": tuple(practical_q["writing_requirements"] or ("词数 80 左右。",)),
+            },
+            {
+                "key": "writing_continuation", "name": "第二节 读后续写", "score": 25, "per_question": 25,
+                "passage": continuation_q["passage"] or "",
+                "prompt": continuation_q["writing_prompt"],
+                "requirements": tuple(continuation_q["writing_requirements"] or ("续写词数 100 左右。",)),
+            },
+        ),
+    }
+
+
+def get_mock_exam(book: str | None = None) -> dict:
+    """获取模拟试卷：优先从当前教材题库随机组卷，题库不足时回退内置演示卷。"""
+    key = book or ""
+    if key not in _MOCK_CACHE:
+        _MOCK_CACHE[key] = assemble_mock_exam(book) or MOCK_EXAM
+    return _MOCK_CACHE[key]
 
 
 def _score_writing(text: str) -> tuple[int, list[str]]:
@@ -1206,34 +1460,57 @@ def _score_writing(text: str) -> tuple[int, list[str]]:
     return min(25, score), notes
 
 
-def grade_mock_exam(answers: dict, writing_text: str = "") -> dict:
-    """批改模拟试卷，返回各板块得分、总分与评语。"""
-    exam = get_mock_exam()
+def grade_mock_exam(book: str | None, answers: dict, writings: dict | None = None) -> dict:
+    """批改模拟试卷，返回各题型得分、总分与评语。
+
+    answers 以题目 id 为键（客观题）；writings 为写作板块作答，形如
+    {"writing_practical": "...", "writing_continuation": "..."}。
+    """
+    exam = get_mock_exam(book)
+    writings = writings or {}
     details = []
-    objective_score = 0
+    objective_score = 0.0
 
     for section in exam["sections"]:
-        if section["key"] == "writing":
+        if section["key"].startswith("writing"):
             continue
-        for question in section["questions"]:
-            chosen = answers.get(question["id"], "")
-            is_right = chosen == question["answer"]
-            if is_right:
-                objective_score += section["per_question"]
-            details.append(
-                {
-                    "section": section["name"],
-                    "question": question["question"],
-                    "your_answer": chosen or "未作答",
-                    "answer": question["answer"],
-                    "explain": question["explain"],
-                    "is_right": is_right,
-                    "score": section["per_question"] if is_right else 0,
-                }
-            )
+        # 阅读理解有多篇 passage，其它题型单 passage
+        question_groups = []
+        if section.get("passages"):
+            for p in section["passages"]:
+                question_groups.append((p["passage"], p["questions"]))
+        else:
+            question_groups.append((section.get("passage", ""), section["questions"]))
 
-    writing_score, writing_notes = _score_writing(writing_text)
-    total = objective_score + writing_score
+        for _passage, questions in question_groups:
+            for question in questions:
+                chosen = answers.get(question["id"], "")
+                if section["key"] == "grammar_blank":
+                    is_right = (chosen or "").strip().lower() == (question["answer"] or "").strip().lower()
+                else:
+                    is_right = chosen == question["answer"]
+                per_q = section["per_question"]
+                if is_right:
+                    objective_score += per_q
+                details.append(
+                    {
+                        "section": section["name"],
+                        "question": question["question"],
+                        "your_answer": chosen or "未作答",
+                        "answer": question["answer"],
+                        "explain": question.get("explain", ""),
+                        "is_right": is_right,
+                        "score": per_q if is_right else 0,
+                    }
+                )
+
+    # 两篇作文：应用文 15 分（按 25 分制折算）、读后续写 25 分
+    practical_score = round(_score_writing(writings.get("writing_practical", ""))[0] * 15 / 25)
+    continuation_score, continuation_notes = _score_writing(writings.get("writing_continuation", ""))
+    writing_score = practical_score + continuation_score
+    writing_notes = [f"应用文写作：{practical_score}/15"] + [f"读后续写：{continuation_score}/25"] + continuation_notes
+
+    total = round(objective_score + writing_score)
 
     if total >= 90:
         comment = "表现优秀，语言基础扎实，继续保持这样的正确率。"
@@ -1245,7 +1522,7 @@ def grade_mock_exam(answers: dict, writing_text: str = "") -> dict:
         comment = "本次得分偏低，建议先回到课本复习核心词汇与基本句型。"
 
     return {
-        "objective_score": objective_score,
+        "objective_score": round(objective_score),
         "writing_score": writing_score,
         "total": total,
         "full_score": 100,

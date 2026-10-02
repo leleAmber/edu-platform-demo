@@ -10,5 +10,8 @@ PyMySQL>=1.1.0
 # 作业图片识别（本地 OCR，离线免费）
 rapidocr-onnxruntime>=1.2.0
 
+# 教材 PDF 文本提取（离线脚本 extract_textbooks.py 用）
+pymupdf>=1.24.0
+
 # 大模型批改（OpenAI 兼容接口，可选；未配置时自动退回本地规则引擎）
 requests>=2.31.0

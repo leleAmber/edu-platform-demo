@@ -1,0 +1,2511 @@
+{
+  "key": "选三",
+  "name": "人教版选择性必修第三册",
+  "grade": "高三",
+  "units": [
+    {
+      "unit": "Unit1 Art",
+      "theme": "艺术 · 审美与表达",
+      "words": [
+        {
+          "word": "precise",
+          "pos": "adj.",
+          "explain": "准确的；精确的"
+        },
+        {
+          "word": "precisely",
+          "pos": "adv.",
+          "explain": "准确地；精确地；的确如此"
+        },
+        {
+          "word": "Christianity",
+          "pos": "n.",
+          "explain": "基督教"
+        },
+        {
+          "word": "realistic",
+          "pos": "adj.",
+          "explain": "现实的；逼真的"
+        },
+        {
+          "word": "realism",
+          "pos": "n.",
+          "explain": "逼真；现实主义；务实作风"
+        },
+        {
+          "word": "realist",
+          "pos": "n.",
+          "explain": "现实主义画家（或作家等）；现实主义者"
+        },
+        {
+          "word": "primitive",
+          "pos": "adj.",
+          "explain": "发展水平低的；原始的；远古的"
+        },
+        {
+          "word": "primitive",
+          "pos": "n.",
+          "explain": "文艺复兴前的艺术家（或作品）"
+        },
+        {
+          "word": "two-dimensional",
+          "pos": "adj.",
+          "explain": "二维的"
+        },
+        {
+          "word": "dimension",
+          "pos": "n.",
+          "explain": "维；规模；范围"
+        },
+        {
+          "word": "in particular",
+          "pos": "",
+          "explain": "尤其；特别"
+        },
+        {
+          "word": "set apart from",
+          "pos": "",
+          "explain": "使与众不同；使突出；使优于……"
+        },
+        {
+          "word": "humanistic",
+          "pos": "adj.",
+          "explain": "人文主义的"
+        },
+        {
+          "word": "humanity",
+          "pos": "n.",
+          "explain": "人性；人道；（统称）人类"
+        },
+        {
+          "word": "breakthrough",
+          "pos": "n.",
+          "explain": "重大进展；突破"
+        },
+        {
+          "word": "influential",
+          "pos": "adj.",
+          "explain": "有很大影响力的；有支配力的"
+        },
+        {
+          "word": "reputation",
+          "pos": "n.",
+          "explain": "名誉；名声"
+        },
+        {
+          "word": "noble",
+          "pos": "n.",
+          "explain": "贵族成员；出身高贵的人"
+        },
+        {
+          "word": "noble",
+          "pos": "adj.",
+          "explain": "崇高的；宏伟的；高贵的"
+        },
+        {
+          "word": "rank",
+          "pos": "n.",
+          "explain": "地位；级别；行列"
+        },
+        {
+          "word": "rank",
+          "pos": "vt. & vi.",
+          "explain": "把……分等级；使排成行"
+        },
+        {
+          "word": "purchase",
+          "pos": "vt.",
+          "explain": "购买；采购"
+        },
+        {
+          "word": "purchase",
+          "pos": "n.",
+          "explain": "购买；购买的东西"
+        },
+        {
+          "word": "mythology",
+          "pos": "n.",
+          "explain": "神话；虚幻的想法"
+        },
+        {
+          "word": "client",
+          "pos": "n.",
+          "explain": "委托人；当事人；客户"
+        },
+        {
+          "word": "photography",
+          "pos": "n.",
+          "explain": "照相术；摄影"
+        },
+        {
+          "word": "Impressionism",
+          "pos": "n.",
+          "explain": "印象主义；印象派（绘画风格）"
+        },
+        {
+          "word": "emerge",
+          "pos": "vi. & vt.",
+          "explain": "出现；浮现；暴露"
+        },
+        {
+          "word": "sunrise",
+          "pos": "n.",
+          "explain": "日出"
+        },
+        {
+          "word": "convey",
+          "pos": "vt.",
+          "explain": "表达；传递（思想、感情等）；传送"
+        },
+        {
+          "word": "subjective",
+          "pos": "adj.",
+          "explain": "主观的"
+        },
+        {
+          "word": "outer",
+          "pos": "adj.",
+          "explain": "外表的；外边的；外围的"
+        },
+        {
+          "word": "subsequent",
+          "pos": "adj.",
+          "explain": "随后的；后来的；之后的"
+        },
+        {
+          "word": "Cubism",
+          "pos": "n.",
+          "explain": "立体主义；立体派"
+        },
+        {
+          "word": "fond",
+          "pos": "adj.",
+          "explain": "喜爱"
+        },
+        {
+          "word": "be fond of",
+          "pos": "",
+          "explain": "喜爱；喜欢"
+        },
+        {
+          "word": "fine art (also fine arts)",
+          "pos": "",
+          "explain": "美术（尤指绘画和雕塑）"
+        },
+        {
+          "word": "sculpture",
+          "pos": "n.",
+          "explain": "雕像；雕刻品；雕刻术"
+        },
+        {
+          "word": "sculptor",
+          "pos": "n.",
+          "explain": "雕刻家；雕塑家"
+        },
+        {
+          "word": "visual",
+          "pos": "adj.",
+          "explain": "视觉的；视力的"
+        },
+        {
+          "word": "water lily",
+          "pos": "",
+          "explain": "睡莲"
+        },
+        {
+          "word": "pond",
+          "pos": "n.",
+          "explain": "池塘；水池"
+        },
+        {
+          "word": "arched",
+          "pos": "adj.",
+          "explain": "拱形的；弓形的"
+        },
+        {
+          "word": "arch",
+          "pos": "vt. & vi.",
+          "explain": "呈弧形横跨；（使）成弓形"
+        },
+        {
+          "word": "arch",
+          "pos": "n.",
+          "explain": "拱；拱形结构；拱门"
+        },
+        {
+          "word": "investment",
+          "pos": "n.",
+          "explain": "投资额；投资；（时间、精力的）投入"
+        },
+        {
+          "word": "bride",
+          "pos": "n.",
+          "explain": "新娘"
+        },
+        {
+          "word": "permanent",
+          "pos": "adj.",
+          "explain": "永久的；永恒的；长久的"
+        },
+        {
+          "word": "memorial",
+          "pos": "n.",
+          "explain": "纪念碑（或像等）；纪念物；纪念品"
+        },
+        {
+          "word": "memorial",
+          "pos": "adj.",
+          "explain": "纪念的；悼念的"
+        },
+        {
+          "word": "humble",
+          "pos": "adj.",
+          "explain": "谦逊的；虚心的；卑微的"
+        },
+        {
+          "word": "criticise (NAmE -ize)",
+          "pos": "vi. & vt.",
+          "explain": "批评；指责；评价"
+        },
+        {
+          "word": "criticism",
+          "pos": "n.",
+          "explain": "批评；指责；评论"
+        },
+        {
+          "word": "representative",
+          "pos": "adj.",
+          "explain": "典型的；有代表性的"
+        },
+        {
+          "word": "representative",
+          "pos": "n.",
+          "explain": "代表"
+        },
+        {
+          "word": "ink",
+          "pos": "n.",
+          "explain": "墨水；墨汁；油墨"
+        },
+        {
+          "word": "animation",
+          "pos": "n.",
+          "explain": "（电脑、录像）动画制作； 动画片"
+        },
+        {
+          "word": "frame",
+          "pos": "n.",
+          "explain": "画面；框架"
+        },
+        {
+          "word": "frame",
+          "pos": "vt.",
+          "explain": "给……镶框；陷害"
+        },
+        {
+          "word": "symphony",
+          "pos": "n.",
+          "explain": "交响乐；交响曲"
+        },
+        {
+          "word": "decline",
+          "pos": "n.",
+          "explain": "（数量、价格、质量等的）减少；下降；衰落"
+        },
+        {
+          "word": "decline",
+          "pos": "vi. & vt.",
+          "explain": "减少；下降；衰落；谢绝"
+        },
+        {
+          "word": "exhibition",
+          "pos": "n.",
+          "explain": "展览；（技能、感情或行为的）表演"
+        },
+        {
+          "word": "bronze",
+          "pos": "n.",
+          "explain": "青铜；深红褐色"
+        },
+        {
+          "word": "bronze",
+          "pos": "adj.",
+          "explain": "青铜色的；深红褐色的"
+        },
+        {
+          "word": "ceramic",
+          "pos": "n.",
+          "explain": "陶瓷制品；制陶艺术"
+        },
+        {
+          "word": "vase",
+          "pos": "n.",
+          "explain": "花瓶；装饰瓶"
+        },
+        {
+          "word": "artistic",
+          "pos": "adj.",
+          "explain": "艺术的；艺术家的"
+        },
+        {
+          "word": "entry",
+          "pos": "n.",
+          "explain": "加入；进入；参与"
+        },
+        {
+          "word": "civil",
+          "pos": "adj.",
+          "explain": "国民的；民用的；民事的"
+        },
+        {
+          "word": "recognition",
+          "pos": "n.",
+          "explain": "承认；认出；赞誉"
+        },
+        {
+          "word": "Buddhist",
+          "pos": "adj.",
+          "explain": "佛教的"
+        },
+        {
+          "word": "Buddhist",
+          "pos": "n.",
+          "explain": "佛教徒"
+        },
+        {
+          "word": "Buddhism",
+          "pos": "n.",
+          "explain": "佛教"
+        },
+        {
+          "word": "expansion",
+          "pos": "n.",
+          "explain": "扩张；扩展；扩大"
+        },
+        {
+          "word": "bring … to life",
+          "pos": "",
+          "explain": "赋予……生命；使……鲜活起来"
+        },
+        {
+          "word": "guarantee",
+          "pos": "vt.",
+          "explain": "保证；确保；肯定……必然发生"
+        },
+        {
+          "word": "guarantee",
+          "pos": "n.",
+          "explain": "保证；保修单；担保物"
+        },
+        {
+          "word": "contemporary",
+          "pos": "adj.",
+          "explain": "当代的；现代的；属同时期的"
+        },
+        {
+          "word": "contemporary",
+          "pos": "n.",
+          "explain": "同代人；同辈人"
+        },
+        {
+          "word": "worthy",
+          "pos": "adj.",
+          "explain": "值得……的；有价值的"
+        },
+        {
+          "word": "be worthy of",
+          "pos": "",
+          "explain": "值得"
+        },
+        {
+          "word": "The Middle Ages",
+          "pos": "",
+          "explain": "中世纪乔托·迪·邦多纳（意大利画家、雕刻家、建筑师）文艺复兴（时期）"
+        },
+        {
+          "word": "Masaccio",
+          "pos": "",
+          "explain": "马萨乔（意大利现实主义画家）莱昂纳多·达·芬奇（意大利艺术家、学者、发明家）米开朗琪罗（意大利雕塑家、画家、建筑师、诗人）"
+        },
+        {
+          "word": "Raphael",
+          "pos": "",
+          "explain": "拉斐尔（意大利画家）"
+        },
+        {
+          "word": "Rembrandt",
+          "pos": "",
+          "explain": "伦勃朗（荷兰画家）克劳德·莫奈（法国印象派画家）"
+        },
+        {
+          "word": "Renoir",
+          "pos": "",
+          "explain": "雷诺阿（法国印象派画家）"
+        },
+        {
+          "word": "Picasso",
+          "pos": "",
+          "explain": "毕加索（西班牙画家、雕塑家）"
+        },
+        {
+          "word": "Giverny",
+          "pos": "",
+          "explain": "吉维尼（法国小镇）"
+        },
+        {
+          "word": "Mother 《",
+          "pos": "",
+          "explain": "小蝌蚪找妈妈》"
+        },
+        {
+          "word": "The Cowboy’s Flute 《",
+          "pos": "",
+          "explain": "牧笛》《山水情》《函关雪霁图》（明代画家唐寅画作）"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "The Middle Ages",
+          "explain": "专有名词，指欧洲历史上的一个时期",
+          "example": "The Middle Ages is also known as Medieval times/period.",
+          "translation": "中世纪也称作中世纪时期/时期。"
+        },
+        {
+          "pattern": "Their works were often primitive and two-dimensional",
+          "explain": "形容词短语作表语，描述作品的特点",
+          "example": "Their works were often primitive and two-dimensional.",
+          "translation": "他们的作品通常较为粗糙且二维化。"
+        },
+        {
+          "pattern": "dimension意为“维”，又称“维度”，系几何学及空间理论概念，也是绘画、构图的基本概念之一。",
+          "explain": "名词解释，说明dimension的含义和用途",
+          "example": "Dimension is a concept in geometry and spatial theory, also a basic concept in painting and composition.",
+          "translation": "维度是几何学和空间理论的概念，也是绘画和构图的基本概念之一。"
+        },
+        {
+          "pattern": "The Renaissance",
+          "explain": "专有名词，指欧洲历史上的一个时期",
+          "example": "The Renaissance was an intellectual and cultural movement in Europe.",
+          "translation": "文艺复兴是欧洲的一场思想和文化运动。"
+        },
+        {
+          "pattern": "Masaccio (1401–1428)",
+          "explain": "人名，意大利文艺复兴时期的重要画家",
+          "example": "Masaccio (1401–1428) was an important painter of the Italian Renaissance.",
+          "translation": "马萨乔（1401–1428）是意大利文艺复兴时期的重要画家。"
+        },
+        {
+          "pattern": "While painters as early as Da Vinci had used oil, this technique reached its height with Rembrandt (1606–1669), who gained a reputation as a master of shadow and light.",
+          "explain": "让步状语从句，说明尽管早期画家使用油彩，但伦勃朗将这一技术推向了顶峰",
+          "example": "While painters as early as Da Vinci had used oil, this technique reached its height with Rembrandt (1606–1669), who gained a reputation as a master of shadow and light.",
+          "translation": "尽管早在达·芬奇时代，一些画家就使用油彩绘画，但伦勃朗使得这种技艺达到顶峰，他拥有“光影大师”的雅称。"
+        },
+        {
+          "pattern": "Impressionism",
+          "explain": "专有名词，指19世纪60年代兴起的法国绘画流派",
+          "example": "Impressionism is an important art movement that emerged in France in the 1860s.",
+          "translation": "印象主义是19世纪60年代在法国兴起的一个重要艺术运动。"
+        },
+        {
+          "pattern": "ink wash animation film",
+          "explain": "专有名词，指结合国画传统与现代动画电影形式的一种动画电影",
+          "example": "Ink wash animation film is a creative blend of traditional Chinese painting techniques and modern animation.",
+          "translation": "水墨动画电影是将国画传统绘画技艺与现代动画电影形式相结合的一种创举。"
+        },
+        {
+          "pattern": "of note",
+          "explain": "习语，表示“重要；有趣”或“值得关注；值得一提”",
+          "example": "A collection of nearly 100 bronze objects from the Shang Dynasty is of primary note.",
+          "translation": "一组近百件商代青铜器藏品同样十分重要。"
+        },
+        {
+          "pattern": "This is just a small taste of what is in store for you in this exhibition.",
+          "explain": "习语，表示“某事即将发生”",
+          "example": "This is just a small taste of what is in store for you in this exhibition.",
+          "translation": "这只是该展览供您参观的一小部分。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "艺术 · 审美与表达",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 91
+      }
+    },
+    {
+      "unit": "Unit2 Healthy Lifestyle",
+      "theme": "健康生活 · 习惯与自律",
+      "words": [
+        {
+          "word": "tobacco",
+          "pos": "n.",
+          "explain": "烟草；烟叶"
+        },
+        {
+          "word": "alcohol",
+          "pos": "n.",
+          "explain": "酒；酒精"
+        },
+        {
+          "word": "abuse",
+          "pos": "n.",
+          "explain": "滥用；虐待；辱骂"
+        },
+        {
+          "word": "abuse",
+          "pos": "vt.",
+          "explain": "滥用；虐待；辱骂"
+        },
+        {
+          "word": "physical",
+          "pos": "adj.",
+          "explain": "身体的；客观存在的；物理学的"
+        },
+        {
+          "word": "dominate",
+          "pos": "vt. & vi.",
+          "explain": "支配；控制；占有优势"
+        },
+        {
+          "word": "repeatedly",
+          "pos": "adv.",
+          "explain": "重复地"
+        },
+        {
+          "word": "psychology",
+          "pos": "n.",
+          "explain": "心理学；心理；心理影响"
+        },
+        {
+          "word": "cue",
+          "pos": "n.",
+          "explain": "提示；暗示；信号"
+        },
+        {
+          "word": "cue",
+          "pos": "vt.",
+          "explain": "给（某人）暗示（或提示）"
+        },
+        {
+          "word": "in response to",
+          "pos": "",
+          "explain": "回答；答复"
+        },
+        {
+          "word": "reward",
+          "pos": "n.",
+          "explain": "回报；奖励；报酬"
+        },
+        {
+          "word": "reward",
+          "pos": "vt.",
+          "explain": "奖励；奖赏；给以报酬"
+        },
+        {
+          "word": "rely",
+          "pos": "vi.",
+          "explain": "依赖；依靠；信赖"
+        },
+        {
+          "word": "rely on",
+          "pos": "",
+          "explain": "依赖；依靠；信赖"
+        },
+        {
+          "word": "facilitate",
+          "pos": "vt.",
+          "explain": "促进；促使；使便利"
+        },
+        {
+          "word": "examine",
+          "pos": "vt.",
+          "explain": "（仔细）检查；审查；测验"
+        },
+        {
+          "word": "negative",
+          "pos": "adj.",
+          "explain": "消极的；有害的；否定的"
+        },
+        {
+          "word": "escalator",
+          "pos": "n.",
+          "explain": "自动扶梯；滚梯"
+        },
+        {
+          "word": "straight away",
+          "pos": "",
+          "explain": "立即；马上"
+        },
+        {
+          "word": "pessimistic",
+          "pos": "adj.",
+          "explain": "悲观的；悲观主义的"
+        },
+        {
+          "word": "discipline",
+          "pos": "n.",
+          "explain": "自制力；纪律；学科"
+        },
+        {
+          "word": "discipline",
+          "pos": "vt.",
+          "explain": "自我控制；管教；处罚"
+        },
+        {
+          "word": "pill",
+          "pos": "n.",
+          "explain": "药丸；药片"
+        },
+        {
+          "word": "delete",
+          "pos": "v.",
+          "explain": "删去；删除"
+        },
+        {
+          "word": "decide on",
+          "pos": "",
+          "explain": "决定；选定"
+        },
+        {
+          "word": "make up one’s mind",
+          "pos": "",
+          "explain": "下定决心"
+        },
+        {
+          "word": "compose",
+          "pos": "vt. & vi.",
+          "explain": "组成；作曲；撰写"
+        },
+        {
+          "word": "be composed of",
+          "pos": "",
+          "explain": "由……组成（或构成）的"
+        },
+        {
+          "word": "surgeon",
+          "pos": "n.",
+          "explain": "外科医生"
+        },
+        {
+          "word": "surgery",
+          "pos": "n.",
+          "explain": "外科手术；外科学"
+        },
+        {
+          "word": "liberation",
+          "pos": "n.",
+          "explain": "解放；摆脱"
+        },
+        {
+          "word": "shave vi.,",
+          "pos": "vt. & n.",
+          "explain": "剃（须发）；刮脸"
+        },
+        {
+          "word": "shave off",
+          "pos": "",
+          "explain": "剃掉；刮去"
+        },
+        {
+          "word": "beard",
+          "pos": "n.",
+          "explain": "胡须；络腮胡子"
+        },
+        {
+          "word": "disturb",
+          "pos": "vt.",
+          "explain": "打扰；搅乱；使烦恼"
+        },
+        {
+          "word": "cigarette",
+          "pos": "n.",
+          "explain": "香烟；卷烟"
+        },
+        {
+          "word": "specialist",
+          "pos": "n.",
+          "explain": "专科医生；专家"
+        },
+        {
+          "word": "consultant",
+          "pos": "n.",
+          "explain": "顾问；高级顾问医师"
+        },
+        {
+          "word": "drug",
+          "pos": "n.",
+          "explain": "毒品；药物"
+        },
+        {
+          "word": "skip",
+          "pos": "vt.",
+          "explain": "跳过；不参加；悄悄溜走"
+        },
+        {
+          "word": "skip",
+          "pos": "vi.",
+          "explain": "蹦蹦跳跳地走；跳绳"
+        },
+        {
+          "word": "skip",
+          "pos": "n.",
+          "explain": "蹦跳"
+        },
+        {
+          "word": "dizzy",
+          "pos": "adj.",
+          "explain": "头晕目眩的"
+        },
+        {
+          "word": "flu",
+          "pos": "n.",
+          "explain": "流感"
+        },
+        {
+          "word": "stimulate",
+          "pos": "vt.",
+          "explain": "激发；促进；刺激"
+        },
+        {
+          "word": "dentist",
+          "pos": "n.",
+          "explain": "牙科医生"
+        },
+        {
+          "word": "sugary",
+          "pos": "adj.",
+          "explain": "含糖的；甜的"
+        },
+        {
+          "word": "nut",
+          "pos": "n.",
+          "explain": "坚果"
+        },
+        {
+          "word": "skateboard",
+          "pos": "n.",
+          "explain": "滑板"
+        },
+        {
+          "word": "skateboard",
+          "pos": "vi.",
+          "explain": "滑滑板"
+        },
+        {
+          "word": "dynamic",
+          "pos": "adj.",
+          "explain": "充满活力的；精力充沛的；动态的"
+        },
+        {
+          "word": "stressed out",
+          "pos": "",
+          "explain": "焦虑不安；心力交瘁"
+        },
+        {
+          "word": "worn out",
+          "pos": "",
+          "explain": "筋疲力尽的；疲惫的"
+        },
+        {
+          "word": "bowling",
+          "pos": "n.",
+          "explain": "保龄球运动"
+        },
+        {
+          "word": "comedy",
+          "pos": "n.",
+          "explain": "喜剧；喜剧片；滑稽节目"
+        },
+        {
+          "word": "monthly",
+          "pos": "adv. & adj.",
+          "explain": "每月；每月一次的"
+        },
+        {
+          "word": "monthly",
+          "pos": "n.",
+          "explain": "月刊"
+        },
+        {
+          "word": "enhance",
+          "pos": "vt.",
+          "explain": "提高；增强；增进"
+        },
+        {
+          "word": "refresh",
+          "pos": "vt.",
+          "explain": "使恢复精力；使凉爽；刷新"
+        },
+        {
+          "word": "absorb",
+          "pos": "vt.",
+          "explain": "吸引全部注意力；吸收"
+        },
+        {
+          "word": "Aristotle",
+          "pos": "",
+          "explain": "亚里士多德（古希腊哲学家）中国人民解放军"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "For example, some of them may become involved in tobacco or alcohol abuse, which can lead to physical and mental health problems.",
+          "explain": "此句中，'involved in' 表示参与，'abuse' 意为过度使用，'which' 引导非限制性定语从句。",
+          "example": "The leader has been arrested for the abuse of power.",
+          "translation": "这位领导人因滥用权力而被捕。"
+        },
+        {
+          "pattern": "There is a famous saying based on the philosophy of Aristotle: “We are what we repeatedly do.”",
+          "explain": "此句中，'based on' 表示基于，'repeatedly' 意为反复地。",
+          "example": "He is a man of few words, but his actions repeatedly speak louder than his words.",
+          "translation": "他话不多，但他的行动反复证明比他的话更有说服力。"
+        },
+        {
+          "pattern": "To facilitate a positive change in our bad habits, we must first examine our bad habit cycles and then try to adapt them.",
+          "explain": "此句中，'facilitate' 意为促进，'bad habit cycles' 指坏习惯的循环，'adapt' 意为调整。",
+          "example": "We need to facilitate the process of learning a new language by creating a supportive environment.",
+          "translation": "我们需要通过创造一个支持性的环境来促进学习新语言的过程。"
+        },
+        {
+          "pattern": "I feel more dynamic and stronger than ever, in both body and mind.",
+          "explain": "此句中，'dynamic' 和 'stronger' 分别表示有活力和更强壮，'in both body and mind' 表示在身体和精神上。",
+          "example": "After the exercise, she felt more dynamic and stronger than ever.",
+          "translation": "锻炼后，她感到比以往任何时候都更有活力和更强壮。"
+        },
+        {
+          "pattern": "Now my dad and I go rock climbing together monthly!",
+          "explain": "此句中，'monthly' 是由名词 'month' 和后缀 '-ly' 构成的副词，表示每月。",
+          "example": "She visits her grandparents weekly.",
+          "translation": "她每周都去看望她的祖父母。"
+        },
+        {
+          "pattern": "As Gandhi said, “Be the change you want to see in the world.”",
+          "explain": "此句中，'As...said' 引导非限制性定语从句，'Be the change' 是一个祈使句，表示成为你希望看到的改变。",
+          "example": "As the teacher said, “Be quiet and listen.”",
+          "translation": "正如老师说的，“安静下来，听讲。”"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "健康生活 · 习惯与自律",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 62
+      }
+    },
+    {
+      "unit": "Unit3 Environmental Protection",
+      "theme": "环境保护 · 绿色家园",
+      "words": [
+        {
+          "word": "graph",
+          "pos": "n.",
+          "explain": "图；图表；曲线图"
+        },
+        {
+          "word": "emission",
+          "pos": "n.",
+          "explain": "排放物；散发物；排放"
+        },
+        {
+          "word": "starve",
+          "pos": "vi. & vt.",
+          "explain": "（使）挨饿；饿死"
+        },
+        {
+          "word": "seal",
+          "pos": "n.",
+          "explain": "海豹"
+        },
+        {
+          "word": "ecology",
+          "pos": "n.",
+          "explain": "生态；生态学"
+        },
+        {
+          "word": "release",
+          "pos": "vt. & n.",
+          "explain": "排放；释放；发布"
+        },
+        {
+          "word": "methane",
+          "pos": "n.",
+          "explain": "甲烷；沼气"
+        },
+        {
+          "word": "carbon",
+          "pos": "n.",
+          "explain": "碳"
+        },
+        {
+          "word": "dioxide",
+          "pos": "n.",
+          "explain": "二氧化物"
+        },
+        {
+          "word": "carbon dioxide",
+          "pos": "",
+          "explain": "二氧化碳"
+        },
+        {
+          "word": "habitable",
+          "pos": "adj.",
+          "explain": "适合居住的"
+        },
+        {
+          "word": "sustain",
+          "pos": "vt.",
+          "explain": "维持；遭受；承受住"
+        },
+        {
+          "word": "sustainable",
+          "pos": "adj.",
+          "explain": "可持续的；合理利用的"
+        },
+        {
+          "word": "fossil",
+          "pos": "n.",
+          "explain": "化石"
+        },
+        {
+          "word": "fuel",
+          "pos": "n.",
+          "explain": "燃料；刺激性言行"
+        },
+        {
+          "word": "fossil fuel",
+          "pos": "",
+          "explain": "化石燃料（如煤或石油）"
+        },
+        {
+          "word": "comprehensive",
+          "pos": "adj.",
+          "explain": "全部的；所有的；详尽的"
+        },
+        {
+          "word": "worldwide",
+          "pos": "adv.",
+          "explain": "遍及全球地"
+        },
+        {
+          "word": "worldwide",
+          "pos": "adj.",
+          "explain": "世界各地的；影响全世界的"
+        },
+        {
+          "word": "trend",
+          "pos": "n.",
+          "explain": "趋势；趋向；动向"
+        },
+        {
+          "word": "frequently",
+          "pos": "adv.",
+          "explain": "频繁地；经常"
+        },
+        {
+          "word": "broadcast",
+          "pos": "vt. & vi.",
+          "explain": "（broadcast, broadcast）播送；广播； 传播"
+        },
+        {
+          "word": "broadcast",
+          "pos": "n.",
+          "explain": "广播节目；电视节目"
+        },
+        {
+          "word": "policy",
+          "pos": "n.",
+          "explain": "政策；方针；原则"
+        },
+        {
+          "word": "footprint",
+          "pos": "n.",
+          "explain": "足迹；（某物所占的）空间量；面积"
+        },
+        {
+          "word": "restrict",
+          "pos": "vt.",
+          "explain": "限制；限定；束缚"
+        },
+        {
+          "word": "restriction",
+          "pos": "n.",
+          "explain": "限制规定；限制法规；约束"
+        },
+        {
+          "word": "seize",
+          "pos": "vt.",
+          "explain": "抓住；夺取；控制"
+        },
+        {
+          "word": "basin",
+          "pos": "n.",
+          "explain": "流域；盆地；盆"
+        },
+        {
+          "word": "penguin",
+          "pos": "n.",
+          "explain": "企鹅"
+        },
+        {
+          "word": "reform",
+          "pos": "vi. & vt.",
+          "explain": "改革；（使）改正；改造"
+        },
+        {
+          "word": "reform",
+          "pos": "n.",
+          "explain": "改革；变革；改良"
+        },
+        {
+          "word": "undergo",
+          "pos": "vt.",
+          "explain": "（underwent, undergone）经历；经受（变化、不快等）"
+        },
+        {
+          "word": "implement",
+          "pos": "vt.",
+          "explain": "使生效；贯彻；执行"
+        },
+        {
+          "word": "harmonious",
+          "pos": "adj.",
+          "explain": "和谐的"
+        },
+        {
+          "word": "moderate",
+          "pos": "adj.",
+          "explain": "适度的；中等的；温和的"
+        },
+        {
+          "word": "moderate",
+          "pos": "vi. & vt.",
+          "explain": "缓和；使适中"
+        },
+        {
+          "word": "submit",
+          "pos": "vt. & vi.",
+          "explain": "提交；呈递；屈服"
+        },
+        {
+          "word": "annual",
+          "pos": "adj.",
+          "explain": "每年的；一年的"
+        },
+        {
+          "word": "annual",
+          "pos": "n.",
+          "explain": "年刊；年鉴"
+        },
+        {
+          "word": "tropical",
+          "pos": "adj.",
+          "explain": "热带的；来自热带的"
+        },
+        {
+          "word": "chaos",
+          "pos": "n.",
+          "explain": "混乱；杂乱；紊乱"
+        },
+        {
+          "word": "on behalf of",
+          "pos": "",
+          "explain": "代表（代替）某人"
+        },
+        {
+          "word": "nuclear",
+          "pos": "adj.",
+          "explain": "原子能的；核能的；原子核的"
+        },
+        {
+          "word": "sensitive",
+          "pos": "adj.",
+          "explain": "敏感的；善解人意的；灵敏的"
+        },
+        {
+          "word": "jungle",
+          "pos": "n.",
+          "explain": "（热带）丛林；密林"
+        },
+        {
+          "word": "smog",
+          "pos": "n.",
+          "explain": "烟雾（烟与雾混合的空气污染物）"
+        },
+        {
+          "word": "originate",
+          "pos": "vi. & vt.",
+          "explain": "起源；发源；创立"
+        },
+        {
+          "word": "volume",
+          "pos": "n.",
+          "explain": "量；体积；（成套书籍中的）一卷"
+        },
+        {
+          "word": "garbage",
+          "pos": "n.",
+          "explain": "垃圾；废物"
+        },
+        {
+          "word": "enterprise",
+          "pos": "n.",
+          "explain": "公司；企业；事业"
+        },
+        {
+          "word": "restore",
+          "pos": "vt.",
+          "explain": "恢复；使复原；修复"
+        },
+        {
+          "word": "conservation",
+          "pos": "n.",
+          "explain": "（对环境、文物等）保护；保持"
+        },
+        {
+          "word": "dozen",
+          "pos": "n.",
+          "explain": "（一）打；十二个"
+        },
+        {
+          "word": "dozens of",
+          "pos": "",
+          "explain": "许多；很多"
+        },
+        {
+          "word": "regulation",
+          "pos": "n.",
+          "explain": "章程；规章制度"
+        },
+        {
+          "word": "disposal",
+          "pos": "n.",
+          "explain": "去掉；清除；处理"
+        },
+        {
+          "word": "inspection",
+          "pos": "n.",
+          "explain": "检查；查看；视察"
+        },
+        {
+          "word": "fine",
+          "pos": "vt.",
+          "explain": "对……处以罚款"
+        },
+        {
+          "word": "campaign",
+          "pos": "n.",
+          "explain": "运动；战役"
+        },
+        {
+          "word": "campaign",
+          "pos": "vi. & vt.",
+          "explain": "参加运动；领导运动"
+        },
+        {
+          "word": "waterway",
+          "pos": "n.",
+          "explain": "水道；航道"
+        },
+        {
+          "word": "tolerate",
+          "pos": "vt.",
+          "explain": "忍受；包容；容许"
+        },
+        {
+          "word": "agenda",
+          "pos": "n.",
+          "explain": "议程表；议事日程"
+        },
+        {
+          "word": "Norway",
+          "pos": "",
+          "explain": "挪威（北欧国家）"
+        },
+        {
+          "word": "Svalbard",
+          "pos": "",
+          "explain": "斯瓦尔巴群岛（挪威）飓风卡特里娜"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "greenhouse effect",
+          "explain": "温室效应是指大气中的某些气体吸收地球表面发射的热能，导致地球表面温度升高的现象。",
+          "example": "The greenhouse effect is caused by certain gases in the Earth's atmosphere.",
+          "translation": "温室效应是由地球大气中的某些气体引起的。"
+        },
+        {
+          "pattern": "volume as a noun",
+          "explain": "名词volume表示数量，常与体积、容积有关，也用于表示流量、吞吐量、消耗量、工作量等。",
+          "example": "The volume of rainwater this summer has been much more than when we first moved here.",
+          "translation": "今年夏天的降雨量比我们刚搬到这儿时大多了。"
+        },
+        {
+          "pattern": "Water Ten Plan",
+          "explain": "水十条是指《水污染防治行动计划》，旨在通过监管和问责制改善全国水环境质量。",
+          "example": "The Water Ten Plan aims to improve the quality of water environments across the country through strict supervision and accountability.",
+          "translation": "水十条旨在通过严格的监管和问责制改善全国的水环境质量。"
+        },
+        {
+          "pattern": "River Chief System",
+          "explain": "河长制是指由各级党政主要负责人担任“河长”，负责组织领导相应河湖的管理和保护工作。",
+          "example": "The River Chief System involves local leaders taking responsibility for the management and protection of rivers and lakes.",
+          "translation": "河长制是指地方领导人负责河流和湖泊的管理和保护工作。"
+        },
+        {
+          "pattern": "plan, initiative, campaign",
+          "explain": "这三个词都表示计划或方案，但含义有所不同：plan指计划或条目；initiative指新方案或倡议；campaign指运动或行动。",
+          "example": "The ambitious 'Water Ten Plan' is a plan to tackle water pollution, the 'River Chief System' is an initiative, and the clean-up campaign is an ongoing action.",
+          "translation": "宏伟的“水十条”是一项治理水污染的计划，‘河长制’是一项新方案，而清洁运动是一项持续的行动。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "环境保护 · 绿色家园",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 66
+      }
+    },
+    {
+      "unit": "Unit4 Adversity and Courage",
+      "theme": "逆境与勇气 · 坚持与成长",
+      "words": [
+        {
+          "word": "adversity",
+          "pos": "n.",
+          "explain": "困境；逆境"
+        },
+        {
+          "word": "wage",
+          "pos": "n.",
+          "explain": "工资"
+        },
+        {
+          "word": "bitter",
+          "pos": "adj.",
+          "explain": "严寒的；激烈而不愉快的；味苦的"
+        },
+        {
+          "word": "expedition",
+          "pos": "n.",
+          "explain": "探险；远征；探险队"
+        },
+        {
+          "word": "endurance",
+          "pos": "n.",
+          "explain": "忍耐力；耐久力"
+        },
+        {
+          "word": "vigour (NAmE vigor)",
+          "pos": "n.",
+          "explain": "精力；力量；活力"
+        },
+        {
+          "word": "turn sb down",
+          "pos": "",
+          "explain": "拒绝（某人）"
+        },
+        {
+          "word": "qualified",
+          "pos": "adj.",
+          "explain": "符合资格；具备……的知识（或技能、学历等）"
+        },
+        {
+          "word": "enthusiastic",
+          "pos": "adj.",
+          "explain": "热情的；热心的"
+        },
+        {
+          "word": "aboard",
+          "pos": "adv. & prep.",
+          "explain": "上（船、飞机、公共汽车等）"
+        },
+        {
+          "word": "cupboard",
+          "pos": "n.",
+          "explain": "橱柜；壁橱；衣柜"
+        },
+        {
+          "word": "assign",
+          "pos": "vt.",
+          "explain": "分派；布置；分配"
+        },
+        {
+          "word": "steward",
+          "pos": "n.",
+          "explain": "（轮船、飞机或火车上的）乘务员；服务员"
+        },
+        {
+          "word": "envy",
+          "pos": "n. & vt.",
+          "explain": "羡慕；妒忌"
+        },
+        {
+          "word": "crush",
+          "pos": "vt.",
+          "explain": "毁坏；压坏；压碎"
+        },
+        {
+          "word": "crush",
+          "pos": "n.",
+          "explain": "拥挤的人群"
+        },
+        {
+          "word": "sink",
+          "pos": "vi.",
+          "explain": "（sank or sunk , sunk）沉没；下沉；下降"
+        },
+        {
+          "word": "sink",
+          "pos": "vt.",
+          "explain": "使下沉；使沉没"
+        },
+        {
+          "word": "abandon",
+          "pos": "vt.",
+          "explain": "舍弃；抛弃；放弃"
+        },
+        {
+          "word": "stove",
+          "pos": "n.",
+          "explain": "炉具；厨房灶具"
+        },
+        {
+          "word": "blanket",
+          "pos": "n.",
+          "explain": "毯子"
+        },
+        {
+          "word": "belongings n. ［pl.］",
+          "pos": "",
+          "explain": "财物；动产"
+        },
+        {
+          "word": "banjo",
+          "pos": "n.",
+          "explain": "班卓琴（乐器）"
+        },
+        {
+          "word": "miserable",
+          "pos": "adj.",
+          "explain": "痛苦的；令人难受的"
+        },
+        {
+          "word": "voyage",
+          "pos": "n. & vi.",
+          "explain": "航海；航行"
+        },
+        {
+          "word": "navy",
+          "pos": "n.",
+          "explain": "海军；海军部队"
+        },
+        {
+          "word": "decent",
+          "pos": "adj.",
+          "explain": "相当不错的；正派的；得体的"
+        },
+        {
+          "word": "cosy (NAmE cozy)",
+          "pos": "adj.",
+          "explain": "温馨的；舒适的"
+        },
+        {
+          "word": "selfish",
+          "pos": "adj.",
+          "explain": "自私的"
+        },
+        {
+          "word": "good",
+          "pos": "",
+          "explain": "坏的"
+        },
+        {
+          "word": "genuine",
+          "pos": "adj.",
+          "explain": "真正的；真诚的；可信赖的"
+        },
+        {
+          "word": "perseverance",
+          "pos": "n.",
+          "explain": "毅力；韧性；不屈不挠的精神"
+        },
+        {
+          "word": "persevere",
+          "pos": "vi.",
+          "explain": "坚持；孜孜以求"
+        },
+        {
+          "word": "resolve",
+          "pos": "vi. & vt.",
+          "explain": "决定；决心；解决（问题或困难）"
+        },
+        {
+          "word": "resolve",
+          "pos": "n.",
+          "explain": "决心；坚定的信念"
+        },
+        {
+          "word": "resolution",
+          "pos": "n.",
+          "explain": "决议；解决；坚定"
+        },
+        {
+          "word": "crew",
+          "pos": "n.",
+          "explain": "（轮船、飞机等上面的）全体工作人员；专业团队；一群人"
+        },
+        {
+          "word": "cruel",
+          "pos": "adj.",
+          "explain": "残酷的；残忍的；冷酷的"
+        },
+        {
+          "word": "thorough",
+          "pos": "adj.",
+          "explain": "深入的；彻底的；细致的"
+        },
+        {
+          "word": "furniture",
+          "pos": "n.",
+          "explain": "家具"
+        },
+        {
+          "word": "unfortunately",
+          "pos": "adv.",
+          "explain": "不幸地； 遗憾地"
+        },
+        {
+          "word": "fortunately",
+          "pos": "adv.",
+          "explain": "幸运地"
+        },
+        {
+          "word": "bark",
+          "pos": "vi. & n.",
+          "explain": "（狗）吠叫；吠叫声"
+        },
+        {
+          "word": "rugby",
+          "pos": "n.",
+          "explain": "橄榄球运动"
+        },
+        {
+          "word": "bat",
+          "pos": "n.",
+          "explain": "球拍；蝙蝠"
+        },
+        {
+          "word": "bat",
+          "pos": "vi. & vt.",
+          "explain": "用球板击球；挥打；拍打"
+        },
+        {
+          "word": "damp",
+          "pos": "adj.",
+          "explain": "潮湿的；湿气重的"
+        },
+        {
+          "word": "recreation",
+          "pos": "n.",
+          "explain": "娱乐；消遣；游戏"
+        },
+        {
+          "word": "guidance",
+          "pos": "n.",
+          "explain": "指导；引导；导航"
+        },
+        {
+          "word": "nephew",
+          "pos": "n.",
+          "explain": "侄子；外甥"
+        },
+        {
+          "word": "advertising",
+          "pos": "n.",
+          "explain": "广告活动；广告业"
+        },
+        {
+          "word": "advertise",
+          "pos": "vt. & vi.",
+          "explain": "公布；宣传；做广告"
+        },
+        {
+          "word": "corporate",
+          "pos": "adj.",
+          "explain": "公司的；法人的；社团的"
+        },
+        {
+          "word": "rough",
+          "pos": "adj.",
+          "explain": "汹涌的；粗糙的；粗略的"
+        },
+        {
+          "word": "navigator",
+          "pos": "n.",
+          "explain": "领航员；（飞机、船舶等上的）航行者"
+        },
+        {
+          "word": "loyal",
+          "pos": "adj.",
+          "explain": "忠诚的；忠实的"
+        },
+        {
+          "word": "motor",
+          "pos": "n.",
+          "explain": "发动机；马达"
+        },
+        {
+          "word": "motor",
+          "pos": "adj.",
+          "explain": "有引擎的；机动车的"
+        },
+        {
+          "word": "candidate",
+          "pos": "n.",
+          "explain": "候选人；应试者"
+        },
+        {
+          "word": "make fire",
+          "pos": "",
+          "explain": "生火"
+        },
+        {
+          "word": "give off",
+          "pos": "",
+          "explain": "放出（热、光、气味或气体）"
+        },
+        {
+          "word": "episode",
+          "pos": "n.",
+          "explain": "（人生的）一段经历；（小说的）片段；插曲"
+        },
+        {
+          "word": "commitment",
+          "pos": "n.",
+          "explain": "承诺；保证；奉献"
+        },
+        {
+          "word": "motive",
+          "pos": "n.",
+          "explain": "动机；原因；目的"
+        },
+        {
+          "word": "Confucianism",
+          "pos": "n.",
+          "explain": "孔子学说；儒家（学说）欧内斯特·沙克尔顿（英国探险家）珀西·布莱克博罗（“坚忍”号服务员）"
+        },
+        {
+          "word": "Antarctica",
+          "pos": "",
+          "explain": "南极洲"
+        },
+        {
+          "word": "the Antarctic",
+          "pos": "",
+          "explain": "南极地区"
+        },
+        {
+          "word": "the South Pole",
+          "pos": "",
+          "explain": "南极南乔治亚岛（南极洲）"
+        },
+        {
+          "word": "Frank Wild",
+          "pos": "",
+          "explain": "弗兰克·怀尔德托马斯·奥德利斯"
+        },
+        {
+          "word": "Frank Worsley",
+          "pos": "",
+          "explain": "弗兰克·沃斯利"
+        },
+        {
+          "word": "Tom Crean",
+          "pos": "",
+          "explain": "汤姆·克林休伯特·赫德森莱昂内尔·格林斯特里特"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "A SUCCESSFUL FAILURE",
+          "explain": "矛盾修辞法（Oxymoron）",
+          "example": "No light, but rather darkness visible.",
+          "translation": "与其说是亮光，不如说是能看得见的黑暗。"
+        },
+        {
+          "pattern": "Perce Blackborow joined an expedition with Sir Ernest Shackleton to Antarctica on the ship Endurance in 1914.",
+          "explain": "描述人物参与探险活动的时间、地点和事件。",
+          "example": "Perce Blackborow珀西· 布莱克博罗于1914年加入欧内斯特· 沙克尔顿爵士的“坚忍”号南极探险之旅。",
+          "translation": "珀西· 布莱克博罗于1914年加入欧内斯特· 沙克尔顿爵士的“坚忍”号南极探险之旅。"
+        },
+        {
+          "pattern": "The ice froze around us and we were well and truly stuck!",
+          "explain": "副词短语well and truly的用法，表示完全地；彻底地。",
+          "example": "The party was well and truly over by the time he arrived.",
+          "translation": "他赶到时聚会已经完全结束。"
+        },
+        {
+          "pattern": "Hold on now, Perce. Don’t you go turning into another Tom.",
+          "explain": "动词短语hold on的用法，表示等一等；坚持住；继续。Don’t you go ... 是祈使句，意思是你可不要……。came the reply是倒装句，常用于人物对话中。",
+          "example": "Hold on. I’ll be ready in just a moment.",
+          "translation": "稍等，我马上就好。"
+        },
+        {
+          "pattern": "There was nothing like a good dinner and some music to cheer us up.",
+          "explain": "句型there is/was nothing like ... 的用法，表示没有什么比……更……。",
+          "example": "There’s nothing like a holiday to make one feel relaxed.",
+          "translation": "没有什么比得上假期更让人放松的了。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "逆境与勇气 · 坚持与成长",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 71
+      }
+    },
+    {
+      "unit": "Unit5 Poems",
+      "theme": "诗歌 · 韵律与情感",
+      "words": [
+        {
+          "word": "drama",
+          "pos": "n.",
+          "explain": "戏；剧；戏剧艺术"
+        },
+        {
+          "word": "sorrow",
+          "pos": "n.",
+          "explain": "悲伤；悲痛；伤心事"
+        },
+        {
+          "word": "sorrow",
+          "pos": "vi.",
+          "explain": "感到悲伤"
+        },
+        {
+          "word": "imagery",
+          "pos": "n.",
+          "explain": "形象的描述；意象；像"
+        },
+        {
+          "word": "literary",
+          "pos": "adj.",
+          "explain": "文学的；爱好文学的；有文学作品特征的"
+        },
+        {
+          "word": "rhyme",
+          "pos": "n.",
+          "explain": "押韵词；押韵的短诗"
+        },
+        {
+          "word": "rhyme",
+          "pos": "vi. & vt.",
+          "explain": "（使）押韵"
+        },
+        {
+          "word": "rhythm",
+          "pos": "n.",
+          "explain": "节奏；韵律；规律"
+        },
+        {
+          "word": "nursery",
+          "pos": "adj.",
+          "explain": "幼儿教育的"
+        },
+        {
+          "word": "nursery",
+          "pos": "n.",
+          "explain": "托儿所；保育室"
+        },
+        {
+          "word": "nursery rhyme",
+          "pos": "",
+          "explain": "童谣；儿歌"
+        },
+        {
+          "word": "folk",
+          "pos": "adj.",
+          "explain": "民间的；民俗的；普通百姓的"
+        },
+        {
+          "word": "mockingbird",
+          "pos": "n.",
+          "explain": "嘲鸫（美洲鸣禽，能模仿别种鸟的鸣叫）"
+        },
+        {
+          "word": "diamond",
+          "pos": "n.",
+          "explain": "钻石；金刚石；菱形"
+        },
+        {
+          "word": "brass",
+          "pos": "n.",
+          "explain": "黄铜；黄铜制品；铜管乐器"
+        },
+        {
+          "word": "billy goat",
+          "pos": "",
+          "explain": "公山羊"
+        },
+        {
+          "word": "bull",
+          "pos": "n.",
+          "explain": "公牛"
+        },
+        {
+          "word": "recite",
+          "pos": "vt.",
+          "explain": "背诵； 吟诵；列举"
+        },
+        {
+          "word": "bee",
+          "pos": "n.",
+          "explain": "蜜蜂"
+        },
+        {
+          "word": "dewdrop",
+          "pos": "n.",
+          "explain": "露珠；水珠"
+        },
+        {
+          "word": "dawn",
+          "pos": "n.",
+          "explain": "黎明；开端；萌芽"
+        },
+        {
+          "word": "clover",
+          "pos": "n.",
+          "explain": "三叶草"
+        },
+        {
+          "word": "butterfly",
+          "pos": "n.",
+          "explain": "蝴蝶"
+        },
+        {
+          "word": "lawn",
+          "pos": "n.",
+          "explain": "草坪；草地"
+        },
+        {
+          "word": "amateur",
+          "pos": "n.",
+          "explain": "业余爱好者"
+        },
+        {
+          "word": "amateur",
+          "pos": "adj.",
+          "explain": "业余的；业余爱好的"
+        },
+        {
+          "word": "cinquain",
+          "pos": "n.",
+          "explain": "五行诗"
+        },
+        {
+          "word": "be made up of",
+          "pos": "",
+          "explain": "由……组成（构成）"
+        },
+        {
+          "word": "mood",
+          "pos": "n.",
+          "explain": "情绪；心情；语气"
+        },
+        {
+          "word": "tease",
+          "pos": "vi. & vt.",
+          "explain": "取笑（某人）；揶揄；逗弄"
+        },
+        {
+          "word": "haiku",
+          "pos": "n.",
+          "explain": "俳句"
+        },
+        {
+          "word": "syllable",
+          "pos": "n.",
+          "explain": "音节"
+        },
+        {
+          "word": "format",
+          "pos": "n.",
+          "explain": "格式；总体安排；（出版物的）版式"
+        },
+        {
+          "word": "format",
+          "pos": "vt.",
+          "explain": "格式化"
+        },
+        {
+          "word": "respectively",
+          "pos": "adv.",
+          "explain": "分别；各自；依次为"
+        },
+        {
+          "word": "respective",
+          "pos": "adj.",
+          "explain": "分别的；各自的"
+        },
+        {
+          "word": "blossom",
+          "pos": "n.",
+          "explain": "花朵；花簇"
+        },
+        {
+          "word": "delicate",
+          "pos": "adj.",
+          "explain": "精美的；精致的；脆弱的"
+        },
+        {
+          "word": "await",
+          "pos": "vt.",
+          "explain": "等候；期待；将发生在"
+        },
+        {
+          "word": "revolve",
+          "pos": "vi.",
+          "explain": "旋转；环绕；转动"
+        },
+        {
+          "word": "utter",
+          "pos": "vt.",
+          "explain": "出声；说；讲"
+        },
+        {
+          "word": "utter",
+          "pos": "adj.",
+          "explain": "完全的；十足的；彻底的"
+        },
+        {
+          "word": "comprehension",
+          "pos": "n.",
+          "explain": "理解力；领悟力；理解练习"
+        },
+        {
+          "word": "shelf",
+          "pos": "n.",
+          "explain": "（pl. shelves ）架子；搁板"
+        },
+        {
+          "word": "core",
+          "pos": "n.",
+          "explain": "核心；精髓；（水果的）核儿"
+        },
+        {
+          "word": "cherry",
+          "pos": "n.",
+          "explain": "樱桃；樱桃树；樱桃色"
+        },
+        {
+          "word": "cherry",
+          "pos": "adj.",
+          "explain": "樱桃色的；鲜红色的"
+        },
+        {
+          "word": "cherry blossom",
+          "pos": "",
+          "explain": "樱花"
+        },
+        {
+          "word": "blank",
+          "pos": "adj.",
+          "explain": "空白的；无图画（或韵律、装饰）的；没表情的"
+        },
+        {
+          "word": "blank",
+          "pos": "n.",
+          "explain": "空白；空格"
+        },
+        {
+          "word": "verse",
+          "pos": "n.",
+          "explain": "诗；韵文；诗节"
+        },
+        {
+          "word": "civilian",
+          "pos": "n.",
+          "explain": "平民；老百姓"
+        },
+        {
+          "word": "prose",
+          "pos": "n.",
+          "explain": "散文"
+        },
+        {
+          "word": "sympathetic",
+          "pos": "adj.",
+          "explain": "同情的；有同情心的；赞同的"
+        },
+        {
+          "word": "sympathy",
+          "pos": "n.",
+          "explain": "同情；赞同"
+        },
+        {
+          "word": "version",
+          "pos": "n.",
+          "explain": "版本；（从不同角度的）说法"
+        },
+        {
+          "word": "innocence",
+          "pos": "n.",
+          "explain": "天真；单纯；无罪"
+        },
+        {
+          "word": "innocent",
+          "pos": "adj.",
+          "explain": "天真无邪的；无辜的；无恶意的"
+        },
+        {
+          "word": "era",
+          "pos": "n.",
+          "explain": "时代；年代；纪元"
+        },
+        {
+          "word": "correspondence",
+          "pos": "n.",
+          "explain": "来往信件；通信联系"
+        },
+        {
+          "word": "correspond",
+          "pos": "vi.",
+          "explain": "相一致；符合；相当于；通信"
+        },
+        {
+          "word": "sow",
+          "pos": "vt. & vi.",
+          "explain": "（sowed, sown or sowed）播种；种"
+        },
+        {
+          "word": "seed",
+          "pos": "n.",
+          "explain": "种子；起源；萌芽"
+        },
+        {
+          "word": "dominant",
+          "pos": "adj.",
+          "explain": "首要的；占支配地位的；显著的"
+        },
+        {
+          "word": "sonnet",
+          "pos": "n.",
+          "explain": "十四行诗"
+        },
+        {
+          "word": "deadline",
+          "pos": "n.",
+          "explain": "最后期限；截止日期"
+        },
+        {
+          "word": "contest",
+          "pos": "n.",
+          "explain": "比赛；竞赛；竞争"
+        },
+        {
+          "word": "contest",
+          "pos": "vt.",
+          "explain": "争取赢得（比赛、选举等）；争辩"
+        },
+        {
+          "word": "polish",
+          "pos": "vt.",
+          "explain": "修改；润色；抛光"
+        },
+        {
+          "word": "polish",
+          "pos": "n.",
+          "explain": "上光剂；抛光；擦亮"
+        },
+        {
+          "word": "string",
+          "pos": "n.",
+          "explain": "细绳；线；一串"
+        },
+        {
+          "word": "string",
+          "pos": "vt.",
+          "explain": "（strung , strung）悬挂；系"
+        },
+        {
+          "word": "string",
+          "pos": "adj.",
+          "explain": "弦乐器的；线织的"
+        },
+        {
+          "word": "wherever",
+          "pos": "conj.",
+          "explain": "在任何地方；在所有……的情况下"
+        },
+        {
+          "word": "wherever",
+          "pos": "adv.",
+          "explain": "（用于问句）究竟在（到）哪里"
+        },
+        {
+          "word": "barren",
+          "pos": "adj.",
+          "explain": "贫瘠的；不结果实的"
+        },
+        {
+          "word": "grief",
+          "pos": "n.",
+          "explain": "悲伤；悲痛；伤心事"
+        },
+        {
+          "word": "complicated",
+          "pos": "adj.",
+          "explain": "复杂的；难懂的"
+        },
+        {
+          "word": "variation",
+          "pos": "n.",
+          "explain": "变化；变体；变奏曲"
+        },
+        {
+          "word": "racial",
+          "pos": "adj.",
+          "explain": "种族的；人种的"
+        },
+        {
+          "word": "prejudice",
+          "pos": "n.",
+          "explain": "偏见；成见"
+        },
+        {
+          "word": "prejudice",
+          "pos": "vt.",
+          "explain": "使怀有（或形成）偏见莎士比亚 （英国剧作家、诗人）"
+        },
+        {
+          "word": "The Crescent Moon 《",
+          "pos": "",
+          "explain": "新月集》"
+        },
+        {
+          "word": "Tagore",
+          "pos": "",
+          "explain": "泰戈尔（印度诗人、文学家）伊丽莎白·巴雷特·布朗宁（英国诗人）"
+        },
+        {
+          "word": "Robert Browning",
+          "pos": "",
+          "explain": "罗伯特·布朗宁（英国诗人）"
+        },
+        {
+          "word": "the Victorian era",
+          "pos": "",
+          "explain": "维多利亚时代《葡萄牙人的十四行诗集》"
+        },
+        {
+          "word": "Langston Hughes",
+          "pos": "",
+          "explain": "兰斯顿·休斯"
+        },
+        {
+          "word": "bat",
+          "pos": "n.",
+          "explain": "球拍；蝙蝠"
+        },
+        {
+          "word": "bat",
+          "pos": "vi. & vt.",
+          "explain": "用球板击球；挥打；拍打(4)"
+        },
+        {
+          "word": "be made up of",
+          "pos": "",
+          "explain": "由……组成（构成）(5)"
+        },
+        {
+          "word": "beard",
+          "pos": "n.",
+          "explain": "胡须；络腮胡子(2)"
+        },
+        {
+          "word": "bee",
+          "pos": "n.",
+          "explain": "蜜蜂(5)"
+        },
+        {
+          "word": "belongings n. ［pl.］",
+          "pos": "",
+          "explain": "财物；动产(4)"
+        },
+        {
+          "word": "billy goat",
+          "pos": "",
+          "explain": "公山羊(5)严寒的；激烈而不愉快的；味苦的(4)"
+        },
+        {
+          "word": "blank",
+          "pos": "adj.",
+          "explain": "空白的；无图画（或韵律、装饰）的；没表情的"
+        },
+        {
+          "word": "blank",
+          "pos": "n.",
+          "explain": "空白；空格(5)"
+        },
+        {
+          "word": "blanket",
+          "pos": "n.",
+          "explain": "毯子(4)"
+        },
+        {
+          "word": "blossom",
+          "pos": "n.",
+          "explain": "花朵；花簇(5)"
+        },
+        {
+          "word": "bowling",
+          "pos": "n.",
+          "explain": "保龄球运动(2)"
+        },
+        {
+          "word": "brass",
+          "pos": "n.",
+          "explain": "黄铜；黄铜制品；铜管乐器(5)"
+        },
+        {
+          "word": "breakthrough",
+          "pos": "n.",
+          "explain": "重大进展；突破(1)"
+        },
+        {
+          "word": "bride",
+          "pos": "n.",
+          "explain": "新娘(1)"
+        },
+        {
+          "word": "bring … to life",
+          "pos": "",
+          "explain": "赋予……生命；使……鲜活起来 (1)"
+        },
+        {
+          "word": "broadcast",
+          "pos": "vt. & vi.",
+          "explain": "（broadcast, broadcast）播送；广播； 传播"
+        },
+        {
+          "word": "broadcast",
+          "pos": "n.",
+          "explain": "广播节目；电视节目(3)"
+        },
+        {
+          "word": "bronze",
+          "pos": "n.",
+          "explain": "青铜；深红褐色"
+        },
+        {
+          "word": "bronze",
+          "pos": "adj.",
+          "explain": "青铜色的；深红褐色的(1)"
+        },
+        {
+          "word": "Buddhism",
+          "pos": "n.",
+          "explain": "佛教(1)"
+        },
+        {
+          "word": "Buddhist",
+          "pos": "adj.",
+          "explain": "佛教的"
+        },
+        {
+          "word": "Buddhist",
+          "pos": "n.",
+          "explain": "佛教徒(1)"
+        },
+        {
+          "word": "bull",
+          "pos": "n.",
+          "explain": "公牛(5)"
+        },
+        {
+          "word": "butterfly",
+          "pos": "n.",
+          "explain": "蝴蝶(5)"
+        },
+        {
+          "word": "campaign",
+          "pos": "n.",
+          "explain": "运动；战役(3)"
+        },
+        {
+          "word": "campaign",
+          "pos": "vi. & vt.",
+          "explain": "参加运动；领导运动"
+        },
+        {
+          "word": "candidate",
+          "pos": "n.",
+          "explain": "候选人；应试者(4)"
+        },
+        {
+          "word": "carbon",
+          "pos": "n.",
+          "explain": "碳(3)词汇表"
+        },
+        {
+          "word": "abandon",
+          "pos": "vt.",
+          "explain": "舍弃；抛弃；放弃(4)上（船、飞机、公共汽车等）(4)"
+        },
+        {
+          "word": "absorb",
+          "pos": "vt.",
+          "explain": "吸引全部注意力；吸收(2)"
+        },
+        {
+          "word": "abuse",
+          "pos": "n.",
+          "explain": "滥用；虐待；辱骂"
+        },
+        {
+          "word": "abuse",
+          "pos": "vt.",
+          "explain": "滥用；虐待；辱骂(2)"
+        },
+        {
+          "word": "adversity",
+          "pos": "n.",
+          "explain": "困境；逆境(4)"
+        },
+        {
+          "word": "advertise",
+          "pos": "vt. & vi.",
+          "explain": "公布；宣传；做广告(4)"
+        },
+        {
+          "word": "advertising",
+          "pos": "n.",
+          "explain": "广告活动；广告业 (4)"
+        },
+        {
+          "word": "agenda",
+          "pos": "n.",
+          "explain": "议程表；议事日程(3)"
+        },
+        {
+          "word": "alcohol",
+          "pos": "n.",
+          "explain": "酒；酒精(2)"
+        },
+        {
+          "word": "amateur",
+          "pos": "n.",
+          "explain": "业余爱好者"
+        },
+        {
+          "word": "amateur",
+          "pos": "adj.",
+          "explain": "业余的；业余爱好的(5)"
+        },
+        {
+          "word": "animation",
+          "pos": "n.",
+          "explain": "（电脑、录像）动画制作；动画片(1)"
+        },
+        {
+          "word": "annual",
+          "pos": "adj.",
+          "explain": "每年的；一年的"
+        },
+        {
+          "word": "annual",
+          "pos": "n.",
+          "explain": "年刊；年鉴(3)△Antarctica 南极洲(4)"
+        },
+        {
+          "word": "arch",
+          "pos": "vt. & vi.",
+          "explain": "呈弧形横跨；（使）成弓形"
+        },
+        {
+          "word": "arch",
+          "pos": "n.",
+          "explain": "拱；拱形结构；拱门(1)"
+        },
+        {
+          "word": "arched",
+          "pos": "adj.",
+          "explain": "拱形的；弓形的(1)△Aristotle亚里士多德（古希腊哲学家）(1)"
+        },
+        {
+          "word": "artistic",
+          "pos": "adj.",
+          "explain": "艺术的；艺术家的(1)"
+        },
+        {
+          "word": "assign",
+          "pos": "vt.",
+          "explain": "分派；布置；分配(4)"
+        },
+        {
+          "word": "await",
+          "pos": "vt.",
+          "explain": "等候；期待；将发生在(5)"
+        },
+        {
+          "word": "banjo",
+          "pos": "n.",
+          "explain": "班卓琴（乐器）(4)"
+        },
+        {
+          "word": "bark",
+          "pos": "vi. & n.",
+          "explain": "（狗）吠叫；吠叫声(4)"
+        },
+        {
+          "word": "barren",
+          "pos": "adj.",
+          "explain": "贫瘠的；不结果实的(5)"
+        },
+        {
+          "word": "basin",
+          "pos": "n.",
+          "explain": "流域；盆地；盆(3)"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "The distinctive characteristics of poetry often include economical use of words, descriptive and vivid language, integrated imagery, literary devices such as similes and metaphors, and arrangement of words, lines, rhymes, and rhythm.",
+          "explain": "诗歌的显著特点通常包括用词简洁、语言描述生动、形象、具备整合的意象、使用明喻和暗喻等文学手法以及词、行、韵、节奏等编排有序。",
+          "example": "Poetry is a form of literature that uses concise words, vivid language, integrated imagery, and literary devices like similes and metaphors to express and reflect the spiritual world and social life of people.",
+          "translation": "诗歌是一种文学形式，它使用简洁的词语、生动的语言、整合的意象以及如明喻和暗喻等文学手法来表达和反映人的精神世界和社会生活。"
+        },
+        {
+          "pattern": "different forms of poetry",
+          "explain": "不同种类的诗歌",
+          "example": "Nursery rhymes, cinquain, Haiku, blank verse, free verse, sonnet.",
+          "translation": "儿歌、五行诗、俳句、无韵诗、自由诗、十四行诗。"
+        },
+        {
+          "pattern": "These rhymes, like Poem A, is to the point but has a storyline.",
+          "explain": "这些童谣（如诗歌A）的语言简单明了，但带有故事情节。",
+          "example": "The language of these rhymes, like Poem A, is simple and straightforward but also has a storyline.",
+          "translation": "这些童谣的语言，如诗歌A，简单明了，但同时也带有故事情节。"
+        },
+        {
+          "pattern": "A lot of Tang poetry has been translated into English, such as this one (F).",
+          "explain": "许多唐诗被翻译成英文，比如这一首诗（F）。",
+          "example": "A lot of Tang poetry has been translated into English, such as this one (F).",
+          "translation": "许多唐诗已经被翻译成英文，比如这首诗（F）。"
+        },
+        {
+          "pattern": "Tagore 泰戈尔",
+          "explain": "拉宾德拉纳特·泰戈尔（Rabindranath Tagore）（1861一1941），印度孟加拉语作家、诗人、哲学家、艺术家、社会活动家。",
+          "example": "Rabindranath Tagore was an Indian Bengali writer, poet, philosopher, artist, and social activist.",
+          "translation": "拉宾德拉纳特·泰戈尔是印度孟加拉语作家、诗人、哲学家、艺术家和社会活动家。"
+        },
+        {
+          "pattern": "Elizabeth Barrett Browning 布朗宁夫人",
+          "explain": "伊丽莎白·巴雷特·布朗宁（1806一1861），英国女诗人。",
+          "example": "Elizabeth Barrett Browning was an English poet.",
+          "translation": "伊丽莎白·巴雷特·布朗宁是英国女诗人。"
+        },
+        {
+          "pattern": "the Victorian era 维多利亚时代",
+          "explain": "维多利亚时代指英国维多利亚女王（1819一1901）（Alexandrina Victoria）的统治时期。",
+          "example": "The Victorian era refers to the reign of Queen Victoria of the United Kingdom (1819-1901).",
+          "translation": "维多利亚时代指的是英国维多利亚女王（1819-1901）的统治时期。"
+        },
+        {
+          "pattern": "Langston Hughes 兰斯顿·休斯",
+          "explain": "兰斯顿·休斯（1902一1967），美国黑人诗人、小说家、社会活动家、剧作家和专栏作家。",
+          "example": "Langston Hughes was an American black poet, novelist, social activist, playwright, and columnist.",
+          "translation": "兰斯顿·休斯是美国黑人诗人、小说家、社会活动家、剧作家和专栏作家。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "诗歌 · 韵律与情感",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 140
+      }
+    }
+  ]
+}

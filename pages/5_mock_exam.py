@@ -1,9 +1,11 @@
-"""模拟试卷：VIP 专属，含阅读理解、语言运用、书面写作三个板块。"""
+"""模拟试卷：VIP 专属。完整新高考题型（阅读理解/七选五/完形填空/语法填空/应用文写作/读后续写），
+只抽取当前选中教材的题库题目。"""
 
 from __future__ import annotations
 
 import streamlit as st
 
+from components import book_selector
 from core import auth, database, tutor_ai, vip
 
 user = auth.require_login()
@@ -14,14 +16,15 @@ if not vip.check_vip_permission():
 
 st.title("📝 模拟试卷")
 
-exam = tutor_ai.get_mock_exam()
-st.caption(f"{exam['title']}｜满分 100 分｜建议用时 {exam['duration']} 分钟")
+book = book_selector.render_book_selector()
+exam = tutor_ai.get_mock_exam(book)
+st.caption(f"{exam['title']}｜当前教材：{book}｜满分 100 分｜建议用时 {exam['duration']} 分钟")
 
 
 @st.dialog("开始模拟考试", width="small")
 def confirm_exam_dialog() -> None:
     st.write("模拟考试开始，计时功能为演示版本。")
-    st.caption("交卷后系统会自动评分，并给出各板块得分与学习建议。")
+    st.caption("交卷后系统会自动评分，并给出各题型得分与学习建议。")
     col_cancel, col_start = st.columns(2)
     if col_cancel.button("取消", key="exam_cancel", width="stretch"):
         st.rerun(scope="app")
@@ -31,37 +34,85 @@ def confirm_exam_dialog() -> None:
         st.rerun(scope="app")
 
 
+def _objective_question_ids() -> list[str]:
+    """收集当前试卷所有客观题 id（用于重置答题状态）。"""
+    ids = []
+    for section in exam["sections"]:
+        if section["key"].startswith("writing"):
+            continue
+        if section.get("passages"):
+            for p in section["passages"]:
+                ids.extend(q["id"] for q in p["questions"])
+        else:
+            ids.extend(q["id"] for q in section["questions"])
+    return ids
+
+
 def render_exam_paper() -> None:
     """渲染试卷内容与答题区域。"""
     for section in exam["sections"]:
         with st.container(border=True):
             st.markdown(f"#### {section['name']}（{section['score']} 分）")
+            key = section["key"]
 
-            if section["key"] == "writing":
+            # 写作：应用文 / 读后续写
+            if key == "writing_practical":
                 st.markdown(f"**题目**：{section['prompt']}")
                 for requirement in section["requirements"]:
                     st.markdown(f"- {requirement}")
-                st.text_area(
-                    "作文作答区",
-                    key="exam_writing",
-                    height=220,
-                    placeholder="在此写下你的英语短文…",
-                    label_visibility="collapsed",
-                )
+                st.text_area("应用文作答区", key="exam_writing_practical", height=200,
+                             placeholder="在此写下你的应用文…", label_visibility="collapsed")
                 continue
 
-            if section.get("passage"):
+            if key == "writing_continuation":
+                if section.get("passage"):
+                    st.write(section["passage"])
+                    st.divider()
+                st.markdown(f"**题目**：{section['prompt']}")
+                for requirement in section["requirements"]:
+                    st.markdown(f"- {requirement}")
+                st.text_area("读后续写作答区", key="exam_writing_continuation", height=220,
+                             placeholder="在此续写…", label_visibility="collapsed")
+                continue
+
+            # 七选五：选项 A~G 在 section 级共享
+            if key == "seven_five":
                 st.write(section["passage"])
                 st.divider()
+                st.markdown("**选项**：")
+                for i, opt in enumerate(section["options"]):
+                    st.markdown(f"{chr(65 + i)}. {opt}")
+                st.divider()
+                for q in section["questions"]:
+                    st.markdown(f"**{q['question']}**")
+                    st.radio(q["id"], section["options"], key=f"exam_{q['id']}", label_visibility="collapsed")
+                continue
 
-            for index, question in enumerate(section["questions"], 1):
-                st.markdown(f"**{index}. {question['question']}**")
-                st.radio(
-                    f"{section['key']}-{question['id']}",
-                    question["options"],
-                    key=f"exam_{question['id']}",
-                    label_visibility="collapsed",
-                )
+            # 阅读理解：多篇 passage
+            if key == "reading":
+                for p in section["passages"]:
+                    st.write(p["passage"])
+                    st.divider()
+                    for q in p["questions"]:
+                        st.markdown(f"**{q['question']}**")
+                        st.radio(q["id"], q["options"], key=f"exam_{q['id']}", label_visibility="collapsed")
+                continue
+
+            # 完形填空：每空 4 选项
+            if key == "cloze":
+                st.write(section["passage"])
+                st.divider()
+                for q in section["questions"]:
+                    st.markdown(f"**{q['question']}**")
+                    st.radio(q["id"], q["options"], key=f"exam_{q['id']}", label_visibility="collapsed")
+                continue
+
+            # 语法填空：自由填词
+            if key == "grammar_blank":
+                st.write(section["passage"])
+                st.divider()
+                for q in section["questions"]:
+                    st.text_input(q["question"], key=f"exam_{q['id']}")
 
 
 def render_exam_result(result: dict) -> None:
@@ -79,7 +130,8 @@ def render_exam_result(result: dict) -> None:
             mark = "✅" if item["is_right"] else "❌"
             st.markdown(f"{mark} **{item['question']}**")
             st.caption(f"你的答案：{item['your_answer']}　｜　正确答案：{item['answer']}")
-            st.caption(f"解析：{item['explain']}")
+            if item["explain"]:
+                st.caption(f"解析：{item['explain']}")
 
     with st.expander("查看写作点评", expanded=True):
         for note in result["writing_notes"]:
@@ -88,10 +140,10 @@ def render_exam_result(result: dict) -> None:
     if st.button("再考一次", key="exam_restart"):
         st.session_state["exam_started"] = False
         st.session_state.pop("exam_result", None)
-        for section in exam["sections"]:
-            for question in section["questions"]:
-                st.session_state.pop(f"exam_{question['id']}", None)
-        st.session_state.pop("exam_writing", None)
+        for qid in _objective_question_ids():
+            st.session_state.pop(f"exam_{qid}", None)
+        st.session_state.pop("exam_writing_practical", None)
+        st.session_state.pop("exam_writing_continuation", None)
         st.rerun()
 
 
@@ -102,7 +154,8 @@ elif not st.session_state.get("exam_started"):
     with st.container(border=True):
         st.markdown("#### 开始前须知")
         st.markdown(
-            "- 试卷包含阅读理解、语言运用、书面写作三个板块，满分 100 分\n"
+            "- 试卷含阅读理解、七选五、完形填空、语法填空、应用文写作、读后续写六个题型，满分 100 分\n"
+            "- 题型种类与出题逻辑贴近新高考，仅题量缩减\n"
             "- 演示版本的计时功能仅作展示，不会自动交卷\n"
             "- 写作部分按词数、句数、连接词使用与语法错误四个角度评分"
         )
@@ -112,23 +165,25 @@ else:
     render_exam_paper()
     if st.button("交卷", type="primary", key="exam_submit", width="stretch"):
         answers = {
-            question["id"]: st.session_state.get(f"exam_{question['id']}")
-            for section in exam["sections"]
-            for question in section["questions"]
+            qid: st.session_state.get(f"exam_{qid}")
+            for qid in _objective_question_ids()
         }
-        writing_text = st.session_state.get("exam_writing", "")
+        writings = {
+            "writing_practical": st.session_state.get("exam_writing_practical", ""),
+            "writing_continuation": st.session_state.get("exam_writing_continuation", ""),
+        }
 
-        if any(value is None for value in answers.values()) and not writing_text.strip():
+        if all(value is None for value in answers.values()) and not any(writings.values()):
             st.toast("还没有作答，请完成后交卷", icon="⚠️")
         else:
             with st.spinner("AI 正在阅卷…"):
-                graded = tutor_ai.grade_mock_exam(answers, writing_text)
+                graded = tutor_ai.grade_mock_exam(book, answers, writings)
             st.session_state["exam_result"] = graded
             database.add_learning_record(
                 user["username"],
                 {
                     "module": "模拟试卷",
-                    "unit": st.session_state.get("current_unit", ""),
+                    "unit": f"{book}·模拟卷",
                     "score": graded["total"],
                     "level": tutor_ai.mastery_level(graded["total"]),
                 },

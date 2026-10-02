@@ -50,6 +50,7 @@ ADMIN_SECTIONS = ("用户管理", "消费记录", "客服留言")
 def init_session_state() -> None:
     """初始化全局会话状态，页面切换时这些状态不会丢失。"""
     st.session_state.setdefault("current_user", None)
+    st.session_state.setdefault("current_book", "必修一")
     st.session_state.setdefault("current_unit", "Unit1 Teenage Life")
     st.session_state.setdefault("learning_records", [])
     st.session_state.setdefault("_current_page", None)

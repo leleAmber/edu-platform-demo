@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import json
 import os
 import secrets
 import threading
@@ -264,6 +265,36 @@ _SCHEMA_STATEMENTS = (
       KEY idx_records_user_time (username, created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     """,
+    """
+    CREATE TABLE IF NOT EXISTS question_bank (
+      id                  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+      content_hash        CHAR(40)        NOT NULL,
+      book                VARCHAR(50)     NULL,
+      grade               VARCHAR(20)     NOT NULL DEFAULT '高一',
+      module              VARCHAR(20)     NOT NULL,
+      unit                VARCHAR(100)    NULL,
+      qtype               VARCHAR(20)     NOT NULL,
+      passage             TEXT            NULL,
+      question            TEXT            NOT NULL,
+      options             TEXT            NULL,
+      answer              TEXT            NULL,
+      explanation         TEXT            NULL,
+      writing_prompt      TEXT            NULL,
+      writing_requirements TEXT           NULL,
+      score               INT             NOT NULL DEFAULT 1,
+      difficulty          TINYINT         NOT NULL DEFAULT 2,
+      status              TINYINT(1)      NOT NULL DEFAULT 1,
+      source              VARCHAR(20)     NOT NULL DEFAULT 'llm',
+      created_at          DATETIME        NOT NULL,
+      PRIMARY KEY (id),
+      UNIQUE KEY uk_qb_hash (content_hash),
+      KEY idx_qb_book (book),
+      KEY idx_qb_grade_module (grade, module),
+      KEY idx_qb_unit (unit),
+      KEY idx_qb_qtype (qtype),
+      KEY idx_qb_status (status)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    """,
 )
 
 
@@ -273,8 +304,21 @@ def init_schema() -> None:
     with _raw_connect() as conn:
         for statement in _SCHEMA_STATEMENTS:
             conn.execute(text(statement))
+        _migrate_question_bank(conn)
         _seed_accounts(conn)
     _SCHEMA_READY = True
+
+
+def _migrate_question_bank(conn) -> None:
+    """给已存在的 question_bank 表补 book 列（CREATE TABLE IF NOT EXISTS 不会改已有表）。"""
+    try:
+        conn.execute(text("ALTER TABLE question_bank ADD COLUMN book VARCHAR(50) NULL AFTER content_hash"))
+    except Exception:
+        pass
+    try:
+        conn.execute(text("ALTER TABLE question_bank ADD KEY idx_qb_book (book)"))
+    except Exception:
+        pass
 
 
 def _ensure_schema() -> None:
@@ -363,6 +407,50 @@ def _record_row(row) -> dict:
         "unit": data["unit"] or "",
         "score": data["score"],
         "level": data["level"] or "",
+    }
+
+
+def _json_list(value) -> list:
+    """把 JSON 字符串安全转成 list；空值或非法 JSON 时返回空列表。"""
+    if not value:
+        return []
+    try:
+        parsed = json.loads(value)
+    except (TypeError, ValueError):
+        return []
+    return parsed if isinstance(parsed, list) else []
+
+
+def _json_text(value) -> str | None:
+    """把 list 序列化成 JSON 文本；空值返回 None。"""
+    if not value:
+        return None
+    return json.dumps(value, ensure_ascii=False)
+
+
+def _question_row(row) -> dict:
+    """把题库行转成字典，JSON 列反序列化为 list。"""
+    data = dict(row)
+    return {
+        "id": int(data["id"]),
+        "content_hash": data["content_hash"],
+        "book": data["book"] or "",
+        "grade": data["grade"],
+        "module": data["module"],
+        "unit": data["unit"] or "",
+        "qtype": data["qtype"],
+        "passage": data["passage"] or "",
+        "question": data["question"] or "",
+        "options": _json_list(data["options"]),
+        "answer": data["answer"] or "",
+        "explain": data["explanation"] or "",
+        "writing_prompt": data["writing_prompt"] or "",
+        "writing_requirements": _json_list(data["writing_requirements"]),
+        "score": int(data["score"]),
+        "difficulty": int(data["difficulty"]),
+        "status": int(data["status"]),
+        "source": data["source"],
+        "created_at": _to_text(data["created_at"]),
     }
 
 
@@ -608,3 +696,160 @@ def get_learning_records(username: str, limit: int = 50) -> list[dict]:
             {"username": target, "limit": int(limit)},
         ).mappings().all()
     return [_record_row(row) for row in rows]
+
+
+# --------------------------------------------------------------------------- #
+# 题库（离线脚本批量生成、页面按题型随机抽取组卷）
+# --------------------------------------------------------------------------- #
+def add_question(q: dict) -> int | None:
+    """新增一道题，返回内部主键；内容 hash 重复时返回 None（静默跳过）。
+
+    q 里的 options / writing_requirements 传 list，入库前自动序列化为 JSON 文本。
+    """
+    content_hash = str(q.get("content_hash", "") or "").strip()
+    if not content_hash:
+        return None
+    try:
+        with _connect() as conn:
+            result = conn.execute(
+                text(
+                    "INSERT INTO question_bank "
+                    "(content_hash, book, grade, module, unit, qtype, passage, question, options, "
+                    " answer, explanation, writing_prompt, writing_requirements, score, difficulty, "
+                    " status, source, created_at) "
+                    "VALUES (:content_hash, :book, :grade, :module, :unit, :qtype, :passage, :question, "
+                    " :options, :answer, :explanation, :writing_prompt, :writing_requirements, :score, "
+                    " :difficulty, :status, :source, :created_at)"
+                ),
+                {
+                    "content_hash": content_hash,
+                    "book": str(q.get("book", "") or "") or None,
+                    "grade": str(q.get("grade", "高一")),
+                    "module": str(q.get("module", "")),
+                    "unit": str(q.get("unit", "") or "") or None,
+                    "qtype": str(q.get("qtype", "")),
+                    "passage": q.get("passage") or None,
+                    "question": str(q.get("question", "") or ""),
+                    "options": _json_text(q.get("options")),
+                    "answer": q.get("answer") or None,
+                    "explanation": q.get("explain") or None,
+                    "writing_prompt": q.get("writing_prompt") or None,
+                    "writing_requirements": _json_text(q.get("writing_requirements")),
+                    "score": int(q.get("score", 1) or 1),
+                    "difficulty": int(q.get("difficulty", 2) or 2),
+                    "status": int(q.get("status", 1)),
+                    "source": str(q.get("source", "llm")),
+                    "created_at": datetime.now(),
+                },
+            )
+            new_id = result.lastrowid
+    except IntegrityError:
+        return None
+    return int(new_id)
+
+
+def has_question(content_hash: str) -> bool:
+    """判断某道题（按内容 hash）是否已在库中。"""
+    target = (content_hash or "").strip()
+    if not target:
+        return False
+    with _connect() as conn:
+        row = conn.execute(
+            text("SELECT 1 FROM question_bank WHERE content_hash = :h LIMIT 1"),
+            {"h": target},
+        ).first()
+    return row is not None
+
+
+def get_questions(
+    book: str | None = None,
+    grade: str | None = None,
+    module: str | None = None,
+    unit: str | None = None,
+    qtype: str | None = None,
+    status: int | None = 1,
+    limit: int = 500,
+) -> list[dict]:
+    """按条件筛选题目；无任何条件时返回最近的 limit 条。"""
+    clauses = []
+    params: dict = {"limit": int(limit)}
+    if book:
+        clauses.append("book = :book")
+        params["book"] = book
+    if grade:
+        clauses.append("grade = :grade")
+        params["grade"] = grade
+    if module:
+        clauses.append("module = :module")
+        params["module"] = module
+    if unit:
+        clauses.append("unit = :unit")
+        params["unit"] = unit
+    if qtype:
+        clauses.append("qtype = :qtype")
+        params["qtype"] = qtype
+    if status is not None:
+        clauses.append("status = :status")
+        params["status"] = int(status)
+    where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
+    with _connect() as conn:
+        rows = conn.execute(
+            text(f"SELECT * FROM question_bank{where} ORDER BY id DESC LIMIT :limit"),
+            params,
+        ).mappings().all()
+    return [_question_row(row) for row in rows]
+
+
+def get_random_questions(
+    grade: str, module: str, qtype: str | None = None, n: int = 5, book: str | None = None
+) -> list[dict]:
+    """随机抽取 n 道启用中的题目（供组卷）。"""
+    clauses = ["grade = :grade", "module = :module", "status = 1"]
+    params: dict = {"grade": grade, "module": module, "n": int(n)}
+    if book:
+        clauses.append("book = :book")
+        params["book"] = book
+    if qtype:
+        clauses.append("qtype = :qtype")
+        params["qtype"] = qtype
+    where = " WHERE " + " AND ".join(clauses)
+    with _connect() as conn:
+        rows = conn.execute(
+            text(f"SELECT * FROM question_bank{where} ORDER BY RAND() LIMIT :n"),
+            params,
+        ).mappings().all()
+    return [_question_row(row) for row in rows]
+
+
+def count_questions(
+    book: str | None = None,
+    grade: str | None = None,
+    module: str | None = None,
+    unit: str | None = None,
+    qtype: str | None = None,
+    status: int | None = 1,
+) -> int:
+    """统计符合条件的题目数量。"""
+    clauses = []
+    params: dict = {}
+    if book:
+        clauses.append("book = :book")
+        params["book"] = book
+    if grade:
+        clauses.append("grade = :grade")
+        params["grade"] = grade
+    if module:
+        clauses.append("module = :module")
+        params["module"] = module
+    if unit:
+        clauses.append("unit = :unit")
+        params["unit"] = unit
+    if qtype:
+        clauses.append("qtype = :qtype")
+        params["qtype"] = qtype
+    if status is not None:
+        clauses.append("status = :status")
+        params["status"] = int(status)
+    where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
+    with _connect() as conn:
+        return conn.execute(text(f"SELECT COUNT(*) FROM question_bank{where}"), params).scalar()

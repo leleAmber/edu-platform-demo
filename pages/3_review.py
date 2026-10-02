@@ -1,84 +1,101 @@
-"""课本复习：单元知识点总览（词汇 / 语法 / 语篇）与单元练习、7 天错题巩固计划。"""
+"""课本复习：单词复盘 + 重点句型梳理 + 巩固练习（内容只来自当前选中教材）。"""
 
 from __future__ import annotations
 
 import streamlit as st
 
-from components.cards import status_tag
+from components import book_selector
+from components.cards import knowledge_card, status_tag
 from core import auth, database, tutor_ai
 
 user = auth.require_login()
 st.title("🔄 课本复习")
-st.caption("先看知识点掌握情况，再用 5 道题检验，最后生成 7 天错题巩固计划。")
+st.caption("复盘本单元单词与重点句型，再用巩固练习查漏补缺。")
 
-unit = st.selectbox(
-    "选择学习单元",
-    tutor_ai.UNITS,
-    key="current_unit",
-    help="与首页、预习页面共用同一个单元选择",
-)
-content = tutor_ai.get_unit_content(unit)
+book, unit = book_selector.render_selectors()
+content = tutor_ai.get_unit_content(book, unit)
 
-tab_knowledge, tab_practice = st.tabs(["单元知识点总览", "单元练习题"], key="review_tabs")
+tab_words, tab_patterns, tab_practice = st.tabs(["单词复盘", "重点句型梳理", "巩固练习"], key="review_tabs")
 
 # --------------------------------------------------------------------------- #
-# Tab1 单元知识点总览
+# Tab1 单词复盘
 # --------------------------------------------------------------------------- #
-with tab_knowledge:
-    st.subheader("知识点掌握情况")
-    modules = (("vocab", "词汇模块"), ("grammar", "语法模块"), ("discourse", "语篇模块"))
-    for key, label in modules:
-        module = content["knowledge"][key]
-        mastery = module["mastery"]
-        tag_type = "success" if mastery >= 85 else ("warn" if mastery >= 70 else "danger")
-        with st.container(border=True):
-            col_title, col_tag = st.columns([3, 1], vertical_alignment="center")
-            with col_title:
-                st.markdown(f"**{label}｜{module['summary']}**")
-            with col_tag:
-                status_tag(f"掌握度 {mastery}%", tag_type)
-            for point in module["points"]:
-                st.markdown(f"- {point}")
-
-    st.divider()
-    st.subheader("单词掌握统计")
-    stats = content["vocab_stats"]
+with tab_words:
+    st.subheader("单词复盘")
+    stats = content.get("vocab_stats", {})
     col_mastered, col_review = st.columns(2)
-    col_mastered.metric("已掌握词汇", f"{stats['mastered']} 个", border=True)
-    col_review.metric("待巩固词汇", f"{stats['to_review']} 个", border=True)
-    st.caption("待巩固词汇会在 7 天复习计划中自动安排背诵任务。")
+    col_mastered.metric("已掌握词汇", f"{stats.get('mastered', 0)} 个", border=True)
+    col_review.metric("待巩固词汇", f"{stats.get('to_review', 0)} 个", border=True)
+
+    words = content["words"]
+    if not words:
+        st.info("本单元暂无单词数据，请先运行 scripts/extract_textbooks.py 生成教材内容。")
+    else:
+        st.divider()
+        st.caption("完整单词表（词性 + 中文释义），复盘时遮住释义自测。")
+        word_columns = st.columns(3)
+        for index, word in enumerate(words):
+            with word_columns[index % 3]:
+                knowledge_card(
+                    word.get("word", ""),
+                    word.get("pos", ""),
+                    word.get("explain", ""),
+                    word.get("sentence", ""),
+                )
 
 # --------------------------------------------------------------------------- #
-# Tab2 单元练习题
+# Tab2 重点句型梳理
+# --------------------------------------------------------------------------- #
+with tab_patterns:
+    st.subheader("重点句型梳理")
+    patterns = content.get("sentence_patterns", [])
+    if not patterns:
+        st.info("本单元暂无句型数据。")
+    else:
+        for index, item in enumerate(patterns, 1):
+            with st.container(border=True):
+                st.markdown(f"**句型 {index}｜{item.get('pattern', '')}**")
+                if item.get("explain"):
+                    st.markdown(f"{item['explain']}")
+                if item.get("example"):
+                    st.caption(f"例句：{item['example']}")
+                if item.get("translation"):
+                    st.caption(f"翻译：{item['translation']}")
+
+# --------------------------------------------------------------------------- #
+# Tab3 巩固练习
 # --------------------------------------------------------------------------- #
 with tab_practice:
-    st.subheader("单元练习（共 5 题）")
+    st.subheader("巩固练习（共 5 题）")
     questions = content["review_quiz"]
 
-    for index, question in enumerate(questions):
-        st.markdown(f"**{index + 1}. {question['question']}**")
-        st.radio(
-            f"第 {index + 1} 题",
-            question["options"],
-            key=f"review_q_{unit}_{index}",
-            label_visibility="collapsed",
-        )
+    if not questions:
+        st.info("本单元暂无练习题（题库不足）。生成后会自动从题库抽取。")
+    else:
+        for index, question in enumerate(questions):
+            st.markdown(f"**{index + 1}. {question['question']}**")
+            st.radio(
+                f"第 {index + 1} 题",
+                question["options"],
+                key=f"review_q_{unit}_{index}",
+                label_visibility="collapsed",
+            )
 
-    if st.button("提交作答", type="primary", key=f"review_submit_{unit}"):
-        answers = {str(index): st.session_state.get(f"review_q_{unit}_{index}") for index in range(len(questions))}
-        if any(value is None for value in answers.values()):
-            st.toast("还有题目没有作答，请全部完成后提交", icon="⚠️")
-        else:
-            result = tutor_ai.grade_quiz(unit, "review", answers)
-            mastery, level = tutor_ai.get_mastery_score(
-                seed=f"{unit}-review-{result['correct_count']}", base=result["score"]
-            )
-            result.update({"unit": unit, "mastery": mastery, "level": level})
-            st.session_state["review_result"] = result
-            database.add_learning_record(
-                user["username"],
-                {"module": "课本复习", "unit": unit, "score": result["score"], "level": level},
-            )
+        if st.button("提交作答", type="primary", key=f"review_submit_{unit}"):
+            answers = {str(index): st.session_state.get(f"review_q_{unit}_{index}") for index in range(len(questions))}
+            if any(value is None for value in answers.values()):
+                st.toast("还有题目没有作答，请全部完成后提交", icon="⚠️")
+            else:
+                result = tutor_ai.grade_quiz(book, unit, "review", answers)
+                mastery, level = tutor_ai.get_mastery_score(
+                    seed=f"{book}-{unit}-review-{result['correct_count']}", base=result["score"]
+                )
+                result.update({"unit": unit, "mastery": mastery, "level": level})
+                st.session_state["review_result"] = result
+                database.add_learning_record(
+                    user["username"],
+                    {"module": "课本复习", "unit": f"{book}·{unit}", "score": result["score"], "level": level},
+                )
 
     result = st.session_state.get("review_result")
     if result and result.get("unit") == unit:
@@ -99,7 +116,7 @@ with tab_practice:
                 st.caption(f"解析：{item['explain']}")
 
         if st.button("生成 7 天错题巩固计划", key=f"review_plan_{unit}"):
-            st.session_state["review_plan"] = tutor_ai.gen_study_plan("review", unit)
+            st.session_state["review_plan"] = tutor_ai.gen_study_plan("review", unit, book)
             st.toast("已生成 7 天错题巩固计划", icon="🗓️")
 
     plan = st.session_state.get("review_plan")

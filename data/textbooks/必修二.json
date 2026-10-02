@@ -1,0 +1,2871 @@
+{
+  "key": "必修二",
+  "name": "人教版必修第二册",
+  "grade": "高一",
+  "units": [
+    {
+      "unit": "Unit1 Cultural Heritage",
+      "theme": "文化遗产 · 保护与传承",
+      "words": [
+        {
+          "word": "heritage",
+          "pos": "n.",
+          "explain": "遗产（指国家或社会长期形成的历史、传统和特色）"
+        },
+        {
+          "word": "creatively",
+          "pos": "adv.",
+          "explain": "创造性地；有创造力地"
+        },
+        {
+          "word": "creative",
+          "pos": "adj.",
+          "explain": "创造性的；有创造力的；有创意的"
+        },
+        {
+          "word": "temple n.",
+          "pos": "",
+          "explain": "庙；寺"
+        },
+        {
+          "word": "relic",
+          "pos": "n.",
+          "explain": "遗物；遗迹"
+        },
+        {
+          "word": "mount",
+          "pos": "n.",
+          "explain": "山峰"
+        },
+        {
+          "word": "mount",
+          "pos": "vt.",
+          "explain": "爬上；骑上"
+        },
+        {
+          "word": "mount",
+          "pos": "vi.",
+          "explain": "爬；登上"
+        },
+        {
+          "word": "former",
+          "pos": "adj.",
+          "explain": "以前的；（两者中）前者的"
+        },
+        {
+          "word": "clue",
+          "pos": "n.",
+          "explain": "线索；提示"
+        },
+        {
+          "word": "preserve",
+          "pos": "vt.",
+          "explain": "保存；保护；维持"
+        },
+        {
+          "word": "preserve",
+          "pos": "n.",
+          "explain": "保护区"
+        },
+        {
+          "word": "promote",
+          "pos": "vt.",
+          "explain": "促进；提升；推销；晋级"
+        },
+        {
+          "word": "cypress",
+          "pos": "n.",
+          "explain": "柏树"
+        },
+        {
+          "word": "app",
+          "pos": "n.",
+          "explain": "应用程序；应用软件（application 的缩略形式）"
+        },
+        {
+          "word": "application",
+          "pos": "n.",
+          "explain": "申请（表）；用途；运用；应用（程序）"
+        },
+        {
+          "word": "take part in",
+          "pos": "",
+          "explain": "参与（某事）；参加（某活动）"
+        },
+        {
+          "word": "give way to",
+          "pos": "",
+          "explain": "让步；屈服"
+        },
+        {
+          "word": "balance",
+          "pos": "n.",
+          "explain": "平衡；均匀"
+        },
+        {
+          "word": "balance",
+          "pos": "vt.",
+          "explain": "使平衡"
+        },
+        {
+          "word": "keep a balance",
+          "pos": "",
+          "explain": "保持平衡"
+        },
+        {
+          "word": "lead to",
+          "pos": "",
+          "explain": "导致"
+        },
+        {
+          "word": "dam",
+          "pos": "n.",
+          "explain": "水坝；拦河坝"
+        },
+        {
+          "word": "proposal",
+          "pos": "n.",
+          "explain": "提议；建议"
+        },
+        {
+          "word": "make a proposal",
+          "pos": "",
+          "explain": "提出建议"
+        },
+        {
+          "word": "protest",
+          "pos": "n.",
+          "explain": "抗议"
+        },
+        {
+          "word": "protest",
+          "pos": "vi. & vt.",
+          "explain": "（公开）反对；抗议"
+        },
+        {
+          "word": "likely",
+          "pos": "adj.",
+          "explain": "可能的"
+        },
+        {
+          "word": "likely",
+          "pos": "adv.",
+          "explain": "可能地"
+        },
+        {
+          "word": "turn to",
+          "pos": "",
+          "explain": "向……求助"
+        },
+        {
+          "word": "committee",
+          "pos": "n.",
+          "explain": "委员会"
+        },
+        {
+          "word": "establish",
+          "pos": "vt.",
+          "explain": "建立；创立"
+        },
+        {
+          "word": "limit",
+          "pos": "n.",
+          "explain": "限度；限制"
+        },
+        {
+          "word": "limit",
+          "pos": "vt.",
+          "explain": "限制；限定"
+        },
+        {
+          "word": "prevent",
+          "pos": "vt.",
+          "explain": "阻止；阻碍；阻挠"
+        },
+        {
+          "word": "prevent … from …",
+          "pos": "",
+          "explain": "阻止；不准"
+        },
+        {
+          "word": "loss",
+          "pos": "n.",
+          "explain": "丧失；损失"
+        },
+        {
+          "word": "contribution ",
+          "pos": "n.",
+          "explain": "捐款；贡献；捐赠"
+        },
+        {
+          "word": "contribute",
+          "pos": "vi. & vt.",
+          "explain": "捐献；捐助"
+        },
+        {
+          "word": "department",
+          "pos": "n.",
+          "explain": "部；司；科"
+        },
+        {
+          "word": "fund",
+          "pos": "n.",
+          "explain": "基金；专款在（某段时间、距离或范围）之内"
+        },
+        {
+          "word": "investigate",
+          "pos": "vi. & vt.",
+          "explain": "调查；研究"
+        },
+        {
+          "word": "issue",
+          "pos": "n.",
+          "explain": "重要议题；争论的问题"
+        },
+        {
+          "word": "issue",
+          "pos": "vt.",
+          "explain": "宣布；公布"
+        },
+        {
+          "word": "conduct",
+          "pos": "n.",
+          "explain": "行为；举止；管理方法"
+        },
+        {
+          "word": "conduct",
+          "pos": "vt.",
+          "explain": "组织；安排；带领"
+        },
+        {
+          "word": "document",
+          "pos": "n.",
+          "explain": "文件；公文；（计算机）文档"
+        },
+        {
+          "word": "document",
+          "pos": "vt.",
+          "explain": "记录；记载( 详情)"
+        },
+        {
+          "word": "donate",
+          "pos": "vt.",
+          "explain": "（尤指向慈善机构）捐赠；赠送；献（血）"
+        },
+        {
+          "word": "donate … to …",
+          "pos": "",
+          "explain": "向……捐赠……"
+        },
+        {
+          "word": "disappear",
+          "pos": "vi.",
+          "explain": "消失；灭绝；消亡"
+        },
+        {
+          "word": "attempt",
+          "pos": "n. & vt.",
+          "explain": "企图；试图；尝试"
+        },
+        {
+          "word": "make sure",
+          "pos": "",
+          "explain": "确保；设法保证"
+        },
+        {
+          "word": "worthwhile",
+          "pos": "adj.",
+          "explain": "值得做的；值得花时间的"
+        },
+        {
+          "word": "download ",
+          "pos": "vt.",
+          "explain": "下载 n. 下载；已下载的数据资料"
+        },
+        {
+          "word": "republic",
+          "pos": "n.",
+          "explain": "共和国"
+        },
+        {
+          "word": "professional",
+          "pos": "adj.",
+          "explain": "专业的；职业的"
+        },
+        {
+          "word": "professional",
+          "pos": "n.",
+          "explain": "专业人员；职业选手"
+        },
+        {
+          "word": "archaeologist",
+          "pos": "n.",
+          "explain": "考古学家"
+        },
+        {
+          "word": "entrance",
+          "pos": "n.",
+          "explain": "入口；进入"
+        },
+        {
+          "word": "pyramid",
+          "pos": "n.",
+          "explain": "（古埃及的）金字塔；棱锥体"
+        },
+        {
+          "word": "process",
+          "pos": "n.",
+          "explain": "过程；进程；步骤"
+        },
+        {
+          "word": "process",
+          "pos": "vt.",
+          "explain": "处理；加工"
+        },
+        {
+          "word": "overseas",
+          "pos": "adj.",
+          "explain": "海外的"
+        },
+        {
+          "word": "overseas",
+          "pos": "adv.",
+          "explain": "在海外"
+        },
+        {
+          "word": "exit",
+          "pos": "n.",
+          "explain": "出口；通道"
+        },
+        {
+          "word": "exit",
+          "pos": "vi. & vt.",
+          "explain": "出去；离去"
+        },
+        {
+          "word": "sheet",
+          "pos": "n.",
+          "explain": "一张（纸）；床单；被单"
+        },
+        {
+          "word": "parade",
+          "pos": "n.",
+          "explain": "游行；检阅"
+        },
+        {
+          "word": "parade",
+          "pos": "vi.",
+          "explain": "游行庆祝；游行示威"
+        },
+        {
+          "word": "mirror",
+          "pos": "n.",
+          "explain": "镜子"
+        },
+        {
+          "word": "roof",
+          "pos": "n.",
+          "explain": "顶部；屋顶"
+        },
+        {
+          "word": "dragon",
+          "pos": "n.",
+          "explain": "龙"
+        },
+        {
+          "word": "forgive",
+          "pos": "vt. & vi.",
+          "explain": "（forgave, forgiven）原谅；宽恕"
+        },
+        {
+          "word": "forgive",
+          "pos": "vt.",
+          "explain": "对不起；请原谅"
+        },
+        {
+          "word": "digital",
+          "pos": "adj.",
+          "explain": "数码的；数字显示的"
+        },
+        {
+          "word": "image",
+          "pos": "n.",
+          "explain": "形象；印象"
+        },
+        {
+          "word": "cave",
+          "pos": "n.",
+          "explain": "山洞；洞穴"
+        },
+        {
+          "word": "throughout",
+          "pos": "prep.",
+          "explain": "各处；遍及；自始至终"
+        },
+        {
+          "word": "quality",
+          "pos": "n.",
+          "explain": "质量；品质；素质；特征"
+        },
+        {
+          "word": "quality",
+          "pos": "adj.",
+          "explain": "优质的；高质量的"
+        },
+        {
+          "word": "all over the world",
+          "pos": "",
+          "explain": "在世界各地"
+        },
+        {
+          "word": "tradition",
+          "pos": "n.",
+          "explain": "传统；传统的信仰或风俗"
+        },
+        {
+          "word": "further",
+          "pos": "adv.",
+          "explain": "（far 的比较级）更远；进一步"
+        },
+        {
+          "word": "historic",
+          "pos": "adj.",
+          "explain": "历史上著名（或重要）的；有史时期的"
+        },
+        {
+          "word": "opinion",
+          "pos": "n.",
+          "explain": "意见；想法；看法"
+        },
+        {
+          "word": "quote",
+          "pos": "vt.",
+          "explain": "引用"
+        },
+        {
+          "word": "paraphrase",
+          "pos": "n.",
+          "explain": ", vi. & vt.（用更容易理解的文字）解释"
+        },
+        {
+          "word": "comparison",
+          "pos": "n.",
+          "explain": "比较；相比"
+        },
+        {
+          "word": "contrast",
+          "pos": "n.",
+          "explain": "对比；对照"
+        },
+        {
+          "word": "contrast",
+          "pos": "vt.",
+          "explain": "对比；对照"
+        },
+        {
+          "word": "identify",
+          "pos": "vt.",
+          "explain": "确认；认出；找到"
+        },
+        {
+          "word": "forever",
+          "pos": "adv.",
+          "explain": "永远; 长久地"
+        },
+        {
+          "word": "Aswan Dam",
+          "pos": "",
+          "explain": "阿斯旺大坝"
+        },
+        {
+          "word": "the Nile",
+          "pos": "",
+          "explain": "尼罗河"
+        },
+        {
+          "word": "Egypt",
+          "pos": "",
+          "explain": "埃及（国家名）"
+        },
+        {
+          "word": "Egyptian",
+          "pos": "adj.",
+          "explain": "埃及的联合国教科文组织"
+        },
+        {
+          "word": "Cairo",
+          "pos": "",
+          "explain": "开罗（埃及首都）"
+        },
+        {
+          "word": "Tanzania",
+          "pos": "",
+          "explain": "坦桑尼亚（国家名）"
+        },
+        {
+          "word": "the Kremlin",
+          "pos": "",
+          "explain": "克里姆林（宫）"
+        },
+        {
+          "word": "Moscow",
+          "pos": "",
+          "explain": "莫斯科（俄罗斯首都）圣瓦西里大教堂"
+        },
+        {
+          "word": "Chiwen",
+          "pos": "",
+          "explain": "鸱吻"
+        },
+        {
+          "word": "the Forbidden City",
+          "pos": "",
+          "explain": "紫禁城"
+        },
+        {
+          "word": "Los Angeles",
+          "pos": "",
+          "explain": "洛杉矶（美国城市）"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "There comes a time when ...",
+          "explain": "when引导的限制性定语从句，修饰先行词a time",
+          "example": "There comes a time when the old must give way to the new",
+          "translation": "新旧更替的时代已经到来"
+        },
+        {
+          "pattern": "give way to sth",
+          "explain": "顺从；让步",
+          "example": "The company finally gave way to the customer’s complaints.",
+          "translation": "面对顾客的投诉，公司最终还是让步了"
+        },
+        {
+          "pattern": "the Nile",
+          "explain": "尼罗河",
+          "example": "the Nile",
+          "translation": "尼罗河"
+        },
+        {
+          "pattern": "the United Nations",
+          "explain": "联合国",
+          "example": "the United Nations",
+          "translation": "联合国"
+        },
+        {
+          "pattern": "Not only had the countries found a path to the future that did not run over the relics of the past, but they had also learnt that it was possible for countries to work together to build a better tomorrow.",
+          "explain": "由not only ... but also ... 所连接的复合句，表示‘不仅……而且……’",
+          "example": "Not only had the countries found a path to the future that did not run over the relics of the past, but they had also learnt that it was possible for countries to work together to build a better tomorrow.",
+          "translation": "这些国家不仅找到了一条不以牺牲古迹为代价的未来发展之路，而且明白了多个国家合作创造美好未来的可能性"
+        },
+        {
+          "pattern": "run over",
+          "explain": "原本有‘（车辆）撞倒并碾轧’之意，此处表示‘损毁’‘遗忘’（古迹）",
+          "example": "The teacher ran over his teaching notes before giving his lesson.",
+          "translation": "老师上课前很快看了一遍教案"
+        },
+        {
+          "pattern": "UNESCO",
+          "explain": "联合国教科文组织",
+          "example": "UNESCO",
+          "translation": "联合国教科文组织"
+        },
+        {
+          "pattern": "the Kremlin and Red Square, Moscow",
+          "explain": "莫斯科的克里姆林宫和红场",
+          "example": "the Kremlin and Red Square, Moscow",
+          "translation": "莫斯科的克里姆林宫和红场"
+        },
+        {
+          "pattern": "the Mogao Caves",
+          "explain": "莫高窟",
+          "example": "the Mogao Caves",
+          "translation": "莫高窟"
+        },
+        {
+          "pattern": "By sharing so many digital photos over the Internet",
+          "explain": "通过在互联网上分享大量电子照片",
+          "example": "By sharing so many digital photos over the Internet",
+          "translation": "这些科学家和研究者在网络上分享了大量（有关莫高窟的）电子照片"
+        },
+        {
+          "pattern": "promote",
+          "explain": "促进；鼓励、提倡",
+          "example": "Enough sunlight and water can promote rapid growth in plants.",
+          "translation": "充足的阳光和水分能够促进植物的快速生长"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "文化遗产 · 保护与传承",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 104
+      }
+    },
+    {
+      "unit": "Unit2 Wildlife Protection",
+      "theme": "野生动物保护 · 人与自然",
+      "words": [
+        {
+          "word": "poster ",
+          "pos": "n.",
+          "explain": "海报"
+        },
+        {
+          "word": "illegal ",
+          "pos": "adj.",
+          "explain": "不合法的；非法的"
+        },
+        {
+          "word": "illegally ",
+          "pos": "adv.",
+          "explain": "不合法地；非法地"
+        },
+        {
+          "word": "hunt ",
+          "pos": "vt. & vi.",
+          "explain": "打猎；搜寻；追捕"
+        },
+        {
+          "word": "hunter ",
+          "pos": "n.",
+          "explain": "猎人"
+        },
+        {
+          "word": "immediately ",
+          "pos": "adv.",
+          "explain": "立刻"
+        },
+        {
+          "word": "species ",
+          "pos": "n.",
+          "explain": "物种"
+        },
+        {
+          "word": "shark ",
+          "pos": "n.",
+          "explain": "鲨鱼"
+        },
+        {
+          "word": "fin ",
+          "pos": "n.",
+          "explain": "（鱼的）鳍"
+        },
+        {
+          "word": "on earth",
+          "pos": "",
+          "explain": "（放在疑问词之后表示强调）究竟；到底"
+        },
+        {
+          "word": "die out",
+          "pos": "",
+          "explain": "灭亡；逐渐消失"
+        },
+        {
+          "word": "alarming ",
+          "pos": "adj.",
+          "explain": "惊人的；使人惊恐的"
+        },
+        {
+          "word": "alarm ",
+          "pos": "vt.",
+          "explain": "使惊恐；使害怕；使担心"
+        },
+        {
+          "word": "alarm ",
+          "pos": "n.",
+          "explain": "恐慌；警报；警报器"
+        },
+        {
+          "word": "rate ",
+          "pos": "n.",
+          "explain": "速度；（比）率"
+        },
+        {
+          "word": "rate ",
+          "pos": "vt.",
+          "explain": "划分等级"
+        },
+        {
+          "word": "rating IN",
+          "pos": "n.",
+          "explain": "等级；级别"
+        },
+        {
+          "word": "extinct /",
+          "pos": "adj.",
+          "explain": "已灭绝的"
+        },
+        {
+          "word": "extinction /",
+          "pos": "n.",
+          "explain": "灭绝"
+        },
+        {
+          "word": "mass ",
+          "pos": "adj.",
+          "explain": "大量的；广泛的"
+        },
+        {
+          "word": "mass ",
+          "pos": "n.",
+          "explain": "大量；堆；群"
+        },
+        {
+          "word": "habitat ",
+          "pos": "n.",
+          "explain": "（动植物的）生活环境；栖息地"
+        },
+        {
+          "word": "aware ",
+          "pos": "adj.",
+          "explain": "知道；发觉；有……意识的"
+        },
+        {
+          "word": "aware of",
+          "pos": "",
+          "explain": "意识到；知道"
+        },
+        {
+          "word": "endanger ",
+          "pos": "vt.",
+          "explain": "使遭受危险；危害"
+        },
+        {
+          "word": "average vrId",
+          "pos": "n.",
+          "explain": "平均数；平均水平"
+        },
+        {
+          "word": "average vrId",
+          "pos": "adj.",
+          "explain": "平均的；正常的；普通的"
+        },
+        {
+          "word": "on average",
+          "pos": "",
+          "explain": "平均"
+        },
+        {
+          "word": "prince prIns",
+          "pos": "n.",
+          "explain": "王子；王孙；亲王"
+        },
+        {
+          "word": "make progress",
+          "pos": "",
+          "explain": "取得进步"
+        },
+        {
+          "word": "concern ",
+          "pos": "vt.",
+          "explain": "涉及；让……担忧"
+        },
+        {
+          "word": "concerned ",
+          "pos": "adj.",
+          "explain": "担心的；关切的"
+        },
+        {
+          "word": "concerned about",
+          "pos": "",
+          "explain": "对……关切的；为……担忧的"
+        },
+        {
+          "word": "living ",
+          "pos": "adj.",
+          "explain": "居住的；活的；在用的"
+        },
+        {
+          "word": "living ",
+          "pos": "n.",
+          "explain": "生活；生计"
+        },
+        {
+          "word": "adapt",
+          "pos": "vi.",
+          "explain": "适应"
+        },
+        {
+          "word": "adapt",
+          "pos": "vt.",
+          "explain": "使适应；使适合"
+        },
+        {
+          "word": "adapt to",
+          "pos": "",
+          "explain": "适应"
+        },
+        {
+          "word": "measure ",
+          "pos": "n.",
+          "explain": "措施；方法"
+        },
+        {
+          "word": "measure ",
+          "pos": "vt.",
+          "explain": "测量；度量；估量"
+        },
+        {
+          "word": "authority",
+          "pos": "n.",
+          "explain": "官方；当权；权威"
+        },
+        {
+          "word": "pressure",
+          "pos": "n.",
+          "explain": "压力；要求"
+        },
+        {
+          "word": "under pressure",
+          "pos": "",
+          "explain": "在压力下；承受压力"
+        },
+        {
+          "word": "whale",
+          "pos": "n.",
+          "explain": "鲸"
+        },
+        {
+          "word": "antelope",
+          "pos": "n.",
+          "explain": "羚；羚类动物"
+        },
+        {
+          "word": "Tibetan antelope",
+          "pos": "",
+          "explain": "藏羚羊"
+        },
+        {
+          "word": "reserve ",
+          "pos": "n.",
+          "explain": "（动植物）保护区；储藏（量）"
+        },
+        {
+          "word": "reserve ",
+          "pos": "vt.",
+          "explain": "预订；预留；保留"
+        },
+        {
+          "word": "plainn.",
+          "pos": "",
+          "explain": "平原"
+        },
+        {
+          "word": "plainn.",
+          "pos": "adj.",
+          "explain": "简单明了的；直率的；平凡的"
+        },
+        {
+          "word": "make out",
+          "pos": "",
+          "explain": "看清；听清；分清"
+        },
+        {
+          "word": "herd n.",
+          "pos": "",
+          "explain": "牧群；兽群"
+        },
+        {
+          "word": "observe",
+          "pos": "vt.",
+          "explain": "观察（到）；注视；遵守"
+        },
+        {
+          "word": "beauty",
+          "pos": "n.",
+          "explain": "美；美人；美好的东西"
+        },
+        {
+          "word": "remind vt.",
+          "pos": "",
+          "explain": "提醒；使想起使某人想起（类似的人或物）"
+        },
+        {
+          "word": "furn.",
+          "pos": "",
+          "explain": "毛（皮）；毛皮衣服"
+        },
+        {
+          "word": "sacredadj.",
+          "pos": "",
+          "explain": "神圣的；受尊敬的"
+        },
+        {
+          "word": "shoot",
+          "pos": "vt. & vi.",
+          "explain": "（shot, shot）射杀；射伤；发射"
+        },
+        {
+          "word": "profitn.",
+          "pos": "",
+          "explain": "利润；利益"
+        },
+        {
+          "word": "watch over",
+          "pos": "",
+          "explain": "保护；照管；监督"
+        },
+        {
+          "word": "day and night",
+          "pos": "",
+          "explain": "日日夜夜；夜以继日"
+        },
+        {
+          "word": "attackn.,",
+          "pos": "vi. & vt.",
+          "explain": "攻击；抨击"
+        },
+        {
+          "word": "effectiveadj.",
+          "pos": "",
+          "explain": "有效的；生效的"
+        },
+        {
+          "word": "recovervi.",
+          "pos": "",
+          "explain": "恢复；康复"
+        },
+        {
+          "word": "recovervi.",
+          "pos": "vt.",
+          "explain": "找回；寻回"
+        },
+        {
+          "word": "removevt.",
+          "pos": "",
+          "explain": "去除；移开；脱去"
+        },
+        {
+          "word": "intendvi. &",
+          "pos": "vt.",
+          "explain": "打算；计划；想要"
+        },
+        {
+          "word": "threatn.",
+          "pos": "",
+          "explain": "威胁"
+        },
+        {
+          "word": "threatenvt.",
+          "pos": "",
+          "explain": "威胁；危及"
+        },
+        {
+          "word": "existvi.",
+          "pos": "",
+          "explain": "存在；生存"
+        },
+        {
+          "word": "harmonyn.",
+          "pos": "",
+          "explain": "和谐；融洽"
+        },
+        {
+          "word": "goodsn.",
+          "pos": "",
+          "explain": "商品；货物"
+        },
+        {
+          "word": "creature",
+          "pos": "n.",
+          "explain": "生物；动物"
+        },
+        {
+          "word": "deer",
+          "pos": "n.",
+          "explain": "鹿"
+        },
+        {
+          "word": "kangaroon.",
+          "pos": "",
+          "explain": "袋鼠"
+        },
+        {
+          "word": "reducevt.",
+          "pos": "",
+          "explain": "减少"
+        },
+        {
+          "word": "dueadj.",
+          "pos": "",
+          "explain": "由于；因为"
+        },
+        {
+          "word": "due to",
+          "pos": "",
+          "explain": "由于；因为"
+        },
+        {
+          "word": "insectn.",
+          "pos": "",
+          "explain": "昆虫"
+        },
+        {
+          "word": "net net n. ＝Internet；",
+          "pos": "",
+          "explain": "网"
+        },
+        {
+          "word": "net net n. ＝Internet；",
+          "pos": "adj.",
+          "explain": "净得的；纯的"
+        },
+        {
+          "word": "neighbourhood (US neighborhood)",
+          "pos": "n.",
+          "explain": "临近的地方；街区"
+        },
+        {
+          "word": "binocularsn.",
+          "pos": "",
+          "explain": "双筒望远镜"
+        },
+        {
+          "word": "bird field guide",
+          "pos": "",
+          "explain": "鸟类图鉴"
+        },
+        {
+          "word": "search for",
+          "pos": "",
+          "explain": "搜索；查找"
+        },
+        {
+          "word": "dolphinn.",
+          "pos": "",
+          "explain": "海豚"
+        },
+        {
+          "word": "Yangtze River Dolphin",
+          "pos": "",
+          "explain": "白豚"
+        },
+        {
+          "word": "koalakUA:ln.",
+          "pos": "",
+          "explain": "树袋熊；考拉"
+        },
+        {
+          "word": "stir(r)vt.",
+          "pos": "",
+          "explain": "激发；搅动"
+        },
+        {
+          "word": "stir up",
+          "pos": "",
+          "explain": "激起"
+        },
+        {
+          "word": "emotionn.",
+          "pos": "",
+          "explain": "感情；情感；情绪"
+        },
+        {
+          "word": "skinn.",
+          "pos": "",
+          "explain": "皮；皮肤"
+        },
+        {
+          "word": "unusualnju:uladj.",
+          "pos": "",
+          "explain": "特别的；不寻常的"
+        },
+        {
+          "word": "Tibetan",
+          "pos": "adj.",
+          "explain": "西藏的；藏语的；藏族（人）的"
+        },
+        {
+          "word": "Tibetan",
+          "pos": "n.",
+          "explain": "西藏人；藏族人；藏语"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "Changtang National Nature Reserve",
+          "explain": "专有名词，表示特定地点的名称。",
+          "example": "Changtang National Nature Reserve",
+          "translation": "羌塘国家级自然保护区"
+        },
+        {
+          "pattern": "On the plain in front of us, we can just make out a herd of graceful animals.",
+          "explain": "make out 表示‘勉强看出；辨认出；听出’。",
+          "example": "On the plain in front of us, we can just make out a herd of graceful animals.",
+          "translation": "放眼平原，我们隐约看到一群体形优美的动物。"
+        },
+        {
+          "pattern": "The government, however, does not intend to stop the protection programmes, since the threats to the Tibetan antelope have not yet disappeared.",
+          "explain": "since 引导原因状语从句，表示‘因为，既然’。",
+          "example": "The government, however, does not intend to stop the protection programmes, since the threats to the Tibetan antelope have not yet disappeared.",
+          "translation": "然而，政府并没有打算停止这些保护项目，因为对藏羚羊的威胁依然存在。"
+        },
+        {
+          "pattern": "is being done",
+          "explain": "现在进行时的被动语态，表示‘正在被做’。",
+          "example": "Much is being done to protect wildlife, ...",
+          "translation": "大量的工作正在进行中以保护野生动物，⋯⋯"
+        },
+        {
+          "pattern": "Only when we learn to exist in harmony with nature can we stop being a threat to wildlife and to our planet.",
+          "explain": "only 位于句首时，需要使用部分倒装结构。",
+          "example": "Only when we learn to exist in harmony with nature can we stop being a threat to wildlife and to our planet.",
+          "translation": "只有学会和大自然和谐共处，我们才不会成为野生生物和地球的威胁。"
+        },
+        {
+          "pattern": "Should we put out bowls of food for them?",
+          "explain": "put out 在此处表示‘把……摆好；预备好（物品）’。",
+          "example": "Should we put out bowls of food for them?",
+          "translation": "我们该给它们（野猫）准备几碗食物吗？"
+        },
+        {
+          "pattern": "World Wide Fund For Nature (WWF)",
+          "explain": "专有名词，世界自然基金会的全称。",
+          "example": "World Wide Fund For Nature (WWF)",
+          "translation": "世界自然基金会"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "野生动物保护 · 人与自然",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 95
+      }
+    },
+    {
+      "unit": "Unit3 The Internet",
+      "theme": "互联网 · 数字生活",
+      "words": [
+        {
+          "word": "blog ",
+          "pos": "n.",
+          "explain": "博客"
+        },
+        {
+          "word": "blog ",
+          "pos": "vi.",
+          "explain": "写博客"
+        },
+        {
+          "word": "blog post",
+          "pos": "",
+          "explain": "博文；博客帖子"
+        },
+        {
+          "word": "blogger ",
+          "pos": "n.",
+          "explain": "博客作者；博主"
+        },
+        {
+          "word": "engine ",
+          "pos": "n.",
+          "explain": "引擎；发动机；火车头"
+        },
+        {
+          "word": "search engine",
+          "pos": "",
+          "explain": "（互联网上的）搜索引擎"
+        },
+        {
+          "word": "chat ",
+          "pos": "vi.",
+          "explain": "聊天；闲聊"
+        },
+        {
+          "word": "stream ",
+          "pos": "vt.",
+          "explain": "流播（不用下载直接在互联网上播放音视频）；流出"
+        },
+        {
+          "word": "stream ",
+          "pos": "vi.",
+          "explain": "流动"
+        },
+        {
+          "word": "stream ",
+          "pos": "n.",
+          "explain": "小河；溪流"
+        },
+        {
+          "word": "identity ",
+          "pos": "n.",
+          "explain": "身份；个性"
+        },
+        {
+          "word": "identity card",
+          "pos": "",
+          "explain": "身份证"
+        },
+        {
+          "word": "convenient ",
+          "pos": "adj.",
+          "explain": "方便的；近便的"
+        },
+        {
+          "word": "cash ",
+          "pos": "n.",
+          "explain": "现金；金钱"
+        },
+        {
+          "word": "update ",
+          "pos": "vt.",
+          "explain": "更新；向……提供最新信息 n. 更新；最新消息"
+        },
+        {
+          "word": "database ",
+          "pos": "n.",
+          "explain": "数据库；资料库"
+        },
+        {
+          "word": "software ",
+          "pos": "n.",
+          "explain": "软件"
+        },
+        {
+          "word": "network ",
+          "pos": "n.",
+          "explain": "（互联）网络；网状系统；人际网"
+        },
+        {
+          "word": "network ",
+          "pos": "vt.",
+          "explain": "将……连接成网络；联播"
+        },
+        {
+          "word": "network ",
+          "pos": "vi.",
+          "explain": "建立工作关系"
+        },
+        {
+          "word": "stuckstkadj.",
+          "pos": "",
+          "explain": "卡住；陷（入）；困（于）"
+        },
+        {
+          "word": "keep sb company",
+          "pos": "",
+          "explain": "陪伴某人"
+        },
+        {
+          "word": "surf ",
+          "pos": "vt. & vi.",
+          "explain": "浏览；冲浪"
+        },
+        {
+          "word": "benefit II",
+          "pos": "n.",
+          "explain": "益处"
+        },
+        {
+          "word": "benefit II",
+          "pos": "vt.",
+          "explain": "使受益"
+        },
+        {
+          "word": "benefit II",
+          "pos": "vi.",
+          "explain": "得益于"
+        },
+        {
+          "word": "distance ",
+          "pos": "n.",
+          "explain": "距离"
+        },
+        {
+          "word": "inspire ",
+          "pos": "vt.",
+          "explain": "鼓舞；激励；启发思考"
+        },
+        {
+          "word": "now that",
+          "pos": "",
+          "explain": "既然；由于"
+        },
+        {
+          "word": "access ",
+          "pos": "n.",
+          "explain": "通道；（使用、查阅、接近或面见的）机会"
+        },
+        {
+          "word": "access ",
+          "pos": "vt.",
+          "explain": "进入；使用；获取"
+        },
+        {
+          "word": "charity ",
+          "pos": "n.",
+          "explain": "慈善；慈善机构（或组织）"
+        },
+        {
+          "word": "go through",
+          "pos": "",
+          "explain": "经历；度过；通读"
+        },
+        {
+          "word": "tough ",
+          "pos": "adj.",
+          "explain": "艰难的；严厉的"
+        },
+        {
+          "word": "province ",
+          "pos": "n.",
+          "explain": "省"
+        },
+        {
+          "word": "conference ",
+          "pos": "n.",
+          "explain": "会议；研讨会；正式会谈"
+        },
+        {
+          "word": "resident",
+          "pos": "n.",
+          "explain": "居民；（美国的）住院医生"
+        },
+        {
+          "word": "resident",
+          "pos": "adj.",
+          "explain": "（在某地）居住的"
+        },
+        {
+          "word": "plus ",
+          "pos": "conj.",
+          "explain": "而且；此外"
+        },
+        {
+          "word": "plus ",
+          "pos": "n.",
+          "explain": "加号；优势"
+        },
+        {
+          "word": "plus ",
+          "pos": "prep.",
+          "explain": "加；另加"
+        },
+        {
+          "word": "function N",
+          "pos": "n.",
+          "explain": "功能；作用；机能"
+        },
+        {
+          "word": "function N",
+          "pos": "vi.",
+          "explain": "起作用；正常工作；运转"
+        },
+        {
+          "word": "battery ",
+          "pos": "n.",
+          "explain": "电池"
+        },
+        {
+          "word": "confirm (r)",
+          "pos": "vt.",
+          "explain": "确认；使确信"
+        },
+        {
+          "word": "Wi-Fi ",
+          "pos": "n.",
+          "explain": "无线保真（用无线电波而非网线在计算机网络传输数据的系统）"
+        },
+        {
+          "word": "press ",
+          "pos": "vt.",
+          "explain": "按，压；敦促"
+        },
+        {
+          "word": "button ",
+          "pos": "n.",
+          "explain": "按钮；纽扣"
+        },
+        {
+          "word": "file ",
+          "pos": "n.",
+          "explain": "文件；文件夹；档案"
+        },
+        {
+          "word": "in shape",
+          "pos": "",
+          "explain": "状况良好"
+        },
+        {
+          "word": "keep track of",
+          "pos": "",
+          "explain": "掌握……的最新消息；了解……的动态"
+        },
+        {
+          "word": "discount ",
+          "pos": "n.",
+          "explain": "折扣 vt. 打折"
+        },
+        {
+          "word": "account ",
+          "pos": "n.",
+          "explain": "账户；描述"
+        },
+        {
+          "word": "click ",
+          "pos": "vt. & vi.",
+          "explain": "点击"
+        },
+        {
+          "word": "privacy NAmE-",
+          "pos": "n.",
+          "explain": "隐私；私密"
+        },
+        {
+          "word": "theft ",
+          "pos": "n.",
+          "explain": "偷（窃）；盗窃罪"
+        },
+        {
+          "word": "rude ",
+          "pos": "adj.",
+          "explain": "粗鲁的；无礼的"
+        },
+        {
+          "word": "target ",
+          "pos": "n.",
+          "explain": "目标；对象；靶子"
+        },
+        {
+          "word": "target ",
+          "pos": "vt.",
+          "explain": "把……作为攻击目标"
+        },
+        {
+          "word": "troll ;NAmE ",
+          "pos": "n.",
+          "explain": "发挑衅帖子的人；恶意挑衅的帖子"
+        },
+        {
+          "word": "cyberbully ",
+          "pos": "n.",
+          "explain": "网霸"
+        },
+        {
+          "word": "cyberbully ",
+          "pos": "vt. & vi.",
+          "explain": "网络欺凌"
+        },
+        {
+          "word": "false ",
+          "pos": "adj.",
+          "explain": "假的；错误的"
+        },
+        {
+          "word": "particular ",
+          "pos": "adj.",
+          "explain": "特定的；特别的；讲究的"
+        },
+        {
+          "word": "embarrassing ",
+          "pos": "adj.",
+          "explain": "让人难堪（尴尬；害羞）的"
+        },
+        {
+          "word": "make fun of",
+          "pos": "",
+          "explain": "取笑；戏弄"
+        },
+        {
+          "word": "upset ",
+          "pos": "adj.",
+          "explain": "心烦的；苦恼的；沮丧的"
+        },
+        {
+          "word": "upset ",
+          "pos": "vt.",
+          "explain": "（upset, upset）使烦恼；使生气；搅乱"
+        },
+        {
+          "word": "guideline ",
+          "pos": "n.",
+          "explain": "准则；指导原则"
+        },
+        {
+          "word": "author",
+          "pos": "n.",
+          "explain": "作者；作家"
+        },
+        {
+          "word": "tip ",
+          "pos": "n.",
+          "explain": "忠告；诀窍；实用的提示"
+        },
+        {
+          "word": "familiar ",
+          "pos": "adj.",
+          "explain": "熟悉；熟知"
+        },
+        {
+          "word": "keep (…) in mind",
+          "pos": "",
+          "explain": "牢记"
+        },
+        {
+          "word": "define dIfaIn",
+          "pos": "vt.",
+          "explain": "给……下定义；界定；解释"
+        },
+        {
+          "word": "case kes",
+          "pos": "n.",
+          "explain": "盒；箱；情况；案件万维网；环球信息网"
+        },
+        {
+          "word": "Jan  Tchamani ",
+          "pos": "",
+          "explain": "简·夏曼尼伯明翰（英国城市）"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "find oneself + 宾语 + 宾补",
+          "explain": "不知不觉间发现自己处于某种状态。",
+          "example": "At age 50, she found herself out of work and stuck at home with only her computer to keep her company.",
+          "translation": "50岁时，她发现自己失业了，困在家里，只有电脑相伴。"
+        },
+        {
+          "pattern": "realise that + 宾语从句",
+          "explain": "意识到某事，宾语从句中可能包含定语从句。",
+          "example": "She realised that one of the greatest benefits of the Internet was its ability to remove the distance that usually exists between people.",
+          "translation": "她意识到互联网的最大好处之一就是能够消除通常存在于人和人之间的距离感。"
+        },
+        {
+          "pattern": "so ... that ...",
+          "explain": "如此……以至于……。",
+          "example": "She was so inspired by the people she met online that she decided to start an IT club to teach older people how to use computers and the Internet.",
+          "translation": "她受到网友的启发，决定成立一个IT俱乐部来教年长一些的人们学习使用电脑和互联网。"
+        },
+        {
+          "pattern": "bridge the digital divide",
+          "explain": "消除数字鸿沟。",
+          "example": "She believes that it is highly important to bridge the digital divide and make sure that everyone has access to the Internet and knows how to use new technology.",
+          "translation": "她认为，消除数字鸿沟、确保每人都能使用互联网并且知晓如何运用新技术，是非常重要的。"
+        },
+        {
+          "pattern": "use the Internet to do sth.",
+          "explain": "使用互联网做某事。",
+          "example": "A cyberbully uses the Internet to be mean to others.",
+          "translation": "网络恶霸使用互联网来欺负别人。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "互联网 · 数字生活",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 76
+      }
+    },
+    {
+      "unit": "Unit4 History and Traditions",
+      "theme": "历史与传统 · 文化认同",
+      "words": [
+        {
+          "word": "Confucius",
+          "pos": "",
+          "explain": "孔子"
+        },
+        {
+          "word": "mansion",
+          "pos": "n.",
+          "explain": "公馆；宅第"
+        },
+        {
+          "word": "cemetery",
+          "pos": "n.",
+          "explain": "墓地；公墓"
+        },
+        {
+          "word": "philosophy",
+          "pos": "n.",
+          "explain": "哲学"
+        },
+        {
+          "word": "descendant",
+          "pos": "n.",
+          "explain": "后裔；后代；子孙"
+        },
+        {
+          "word": "individual",
+          "pos": "adj.",
+          "explain": "单独的；个别的"
+        },
+        {
+          "word": "individual",
+          "pos": "n.",
+          "explain": "个人"
+        },
+        {
+          "word": "heel",
+          "pos": "n.",
+          "explain": "足跟；（脚、袜子、鞋等的）后跟"
+        },
+        {
+          "word": "Achilles’ heel",
+          "pos": "",
+          "explain": "（喻）（希腊神话）阿喀琉斯的脚跟，致命的弱点"
+        },
+        {
+          "word": "kingdom",
+          "pos": "n.",
+          "explain": "王国；领域"
+        },
+        {
+          "word": "chief",
+          "pos": "adj.",
+          "explain": "最重要的；最高级别的"
+        },
+        {
+          "word": "chief",
+          "pos": "n.",
+          "explain": "（公司或机构的）首领；酋长"
+        },
+        {
+          "word": "puzzle",
+          "pos": "n.",
+          "explain": "谜；智力游戏；疑问"
+        },
+        {
+          "word": "puzzle",
+          "pos": "vt.",
+          "explain": "迷惑；使困惑"
+        },
+        {
+          "word": "nearby",
+          "pos": "adj.",
+          "explain": "附近的；邻近的"
+        },
+        {
+          "word": "nearby",
+          "pos": "adv.",
+          "explain": "在附近"
+        },
+        {
+          "word": "join … to …",
+          "pos": "",
+          "explain": "把……和……连接或联结起来脱离；背叛；逃脱"
+        },
+        {
+          "word": "belong",
+          "pos": "vi.",
+          "explain": "应在（某处）；适应"
+        },
+        {
+          "word": "belong to",
+          "pos": "",
+          "explain": "属于"
+        },
+        {
+          "word": "as well as",
+          "pos": "",
+          "explain": "同（一样也）；和；还"
+        },
+        {
+          "word": "currency",
+          "pos": "n.",
+          "explain": "通货；货币"
+        },
+        {
+          "word": "military",
+          "pos": "adj.",
+          "explain": "军事的；军用的"
+        },
+        {
+          "word": "defence (US defense)",
+          "pos": "n.",
+          "explain": "防御；保卫"
+        },
+        {
+          "word": "legal",
+          "pos": "adj.",
+          "explain": "法律的；合法的"
+        },
+        {
+          "word": "surround",
+          "pos": "vt.",
+          "explain": "围绕；包围"
+        },
+        {
+          "word": "evidence",
+          "pos": "n.",
+          "explain": "证据；证明"
+        },
+        {
+          "word": "location",
+          "pos": "n.",
+          "explain": "地方；地点；位置"
+        },
+        {
+          "word": "conquer",
+          "pos": "vt.",
+          "explain": "占领；征服；控制"
+        },
+        {
+          "word": "battle",
+          "pos": "n.",
+          "explain": "战役；搏斗"
+        },
+        {
+          "word": "battle",
+          "pos": "vi. & vt.",
+          "explain": "搏斗；奋斗"
+        },
+        {
+          "word": "port",
+          "pos": "n.",
+          "explain": "港口（城市）"
+        },
+        {
+          "word": "fascinating",
+          "pos": "adj.",
+          "explain": "极有吸引力的；迷人的"
+        },
+        {
+          "word": "keep your eyes open (for)",
+          "pos": "",
+          "explain": "留心；留意"
+        },
+        {
+          "word": "charge",
+          "pos": "n.",
+          "explain": "收费；指控；主管"
+        },
+        {
+          "word": "charge",
+          "pos": "vt.",
+          "explain": "收费；控告；充电"
+        },
+        {
+          "word": "announce",
+          "pos": "vt.",
+          "explain": "宣布；通知；声称"
+        },
+        {
+          "word": "amount",
+          "pos": "n.",
+          "explain": "金额；数量"
+        },
+        {
+          "word": "gallery",
+          "pos": "n.",
+          "explain": "（艺术作品的）展览馆；画廊"
+        },
+        {
+          "word": "approach",
+          "pos": "n.",
+          "explain": "方法；途径；接近"
+        },
+        {
+          "word": "approach",
+          "pos": "vt.",
+          "explain": "接近；接洽；着手处理"
+        },
+        {
+          "word": "approach",
+          "pos": "vi.",
+          "explain": "靠近"
+        },
+        {
+          "word": "ensure",
+          "pos": "vt.",
+          "explain": "保证；确保；担保"
+        },
+        {
+          "word": "landscape",
+          "pos": "n.",
+          "explain": "（陆上，尤指乡村的）风景"
+        },
+        {
+          "word": "generous",
+          "pos": "adj.",
+          "explain": "慷慨的；大方的；丰富的"
+        },
+        {
+          "word": "butter",
+          "pos": "n.",
+          "explain": "黄油；奶油"
+        },
+        {
+          "word": "butter",
+          "pos": "vt.",
+          "explain": "涂黄油于"
+        },
+        {
+          "word": "honey",
+          "pos": "n.",
+          "explain": "蜂蜜"
+        },
+        {
+          "word": "ancestor",
+          "pos": "n.",
+          "explain": "祖宗；祖先"
+        },
+        {
+          "word": "position",
+          "pos": "n.",
+          "explain": "位置；姿态；职位"
+        },
+        {
+          "word": "position",
+          "pos": "vt.",
+          "explain": "安装；安置"
+        },
+        {
+          "word": "courtyard",
+          "pos": "n.",
+          "explain": "庭院；院子"
+        },
+        {
+          "word": "snack",
+          "pos": "n.",
+          "explain": "点心；小吃"
+        },
+        {
+          "word": "eager",
+          "pos": "adj.",
+          "explain": "热切的；渴望的"
+        },
+        {
+          "word": "poet",
+          "pos": "n.",
+          "explain": "诗人"
+        },
+        {
+          "word": "county",
+          "pos": "n.",
+          "explain": "（英国、爱尔兰的）郡；（美国的）县"
+        },
+        {
+          "word": "feast",
+          "pos": "n.",
+          "explain": "盛宴；宴会；节日"
+        },
+        {
+          "word": "roll",
+          "pos": "vi. & vt.",
+          "explain": "（使）翻滚；（使）滚动"
+        },
+        {
+          "word": "roll",
+          "pos": "n.",
+          "explain": "卷（轴）；翻滚"
+        },
+        {
+          "word": "dot",
+          "pos": "n.",
+          "explain": "点；小（圆）点  vt. 加点；遍布"
+        },
+        {
+          "word": "cattle",
+          "pos": "n.",
+          "explain": "牛"
+        },
+        {
+          "word": "roar",
+          "pos": "vi. & n.",
+          "explain": "吼叫；咆哮"
+        },
+        {
+          "word": "ocean",
+          "pos": "n.",
+          "explain": "大海；海洋"
+        },
+        {
+          "word": "scent",
+          "pos": "n.",
+          "explain": "气味；气息"
+        },
+        {
+          "word": "greet",
+          "pos": "vt.",
+          "explain": "问候；迎接"
+        },
+        {
+          "word": "pub",
+          "pos": "n.",
+          "explain": "酒吧；酒馆"
+        },
+        {
+          "word": "wine",
+          "pos": "n.",
+          "explain": "葡萄酒；果酒"
+        },
+        {
+          "word": "beer",
+          "pos": "n.",
+          "explain": "（一杯）啤酒"
+        },
+        {
+          "word": "stew",
+          "pos": "n.",
+          "explain": "炖菜（有肉和蔬菜）"
+        },
+        {
+          "word": "stew",
+          "pos": "vt. & vi.",
+          "explain": "炖；煨"
+        },
+        {
+          "word": "custom",
+          "pos": "n.",
+          "explain": "风俗；习俗；习惯"
+        },
+        {
+          "word": "sensory",
+          "pos": "adj.",
+          "explain": "感觉的；感官的"
+        },
+        {
+          "word": "striking",
+          "pos": "adj.",
+          "explain": "引人注目的；显著的"
+        },
+        {
+          "word": "transition",
+          "pos": "n.",
+          "explain": "过渡；转变；变迁"
+        },
+        {
+          "word": "achievement",
+          "pos": "n.",
+          "explain": "成就；成绩；达到"
+        },
+        {
+          "word": "crowd",
+          "pos": "n.",
+          "explain": "人群；一群人；民众"
+        },
+        {
+          "word": "crowd",
+          "pos": "vt.",
+          "explain": "挤满；使……拥挤"
+        },
+        {
+          "word": "Wales",
+          "pos": "",
+          "explain": "威尔士（英国）"
+        },
+        {
+          "word": "Scotland​",
+          "pos": "",
+          "explain": "苏格兰（英国）北爱尔兰（英国）"
+        },
+        {
+          "word": "Anglo-Saxon",
+          "pos": "",
+          "explain": "盎格鲁—撒克逊人"
+        },
+        {
+          "word": "Viking",
+          "pos": "n.",
+          "explain": "维京人；北欧海盗"
+        },
+        {
+          "word": "the Normans",
+          "pos": "",
+          "explain": "诺曼人"
+        },
+        {
+          "word": "Battle of Hastings",
+          "pos": "",
+          "explain": "黑斯廷斯战役"
+        },
+        {
+          "word": "Roman",
+          "pos": "adj.",
+          "explain": "古罗马的；罗马的"
+        },
+        {
+          "word": "Roman",
+          "pos": "n.",
+          "explain": "古罗马人；罗马市民"
+        },
+        {
+          "word": "Van Gogh",
+          "pos": "",
+          "explain": "梵高（荷兰画家）绿宝石岛（爱尔兰的别称）"
+        },
+        {
+          "word": "Irish",
+          "pos": "adj.",
+          "explain": "爱尔兰的；爱尔兰人（或语）的"
+        },
+        {
+          "word": "Irish",
+          "pos": "n.",
+          "explain": "爱尔兰语"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "They use the same flag, known as the Union Jack, as well as share the same currency and military defence.",
+          "explain": "过去分词短语作后置定语，修饰前面的名词flag，相当于非限制性定语从句。currency表示货币，military defence表示国防。",
+          "example": "Yang Liwei, known as the first Chinese astronaut to go into space, is regarded as an astronautic hero.",
+          "translation": "作为第一个进入太空的中国宇航员，杨利伟被称为航天英雄。"
+        },
+        {
+          "pattern": "the Romans",
+          "explain": "专有名词，指古罗马人，欧洲古代民族。",
+          "example": "",
+          "translation": ""
+        },
+        {
+          "pattern": "the Anglo-Saxons",
+          "explain": "专有名词，指盎格鲁—撒克逊人，欧洲古代日耳曼人的一支。",
+          "example": "",
+          "translation": ""
+        },
+        {
+          "pattern": "the Vikings",
+          "explain": "专有名词，指维京人，斯堪的纳维亚人的一支。",
+          "example": "",
+          "translation": ""
+        },
+        {
+          "pattern": "the Normans",
+          "explain": "专有名词，指诺曼人，来自欧洲西北部。",
+          "example": "",
+          "translation": ""
+        },
+        {
+          "pattern": "The peaceful landscape of the “Emerald Isle” and its many green counties is a true feast for the eyes, with its rolling green hills dotted with sheep and cattle.",
+          "explain": "a feast for the eyes表示视觉盛宴，with引导的介词短语作伴随状语。",
+          "example": "We went to a painting exhibition yesterday, which was really a feast for the eyes.",
+          "translation": "我们昨天去看画展，那真是一场视觉盛宴。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "历史与传统 · 文化认同",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 87
+      }
+    },
+    {
+      "unit": "Unit5 Music",
+      "theme": "音乐 · 艺术与情感",
+      "words": [
+        {
+          "word": "classical",
+          "pos": "adj.",
+          "explain": "古典的；经典的"
+        },
+        {
+          "word": "hip-hop",
+          "pos": "n.",
+          "explain": "嘻哈音乐；嘻哈文化"
+        },
+        {
+          "word": "techno",
+          "pos": "n.",
+          "explain": "泰克诺音乐（一种电子音乐）"
+        },
+        {
+          "word": "energyn.",
+          "pos": "",
+          "explain": "能源；能量；精力"
+        },
+        {
+          "word": "soul",
+          "pos": "n.",
+          "explain": "灵魂；心灵"
+        },
+        {
+          "word": "bagpipes n. [pl.]",
+          "pos": "",
+          "explain": "风笛"
+        },
+        {
+          "word": "stringed",
+          "pos": "adj.",
+          "explain": "有弦的"
+        },
+        {
+          "word": "stringed instrument",
+          "pos": "",
+          "explain": "弦乐器"
+        },
+        {
+          "word": "virtual",
+          "pos": "adj.",
+          "explain": "很接近的；事实上的；虚拟的"
+        },
+        {
+          "word": "virtual choir",
+          "pos": "",
+          "explain": "虚拟合唱团"
+        },
+        {
+          "word": "composition",
+          "pos": "n.",
+          "explain": "成分；（音乐、艺术、诗歌的）作品"
+        },
+        {
+          "word": "opportunity",
+          "pos": "n.",
+          "explain": "机会；时机"
+        },
+        {
+          "word": "perform",
+          "pos": "vi. & vt.",
+          "explain": "表演；履行；执行"
+        },
+        {
+          "word": "performance",
+          "pos": "n.",
+          "explain": "表演；演技；表现"
+        },
+        {
+          "word": "performer",
+          "pos": "n.",
+          "explain": "表演者；演员"
+        },
+        {
+          "word": "onto",
+          "pos": "prep.",
+          "explain": "（朝）向"
+        },
+        {
+          "word": "studio",
+          "pos": "n.",
+          "explain": "演播室；（音乐的）录音棚；工作室"
+        },
+        {
+          "word": "ordinary",
+          "pos": "adj.",
+          "explain": "普通的；平凡的"
+        },
+        {
+          "word": "enable",
+          "pos": "vt.",
+          "explain": "使能够；使可能"
+        },
+        {
+          "word": "prove",
+          "pos": "vt.",
+          "explain": "证明；展现"
+        },
+        {
+          "word": "award",
+          "pos": "vt.",
+          "explain": "授予"
+        },
+        {
+          "word": "award",
+          "pos": "n.",
+          "explain": "奖品"
+        },
+        {
+          "word": "composer",
+          "pos": "n.",
+          "explain": "作曲者；作曲家（乐队、合唱团等的）指挥；（公共汽车的）售票员"
+        },
+        {
+          "word": "fall in love with",
+          "pos": "",
+          "explain": "爱上"
+        },
+        {
+          "word": "original",
+          "pos": "adj.",
+          "explain": "原来的；独创的；原作的"
+        },
+        {
+          "word": "original",
+          "pos": "n.",
+          "explain": "原件；原作（pl. phenomena ） n. 现象"
+        },
+        {
+          "word": "stage",
+          "pos": "n.",
+          "explain": "（发展或进展的）时期；阶段；（多指剧场中的）舞台"
+        },
+        {
+          "word": "altogether",
+          "pos": "adv.",
+          "explain": "（用以强调）全部；总共"
+        },
+        {
+          "word": "thus",
+          "pos": "adv.",
+          "explain": "如此；因此"
+        },
+        {
+          "word": "band",
+          "pos": "n.",
+          "explain": "乐队；带子"
+        },
+        {
+          "word": "rap​",
+          "pos": "n.",
+          "explain": "快速敲击；说唱音乐"
+        },
+        {
+          "word": "rap​",
+          "pos": "vi. & vt.",
+          "explain": "敲击；（说唱歌中的）念白"
+        },
+        {
+          "word": "nowadays",
+          "pos": "adv.",
+          "explain": "现在；目前"
+        },
+        {
+          "word": "gradual",
+          "pos": "adj.",
+          "explain": "逐渐的；渐进的"
+        },
+        {
+          "word": "capable",
+          "pos": "adj.",
+          "explain": "有能力的；有才能的"
+        },
+        {
+          "word": "relief",
+          "pos": "n.",
+          "explain": "（焦虑、痛苦的）减轻或消除；（不快过后的）宽慰、轻松或解脱"
+        },
+        {
+          "word": "cure",
+          "pos": "vt.",
+          "explain": "治愈；治好（疾病）；解决（问题）"
+        },
+        {
+          "word": "cure",
+          "pos": "n.",
+          "explain": "药物；治疗；（解决问题、改善糟糕情况的）措施被……吸引住；专心致志"
+        },
+        {
+          "word": "previous",
+          "pos": "adj.",
+          "explain": "先前的；以往的"
+        },
+        {
+          "word": "unemployed",
+          "pos": "adj.",
+          "explain": "失业的；待业的"
+        },
+        {
+          "word": "romantic",
+          "pos": "adj.",
+          "explain": "浪漫的"
+        },
+        {
+          "word": "romantic",
+          "pos": "n.",
+          "explain": "浪漫的人"
+        },
+        {
+          "word": "album",
+          "pos": "n.",
+          "explain": "相册；集邮簿；音乐专辑"
+        },
+        {
+          "word": "impact",
+          "pos": "n.",
+          "explain": "巨大影响；强大作用；冲击力"
+        },
+        {
+          "word": "aim",
+          "pos": "n.",
+          "explain": "目的；目标"
+        },
+        {
+          "word": "aim",
+          "pos": "vi. & vt.",
+          "explain": "力求达到；力争做到；瞄准"
+        },
+        {
+          "word": "aim",
+          "pos": "vt.",
+          "explain": "目的是；旨在"
+        },
+        {
+          "word": "set sth up",
+          "pos": "",
+          "explain": "安装好（设备或机器）"
+        },
+        {
+          "word": "equipment",
+          "pos": "n.",
+          "explain": "设备；装备"
+        },
+        {
+          "word": "try out​",
+          "pos": "",
+          "explain": "参加……选拔（或试演）"
+        },
+        {
+          "word": "talent",
+          "pos": "n.",
+          "explain": "天才；天资；天赋"
+        },
+        {
+          "word": "piano",
+          "pos": "n.",
+          "explain": "钢琴"
+        },
+        {
+          "word": "assume",
+          "pos": "vt.",
+          "explain": "以为；假设"
+        },
+        {
+          "word": "addition",
+          "pos": "n.",
+          "explain": "添加；加法；增加物"
+        },
+        {
+          "word": "in addition (to sb/sth)",
+          "pos": "",
+          "explain": "除……以外（还）"
+        },
+        {
+          "word": "disease",
+          "pos": "n.",
+          "explain": "（疾）病"
+        },
+        {
+          "word": "ache",
+          "pos": "vi. & n.",
+          "explain": "疼痛"
+        },
+        {
+          "word": "treatment",
+          "pos": "n.",
+          "explain": "治疗；对待；处理"
+        },
+        {
+          "word": "from (then) on",
+          "pos": "",
+          "explain": "从（那）时起"
+        },
+        {
+          "word": "lean",
+          "pos": "vt.",
+          "explain": "（leant leaned）依靠；倾斜"
+        },
+        {
+          "word": "get through",
+          "pos": "",
+          "explain": "（设法）处理；完成"
+        },
+        {
+          "word": "moreover",
+          "pos": "adv.",
+          "explain": "而且；此外"
+        },
+        {
+          "word": "satisfaction",
+          "pos": "n.",
+          "explain": "满足；满意；欣慰"
+        },
+        {
+          "word": "being",
+          "pos": "n.",
+          "explain": "身心；存在；生物"
+        },
+        {
+          "word": "various",
+          "pos": "adj.",
+          "explain": "各种不同的；各种各样的"
+        },
+        {
+          "word": "somehow",
+          "pos": "adv.",
+          "explain": "以某种方式（或方法）；不知怎么地"
+        },
+        {
+          "word": "rhetorical",
+          "pos": "adj.",
+          "explain": "修辞的"
+        },
+        {
+          "word": "metaphor",
+          "pos": "n.",
+          "explain": "暗喻；隐喻"
+        },
+        {
+          "word": "personification",
+          "pos": "n.",
+          "explain": "拟人；人格化；化身"
+        },
+        {
+          "word": "repetition",
+          "pos": "n.",
+          "explain": "重复；重做"
+        },
+        {
+          "word": "simile",
+          "pos": "n.",
+          "explain": "明喻"
+        },
+        {
+          "word": "outline",
+          "pos": "n. & vt.",
+          "explain": "概述；概要"
+        },
+        {
+          "word": "reaction",
+          "pos": "n.",
+          "explain": "反应；回应"
+        },
+        {
+          "word": "Eric Whitacre​",
+          "pos": "",
+          "explain": "埃里克·惠塔克"
+        },
+        {
+          "word": "Nevada",
+          "pos": "",
+          "explain": "内华达州（美国）"
+        },
+        {
+          "word": "Mozart",
+          "pos": "",
+          "explain": "莫扎特《金色光芒》（歌曲名）"
+        },
+        {
+          "word": "Fund",
+          "pos": "",
+          "explain": "联合国儿童基金会拉斯维加斯（美国城市）​"
+        },
+        {
+          "word": "John A. Logan",
+          "pos": "",
+          "explain": "约翰·洛根词汇表被……吸引住；专心致志(5)"
+        },
+        {
+          "word": "access ",
+          "pos": "n.",
+          "explain": "通道；（使用、查阅、接近或面见的）机会"
+        },
+        {
+          "word": "access ",
+          "pos": "vt.",
+          "explain": "进入；使用；获取(3)"
+        },
+        {
+          "word": "account ",
+          "pos": "n.",
+          "explain": "账户；描述(3)"
+        },
+        {
+          "word": "ache",
+          "pos": "vi. & n.",
+          "explain": "疼痛(5)"
+        },
+        {
+          "word": "achievement",
+          "pos": "n.",
+          "explain": "成就；成绩；达到(4)"
+        },
+        {
+          "word": "adapt",
+          "pos": "vi.",
+          "explain": "适应"
+        },
+        {
+          "word": "adapt",
+          "pos": "vt.",
+          "explain": "使适应；使适合(2)"
+        },
+        {
+          "word": "adapt to",
+          "pos": "",
+          "explain": "适应(2)"
+        },
+        {
+          "word": "addition",
+          "pos": "n.",
+          "explain": "添加；加法；增加物(5)"
+        },
+        {
+          "word": "in addition (to sb/sth)",
+          "pos": "",
+          "explain": "除……以外（还） (5)"
+        },
+        {
+          "word": "aim",
+          "pos": "n.",
+          "explain": "目的；目标"
+        },
+        {
+          "word": "aim",
+          "pos": "vi. & vt.",
+          "explain": "力求达到；力争做到；瞄准"
+        },
+        {
+          "word": "aim",
+          "pos": "vt.",
+          "explain": "目的是；旨在(5)"
+        },
+        {
+          "word": "alarm ",
+          "pos": "vt.",
+          "explain": "使惊恐；使害怕；使担心"
+        },
+        {
+          "word": "alarm ",
+          "pos": "n.",
+          "explain": "恐慌；警报；警报器(2)"
+        },
+        {
+          "word": "alarming ",
+          "pos": "adj.",
+          "explain": "惊人的；使人惊恐的(2)"
+        },
+        {
+          "word": "album",
+          "pos": "n.",
+          "explain": "相册；集邮簿；音乐专辑(5)"
+        },
+        {
+          "word": "all over the world",
+          "pos": "",
+          "explain": "在世界各地(1)"
+        },
+        {
+          "word": "altogether",
+          "pos": "adv.",
+          "explain": "（用以强调）全部；总共(5)"
+        },
+        {
+          "word": "amount",
+          "pos": "n.",
+          "explain": "金额；数量(4)"
+        },
+        {
+          "word": "ancestor",
+          "pos": "n.",
+          "explain": "祖宗；祖先(4)△Anglo-Saxon盎格鲁—撒克逊人(4)"
+        },
+        {
+          "word": "announce",
+          "pos": "vt.",
+          "explain": "宣布；通知；声称(4)"
+        },
+        {
+          "word": "antelope",
+          "pos": "n.",
+          "explain": "羚；羚类动物(2)"
+        },
+        {
+          "word": "Tibetan antelope",
+          "pos": "",
+          "explain": "藏羚羊(2)"
+        },
+        {
+          "word": "app",
+          "pos": "n.",
+          "explain": "应用程序；应用软件（application 的缩略形式）(1)"
+        },
+        {
+          "word": "application",
+          "pos": "n.",
+          "explain": "申请（表）；用途；运用；应用（程序）(1)"
+        },
+        {
+          "word": "approach",
+          "pos": "n.",
+          "explain": "方法；途径；接近"
+        },
+        {
+          "word": "approach",
+          "pos": "vt.",
+          "explain": "接近；接洽；着手处理"
+        },
+        {
+          "word": "approach",
+          "pos": "vi.",
+          "explain": "靠近(4)"
+        },
+        {
+          "word": "archaeologist",
+          "pos": "n.",
+          "explain": "考古学家(1)"
+        },
+        {
+          "word": "as well as",
+          "pos": "",
+          "explain": "同（一样也）；和；还(4)"
+        },
+        {
+          "word": "assume",
+          "pos": "vt.",
+          "explain": "以为；假设(5)△Aswan Dam 阿斯旺大坝(1)"
+        },
+        {
+          "word": "attackn.,",
+          "pos": "vi. & vt.",
+          "explain": "攻击；抨击(2)"
+        },
+        {
+          "word": "attempt",
+          "pos": "n. & vt.",
+          "explain": "企图；试图；尝试(1)"
+        },
+        {
+          "word": "author",
+          "pos": "n.",
+          "explain": "作者；作家(3)"
+        },
+        {
+          "word": "authority",
+          "pos": "n.",
+          "explain": "官方；当权；权威(2)"
+        },
+        {
+          "word": "average vrId",
+          "pos": "n.",
+          "explain": "平均数；平均水平"
+        },
+        {
+          "word": "average vrId",
+          "pos": "adj.",
+          "explain": "平均的；正常的；普通的 (2)"
+        },
+        {
+          "word": "on average",
+          "pos": "",
+          "explain": "平均(2)"
+        },
+        {
+          "word": "award",
+          "pos": "vt.",
+          "explain": "授予"
+        },
+        {
+          "word": "award",
+          "pos": "n.",
+          "explain": "奖品(5)"
+        },
+        {
+          "word": "aware ",
+          "pos": "adj.",
+          "explain": "知道；发觉；有……意识的 (2)"
+        },
+        {
+          "word": "aware of",
+          "pos": "",
+          "explain": "意识到；知道(2)"
+        },
+        {
+          "word": "bagpipes n. [pl.]",
+          "pos": "",
+          "explain": "风笛(5)"
+        },
+        {
+          "word": "balance",
+          "pos": "n.",
+          "explain": "平衡；均匀"
+        },
+        {
+          "word": "balance",
+          "pos": "vt.",
+          "explain": "使平衡(1)"
+        },
+        {
+          "word": "keep a balance",
+          "pos": "",
+          "explain": "保持平衡(1)"
+        },
+        {
+          "word": "band",
+          "pos": "n.",
+          "explain": "乐队；带子(5)"
+        },
+        {
+          "word": "battery ",
+          "pos": "n.",
+          "explain": "电池(3)"
+        },
+        {
+          "word": "battle",
+          "pos": "n.",
+          "explain": "战役；搏斗"
+        },
+        {
+          "word": "battle",
+          "pos": "vi. & vt.",
+          "explain": "搏斗；奋斗(4)△Battle of Hastings黑斯廷斯战役(4)"
+        },
+        {
+          "word": "beauty",
+          "pos": "n.",
+          "explain": "美；美人；美好的东西(2)"
+        },
+        {
+          "word": "beer",
+          "pos": "n.",
+          "explain": "（一杯）啤酒(4)"
+        },
+        {
+          "word": "being",
+          "pos": "n.",
+          "explain": "身心；存在；生物(5)"
+        },
+        {
+          "word": "belong",
+          "pos": "vi.",
+          "explain": "应在（某处）；适应(4)"
+        },
+        {
+          "word": "belong to",
+          "pos": "",
+          "explain": "属于(4)"
+        }
+      ],
+      "sentence_patterns": [
+        {
+          "pattern": "Different types of music",
+          "explain": "根据体裁类型不同，常见的音乐可分为古典音乐、流行乐、摇滚乐等。",
+          "example": "According to genre types, common music can be divided into classical music, pop music, rock music, etc.",
+          "translation": "根据体裁类型不同，常见的音乐可以分为古典音乐、流行音乐、摇滚乐等。"
+        },
+        {
+          "pattern": "moved by this music",
+          "explain": "过去分词短语作状语，用于说明原因，相当于as Eric was moved by this music。",
+          "example": "Moved by this music, he said, 'It was like seeing color for the first time.'",
+          "translation": "他被这段音乐打动了，他说：‘那种（兴奋的）感觉就如同是第一次看见色彩一样。’"
+        },
+        {
+          "pattern": "He graduated from university in 1995, and then received a master’s degree in musical composition from the Juilliard School in New York in 1997.",
+          "explain": "表示时间顺序的并列句，第一个动作发生在1995年，第二个动作发生在1997年。",
+          "example": "He graduated from university in 1995, and then received a master’s degree in musical composition from the Juilliard School in New York in 1997.",
+          "translation": "他1995年大学毕业，随后于1997年获得纽约茱莉亚音乐学院音乐创作硕士学位。"
+        },
+        {
+          "pattern": "Whitacre’s next effort was the Virtual Youth Choir for UNICEF, which was first seen on stage on 23 July 2014 in the UK.",
+          "explain": "非限制性定语从句，提供额外信息，用逗号隔开。",
+          "example": "Whitacre’s next effort was the Virtual Youth Choir for UNICEF, which was first seen on stage on 23 July 2014 in the UK.",
+          "translation": "惠塔克的第二个壮举是打造联合国儿童基金会“虚拟青年合唱团”，该团于2014年7月23日在英国首次登台演出。"
+        },
+        {
+          "pattern": "Altogether, 2,292 young people from 80 countries joined in to sing Whitacre’s song 'What If'.",
+          "explain": "副词altogether表示总数，join in表示参加。",
+          "example": "Altogether, 2,292 young people from 80 countries joined in to sing Whitacre’s song 'What If'.",
+          "translation": "总共有来自80个国家的2,292名青年参与演唱惠塔克的歌曲《假如》。"
+        },
+        {
+          "pattern": "It’s an honour to be here and to share with you the story of how music has had an impact on my life.",
+          "explain": "不定式作表语，表示主语的内容或状态。",
+          "example": "It’s an honour to be here and to share with you the story of how music has had an impact on my life.",
+          "translation": "非常荣幸来到这里与大家分享音乐是如何影响了我的人生的。"
+        },
+        {
+          "pattern": "It spoke words of encouragement to the deepest part of my being.",
+          "explain": "介词to表示方向或对象。",
+          "example": "It spoke words of encouragement to the deepest part of my being.",
+          "translation": "它（音乐）使我的内心深受鼓舞。"
+        },
+        {
+          "pattern": "rhetorical devices",
+          "explain": "修辞手法，包括明喻、隐喻、引用和拟人。",
+          "example": "simile: Her eyes twinkled like stars. metaphor: All the world’s a stage. quote: 'A friend in need is a friend indeed.' personification: A lie can travel half way around the world while the truth is putting on his shoes.",
+          "translation": "修辞手法包括明喻、隐喻、引用和拟人。如：明喻：她的眼睛像星星一样一闪一闪的。隐喻：整个世界就是一座舞台。引用：正如一句俗语所言：“患难朋友才是真朋友。”拟人：当真理刚刚穿上鞋子，谎言就已经走了半个世界。"
+        },
+        {
+          "pattern": "Restrictive Relative Clauses",
+          "explain": "限制性定语从句，先行词不可缺少的定语。",
+          "example": "We knew the scientist who had studied the problem.",
+          "translation": "我们了解那个研究过该问题的科学家。"
+        },
+        {
+          "pattern": "The Passive Voice",
+          "explain": "被动语态，表示动作的承受者。",
+          "example": "The email was received by him.",
+          "translation": "邮件被他收到了。"
+        }
+      ],
+      "passages": [],
+      "knowledge": {
+        "vocab": {
+          "summary": "本单元核心词汇与短语",
+          "mastery": 0,
+          "points": []
+        },
+        "grammar": {
+          "summary": "本单元重点语法",
+          "mastery": 0,
+          "points": []
+        },
+        "discourse": {
+          "summary": "音乐 · 艺术与情感",
+          "mastery": 0,
+          "points": []
+        }
+      },
+      "vocab_stats": {
+        "mastered": 0,
+        "to_review": 134
+      }
+    }
+  ]
+}
