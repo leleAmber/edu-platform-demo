@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import time
 import tomllib
 from pathlib import Path
 
@@ -86,38 +87,57 @@ _QTYPE_SPEC = {
         "rules": (
             "原创一篇短文，中间挖 5 个空（用 ___1___ 到 ___5___ 表示），给出 7 个备选句子；"
             "其中 5 个填入 5 空，2 个为干扰项；答案能从上下文逻辑推出。"
+            "必须恰好 5 个空：正文中要出现 ___1___ 到 ___5___ 全部五个编号，"
+            "blanks 数组长度必须正好是 5，缺空的文章视为不合格。"
         ),
         "fields": '{"passage": "含 5 个空的原创短文", "options": ["选项1"..."选项7" 共 7 项], "blanks": [{"question": "该空所在句/上下文", "answer": "正确选项完整原文", "explain": "解析"} ... 共 5 项]}',
     },
     "cloze": {
         "kind": "article", "label": "完形填空",
         "rules": (
-            "原创一篇短文，挖 10 个空（用 ___1___ 到 ___10___ 表示），每空 4 个选项（词或短语），"
-            "仅 1 个正确，考查词汇辨析与语境理解。"
+            "原创一篇短文，正文中必须内嵌 10 个编号空格，格式为三个下划线+数字+三个下划线，例如："
+            "\"Tom ___1___ to school every day, and he ___2___ his homework in the evening.\"；"
+            "编号必须从 1 到 10 连续、各出现一次、不得重复或跳到 11；"
+            "blanks 数组必须正好 10 项，第 i 项的答案对应正文中的 ___i___，每空 4 个选项（词或短语），"
+            "仅 1 个正确，考查词汇辨析与语境理解。正文空格数与 blanks 项数必须一致。"
         ),
         "fields": '{"passage": "含 10 个空的原创短文", "blanks": [{"question": "该空所在句", "options": ["选项1", "选项2", "选项3", "选项4"], "answer": "正确词", "explain": "解析"} ... 共 10 项]}',
     },
     "grammar_blank": {
         "kind": "article", "label": "语法填空",
         "rules": (
-            "原创一篇短文，挖 10 个空（用 ___1___ 到 ___10___ 表示），考查语法/词形变化；"
-            "括号内给提示词或纯语境，答案唯一。"
+            "原创一篇短文，正文中必须内嵌 10 个编号空格，格式为三个下划线+数字+三个下划线，例如："
+            "\"Last week, our class ___1___ (visit) a museum, which ___2___ (build) in 1900.\"；"
+            "编号必须从 1 到 10 连续、各出现一次、不得重复或跳到 11；"
+            "考查语法/词形变化，括号内给提示词或纯语境，答案唯一；"
+            "blanks 数组必须正好 10 项，第 i 项的答案对应正文中的 ___i___，正文空格数与 blanks 项数必须一致。"
         ),
         "fields": '{"passage": "含 10 个空的原创短文", "blanks": [{"question": "该空所在句(含提示)", "answer": "正确填词", "explain": "解析"} ... 共 10 项]}',
     },
+    # 写作题的语言分工：题目/要求一律中文，材料一律英文（与新高考试卷一致）。
     "writing_practical": {
         "kind": "single", "label": "应用文写作",
         "rules": (
-            "出一篇高中应用文（书信/通知/发言稿/建议信等），给出题目与要求（词数、要点、格式）。"
+            "出一道高中英语应用文写作题（书信/通知/发言稿/建议信等）。"
+            "writing_prompt 必须用【中文】写情境与任务，以「假定你是李华」「你校将于……」这类中文指令开头，"
+            "禁止用英文整句写题目（题目里可保留 AI、Voice of Youth 这类专有名词的英文）；"
+            "writing_requirements 用【中文】逐条列出要点、词数与格式要求。"
         ),
-        "fields": '{"writing_prompt": "写作题目", "writing_requirements": ["要求1", "要求2"], "answer": "参考范文要点", "explain": "评分要点"}',
+        "fields": '{"writing_prompt": "中文写作题目（假定你是李华……）", "writing_requirements": ["中文要求1", "中文要求2"], "answer": "中文参考范文要点", "explain": "中文评分要点"}',
     },
     "writing_continuation": {
         "kind": "single", "label": "读后续写",
         "rules": (
-            "给出一段原创故事开头（含时间地点人物情节），要求续写，给出词数与内容要求。"
+            "给出一段【英文】原创故事开头（含时间、地点、人物与情节冲突），"
+            "并在 passage 末尾附上两段的英文段落开头语，严格用下面的格式：\n"
+            "Paragraph 1: <英文段落开头语>________________________\n"
+            "Paragraph 2: <英文段落开头语>________________________\n"
+            "passage 全篇必须是英文，不得出现任何中文；"
+            "writing_prompt 与 writing_requirements 必须用【中文】写续写要求"
+            "（如「阅读下面材料，根据其内容和所给段落开头语续写两段，使之构成一篇完整的短文。」「续写词数应为150左右」），"
+            "段落开头语只能出现在 passage 里，禁止写进 writing_prompt。"
         ),
-        "fields": '{"passage": "故事开头(原创)", "writing_prompt": "续写要求", "writing_requirements": ["要求1", "要求2"], "answer": "参考续写要点", "explain": "评分要点"}',
+        "fields": '{"passage": "英文故事开头 + 两段英文段落开头语（Paragraph 1: ... / Paragraph 2: ...）", "writing_prompt": "中文续写要求", "writing_requirements": ["中文要求1", "中文要求2"], "answer": "中文参考续写要点", "explain": "中文评分要点"}',
     },
 }
 
@@ -202,9 +222,19 @@ def _content_hash(book: str, grade: str, qtype: str, passage: str, question: str
 
 _OPTION_PREFIX = re.compile(r"^[A-Ga-g]\s*[.、:：)）]\s*")
 
+_CJK_RE = re.compile(r"[一-鿿]")
+
 
 def _strip_option_prefix(text: str) -> str:
     return _OPTION_PREFIX.sub("", text, count=1).strip()
+
+
+def _looks_english(text: str) -> bool:
+    """读后续写的材料必须是英文：非空、无中文字符，且含足量英文单词。"""
+    text = (text or "").strip()
+    if not text or _CJK_RE.search(text):
+        return False
+    return len(re.findall(r"[A-Za-z]{2,}", text)) >= 30
 
 
 def _clean_options(options) -> list[str]:
@@ -236,8 +266,18 @@ def _single_row(raw: dict, book: str, grade: str, module: str, unit: str | None,
     requirements = [str(r).strip() for r in requirements if str(r).strip()] if isinstance(requirements, list) else []
 
     if qtype in ("writing_practical", "writing_continuation"):
-        if not writing_prompt:
+        # 题目一律中文。模型常整段用英文写题目（"Write a notice for..."），
+        # 这类行存进去后学生看到的是英文题干，与「题目中文、材料英文」的分工不符，直接丢弃。
+        if not writing_prompt or not _CJK_RE.search(writing_prompt):
             return None
+        if qtype == "writing_continuation":
+            # 材料必须是英文故事，且含两段英文开头语；开头语也不能混进题目字段。
+            if not _looks_english(passage):
+                return None
+            if "Paragraph 1" not in passage or "Paragraph 2" not in passage:
+                return None
+            if "Paragraph" in writing_prompt:
+                return None
         question = ""
     else:
         if not question:
@@ -295,6 +335,13 @@ def _article_rows(raw: dict, book: str, grade: str, module: str, unit: str | Non
             "writing_prompt": None, "writing_requirements": [],
             "score": 1, "difficulty": 2, "status": 1, "source": "llm",
         })
+
+    # 组卷要求整篇完整：完形/语法填空需 10 空、七选五需 5 空。
+    # 模型常只给 8~9 空，缺空的文章无法组出该节（见 core/tutor_ai 的 section builder），
+    # 按不合格整篇丢弃，由上层重试。
+    required = {"cloze": 10, "grammar_blank": 10, "seven_five": 5}.get(qtype, 0)
+    if required and len(rows) < required:
+        return []
     return rows
 
 
@@ -391,38 +438,46 @@ def main() -> int:
             for qtype in qtypes:
                 print(f"\n=== {book_key} / {args.module} / {unit_label} / {qtype} · 生成 {args.count} ===")
                 prompt = _build_prompt(args.module, qtype, material, args.count, book_key)
-                # 大模型偶尔返回空/失败，重试几次提升每日 cron 的稳定性
-                raw_list = None
+                # 两种情况都要重试：调用失败返回空；或文章不完整（如完形只给 9 空）
+                # 导致整篇被丢弃。立即重发会在限流/瞬时故障窗口内三次全败，故加退避。
+                rows_batch: list[dict] = []
+                last_invalid = 0
                 for _attempt in range(3):
                     raw_list = llm.generate_questions(_SYSTEM, prompt)
+                    last_invalid = 0
                     if raw_list:
-                        break
-                if not raw_list:
-                    print("[警告] 模型未返回结果（未配置 key 或调用失败），已跳过。")
+                        for raw in raw_list:
+                            rows = _normalize(raw, book_key, grade, args.module, unit, qtype)
+                            if rows:
+                                rows_batch.extend(rows)
+                            else:
+                                last_invalid += 1
+                        if rows_batch:
+                            break
+                    if _attempt < 2:
+                        time.sleep(3 * (_attempt + 1))
+
+                total_invalid += last_invalid
+                if not rows_batch:
+                    print("[警告] 模型未返回可用题（调用失败或文章不完整），已跳过。")
                     continue
 
-                for raw in raw_list:
-                    rows = _normalize(raw, book_key, grade, args.module, unit, qtype)
-                    if not rows:
-                        total_invalid += 1
-                        print("  - [无效] 字段不完整，跳过")
+                for q in rows_batch:
+                    preview = (q["question"] or q["writing_prompt"])[:36]
+                    if args.dry_run:
+                        print(f"  + [dry-run] {qtype}: {preview}")
                         continue
-                    for q in rows:
-                        preview = (q["question"] or q["writing_prompt"])[:36]
-                        if args.dry_run:
-                            print(f"  + [dry-run] {qtype}: {preview}")
-                            continue
-                        if database.has_question(q["content_hash"]):
-                            total_dup += 1
-                            print(f"  - [重复] {qtype}: {preview}")
-                            continue
-                        new_id = database.add_question(q)
-                        if new_id is None:
-                            total_dup += 1
-                            print(f"  - [重复] {qtype}: {preview}")
-                        else:
-                            total_new += 1
-                            print(f"  + [新增 #{new_id}] {qtype}: {preview}")
+                    if database.has_question(q["content_hash"]):
+                        total_dup += 1
+                        print(f"  - [重复] {qtype}: {preview}")
+                        continue
+                    new_id = database.add_question(q)
+                    if new_id is None:
+                        total_dup += 1
+                        print(f"  - [重复] {qtype}: {preview}")
+                    else:
+                        total_new += 1
+                        print(f"  + [新增 #{new_id}] {qtype}: {preview}")
 
     print("\n=== 汇总 ===")
     print(f"新增 {total_new} 题，重复跳过 {total_dup} 题，无效跳过 {total_invalid} 题。")

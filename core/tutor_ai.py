@@ -10,6 +10,9 @@ from __future__ import annotations
 import random
 import re
 
+import streamlit as st
+from streamlit import runtime
+
 from core import auth, database, textbook
 
 # --------------------------------------------------------------------------- #
@@ -419,9 +422,35 @@ CONTENT: dict[str, dict] = {
 
 DEFAULT_UNIT = UNITS[0]
 
-# 题库覆盖缓存：key=(book, unit, quiz_type)。get_questions 每次随机/按序返回可能不同，
-# 缓存保证「渲染题目」与「批改」用的是同一组题（两者都走 get_unit_content）。
-_QUIZ_CACHE: dict[tuple[str, str, str], list[dict]] = {}
+# 缓存必须挂在「用户会话」上，不能挂模块全局。
+# 模块常驻 sys.modules，模块级字典在整个服务进程内共享：一份练习/试卷只要生成过一次，
+# 所有用户直到服务重启看到的都是同一份（2026-10-02 报的「每次点模拟试卷都是同一张卷」即此因）。
+# 缓存本身是必要的——渲染题目与批改必须用同一组题（两者都走 get_unit_content / get_mock_exam）。
+_FALLBACK_STORE: dict = {}
+
+
+def _session_store():
+    """当前用户的会话级缓存容器；离线脚本（无 Streamlit 运行时）退回模块字典。
+
+    脚本只跑一次进程，回退不会造成跨用户串题。
+    这里显式判断运行时：bare 模式下访问 st.session_state 不会抛异常，而是每次
+    读写都打一条 "Session state does not function" 警告，靠 try/except 兜不住。
+    """
+    try:
+        if runtime.exists():
+            return st.session_state
+    except Exception:
+        pass
+    return _FALLBACK_STORE
+
+
+def _quiz_cache_key(book: str | None, unit: str, quiz_type: str) -> str:
+    return f"quiz::{book or ''}::{unit}::{quiz_type}"
+
+
+def refresh_unit_quiz(book: str | None, unit: str, quiz_type: str) -> None:
+    """清掉某单元练习的会话缓存，下次取题重新随机抽取。"""
+    _session_store().pop(_quiz_cache_key(book, unit, quiz_type), None)
 
 
 def get_units(book: str | None = None) -> list[str]:
@@ -467,9 +496,10 @@ def _db_quiz(book: str | None, unit: str, quiz_type: str) -> list[dict]:
     quiz_type 为 preview / review，对应 question_bank.module。目前只取 choice（单选题），
     因为预习/复习页用 st.radio 渲染 4 选项；blank/reading/writing 接入是后续扩展。
     """
-    key = (book or "", unit, quiz_type)
-    if key in _QUIZ_CACHE:
-        return _QUIZ_CACHE[key]
+    key = _quiz_cache_key(book, unit, quiz_type)
+    store = _session_store()
+    if key in store:
+        return store[key]
 
     result: list[dict] = []
     try:
@@ -481,7 +511,7 @@ def _db_quiz(book: str | None, unit: str, quiz_type: str) -> list[dict]:
             result = [_to_choice(r) for r in random.sample(usable, 5)]
     except Exception:
         result = []
-    _QUIZ_CACHE[key] = result
+    store[key] = result
     return result
 
 
@@ -1250,16 +1280,18 @@ MOCK_EXAM: dict = {
             "requirements": ("词数 80 左右", "介绍课程并说明喜欢的理由", "可适当增加细节，使行文连贯"),
         },
         {
+            # 语言分工与题库一致：材料（故事 + 两段开头语）英文，题目与要求中文。
             "key": "writing_continuation", "name": "第二节 读后续写", "score": 25, "per_question": 25,
             "passage": "When I was little, my grandmother often told me stories under the big tree in our yard. "
-                       "Years later, I went back to the old house and saw the tree again. It was still there, strong and quiet.",
-            "prompt": "续写一段，描述你回到老屋后的所见所感。",
-            "requirements": ("续写词数 100 左右", "至少使用 2 个连接词", "情节合理、情感真挚"),
+                       "Years later, I went back to the old house and saw the tree again. It was still there, "
+                       "strong and quiet. I stood under it, and the memories came flooding back.\n\n"
+                       "Paragraph 1: I sat down under the tree and looked up at its green leaves.________________________\n"
+                       "Paragraph 2: Before I left, I picked up a small stone and wrote something under the tree.________________________",
+            "prompt": "阅读下面材料，根据其内容和所给段落开头语续写两段，使之构成一篇完整的短文。",
+            "requirements": ("续写词数应为 150 左右", "续写部分分为两段，每段的开头语已为你写好", "情节合理、情感真挚"),
         },
     ),
 }
-
-_MOCK_CACHE: dict[str, dict] = {}
 
 
 def _group_by_passage(rows: list[dict]) -> list[tuple[str, list[dict]]]:
@@ -1271,66 +1303,91 @@ def _group_by_passage(rows: list[dict]) -> list[tuple[str, list[dict]]]:
     return sorted(groups.items(), key=lambda kv: -len(kv[1]))
 
 
+def _pick(pool: list[dict], count: int) -> list[dict]:
+    """从一篇课文的题里随机挑 count 条，再按行号还原原文顺序。
+
+    get_questions 是 ORDER BY id DESC 的固定序，直接取前 N 条会让每套卷子
+    抽到完全相同的题目；随机挑再排序，既换题又不打乱文章内部的空号顺序。
+    """
+    picked = random.sample(pool, count) if len(pool) > count else list(pool)
+    return sorted(picked, key=lambda r: r["id"])
+
+
 def _reading_section(readings: list[dict]) -> dict | None:
-    """组「第一节 阅读理解」：需 2 篇各 ≥4 题（每篇取 4 题，共 8 题 × 2.5 分）。"""
-    passages = []
-    for passage, qs in _group_by_passage(readings):
-        if len(qs) >= 4:
-            passages.append({
-                "passage": passage,
-                "questions": tuple(_to_choice(r, f"r{len(passages) * 4 + i}") for i, r in enumerate(qs[:4], 1)),
-            })
-        if len(passages) >= 2:
-            break
-    if len(passages) < 2:
+    """组「第一节 阅读理解」：需 2 篇各 ≥4 题（每篇随机取 4 题，共 8 题 × 2.5 分）。"""
+    usable = [(passage, qs) for passage, qs in _group_by_passage(readings) if len(qs) >= 4]
+    if len(usable) < 2:
         return None
+    passages = []
+    for passage, qs in random.sample(usable, 2):
+        passages.append({
+            "passage": passage,
+            "questions": tuple(
+                _to_choice(r, f"r{len(passages) * 4 + i}") for i, r in enumerate(_pick(qs, 4), 1)
+            ),
+        })
     return {"key": "reading", "name": "第一节 阅读理解", "score": 20, "per_question": 2.5, "passages": tuple(passages)}
 
 
 def _seven_five_section(rows: list[dict]) -> dict | None:
     """组「七选五」：一篇文章 ≥5 空，7 个选项在 section 级共享，每题从 7 项里选 1。"""
+    candidates = []
     for passage, qs in _group_by_passage(rows):
         usable = [q for q in qs if len(q["options"]) == 7 and q["answer"]]
         if len(usable) >= 5:
-            options = tuple(usable[0]["options"])
-            questions = tuple(
-                {"id": f"s{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
-                for i, q in enumerate(usable[:5], 1)
-            )
-            return {
-                "key": "seven_five", "name": "第二节 七选五", "score": 10, "per_question": 2,
-                "passage": passage, "options": options, "questions": questions,
-            }
-    return None
+            candidates.append((passage, usable))
+    if not candidates:
+        return None
+
+    passage, usable = random.choice(candidates)
+    options = tuple(usable[0]["options"])
+    questions = tuple(
+        {"id": f"s{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
+        for i, q in enumerate(_pick(usable, 5), 1)
+    )
+    return {
+        "key": "seven_five", "name": "第二节 七选五", "score": 10, "per_question": 2,
+        "passage": passage, "options": options, "questions": questions,
+    }
 
 
 def _cloze_section(rows: list[dict]) -> dict | None:
     """组「完形填空」：一篇文章 ≥10 空，每空 4 个选项。"""
+    candidates = []
     for passage, qs in _group_by_passage(rows):
         usable = [q for q in qs if len(q["options"]) == 4 and q["answer"]]
         if len(usable) >= 10:
-            return {
-                "key": "cloze", "name": "第一节 完形填空", "score": 15, "per_question": 1.5,
-                "passage": passage,
-                "questions": tuple(_to_choice(q, f"c{i}") for i, q in enumerate(usable[:10], 1)),
-            }
-    return None
+            candidates.append((passage, usable))
+    if not candidates:
+        return None
+
+    passage, usable = random.choice(candidates)
+    return {
+        "key": "cloze", "name": "第一节 完形填空", "score": 15, "per_question": 1.5,
+        "passage": passage,
+        "questions": tuple(_to_choice(q, f"c{i}") for i, q in enumerate(_pick(usable, 10), 1)),
+    }
 
 
 def _blank_section(rows: list[dict], need: int) -> dict | None:
     """组「语法填空」：一篇文章 need 空，每空自由填词（无选项）。"""
+    candidates = []
     for passage, qs in _group_by_passage(rows):
-        qs = [q for q in qs if q["answer"]]
-        if len(qs) >= need:
-            questions = tuple(
-                {"id": f"g{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
-                for i, q in enumerate(qs[:need], 1)
-            )
-            return {
-                "key": "grammar_blank", "name": "第二节 语法填空", "score": 15, "per_question": 1.5,
-                "passage": passage, "questions": questions,
-            }
-    return None
+        usable = [q for q in qs if q["answer"]]
+        if len(usable) >= need:
+            candidates.append((passage, usable))
+    if not candidates:
+        return None
+
+    passage, usable = random.choice(candidates)
+    questions = tuple(
+        {"id": f"g{i}", "question": q["question"], "answer": q["answer"], "explain": q["explain"] or ""}
+        for i, q in enumerate(_pick(usable, need), 1)
+    )
+    return {
+        "key": "grammar_blank", "name": "第二节 语法填空", "score": 15, "per_question": 1.5,
+        "passage": passage, "questions": questions,
+    }
 
 
 def assemble_mock_exam(book: str | None) -> dict | None:
@@ -1370,8 +1427,8 @@ def assemble_mock_exam(book: str | None) -> dict | None:
     if not (reading and seven and cloze_sec and blank_sec and practical and continuation):
         return None
 
-    practical_q = practical[0]
-    continuation_q = continuation[0]
+    practical_q = random.choice(practical)
+    continuation_q = random.choice(continuation)
 
     return {
         "title": "英语综合模拟试卷（题库随机组卷）",
@@ -1396,12 +1453,18 @@ def assemble_mock_exam(book: str | None) -> dict | None:
     }
 
 
-def get_mock_exam(book: str | None = None) -> dict:
-    """获取模拟试卷：优先从当前教材题库随机组卷，题库不足时回退内置演示卷。"""
-    key = book or ""
-    if key not in _MOCK_CACHE:
-        _MOCK_CACHE[key] = assemble_mock_exam(book) or MOCK_EXAM
-    return _MOCK_CACHE[key]
+def get_mock_exam(book: str | None = None, *, refresh: bool = False) -> dict:
+    """获取模拟试卷：优先从当前教材题库随机组卷，题库不足时回退内置演示卷。
+
+    组卷结果缓存在当前用户会话里：同一场考试内渲染与批改必须是同一张卷
+    （grade_mock_exam 也走本函数，否则学生对不上答案），但换用户、换教材或
+    refresh=True 时重新随机组卷，用户点「换一套试卷」传 refresh。
+    """
+    key = f"mock_exam::{book or ''}"
+    store = _session_store()
+    if refresh or key not in store:
+        store[key] = assemble_mock_exam(book) or MOCK_EXAM
+    return store[key]
 
 
 def _score_writing(text: str) -> tuple[int, list[str]]:

@@ -18,6 +18,46 @@ st.title("📝 模拟试卷")
 
 book = book_selector.render_book_selector()
 exam = tutor_ai.get_mock_exam(book)
+
+
+def _objective_question_ids(paper: dict) -> list[str]:
+    """收集一份试卷里所有客观题的 id（用于重置答题状态）。"""
+    ids = []
+    for section in paper["sections"]:
+        if section["key"].startswith("writing"):
+            continue
+        if section.get("passages"):
+            for p in section["passages"]:
+                ids.extend(q["id"] for q in p["questions"])
+        else:
+            ids.extend(q["id"] for q in section["questions"])
+    return ids
+
+
+def _clear_answers(paper: dict) -> None:
+    """清空一份试卷的作答状态（客观题选项 + 两篇写作）。"""
+    for qid in _objective_question_ids(paper):
+        st.session_state.pop(f"exam_{qid}", None)
+    st.session_state.pop("exam_writing_practical", None)
+    st.session_state.pop("exam_writing_continuation", None)
+
+
+def _new_paper() -> None:
+    """重新随机组一套卷，并回到「开始前须知」的未开考状态。"""
+    _clear_answers(exam)  # 先按旧卷清作答，见下方 id 重名说明
+    tutor_ai.get_mock_exam(book, refresh=True)
+    st.session_state["exam_started"] = False
+    st.session_state.pop("exam_result", None)
+
+
+# 中途换教材等于换卷。题目的 id 是按位置编的（r1..r8 / s1..s5 / c1..c10 / g1..g10），
+# 新旧卷 id 完全重名，不作废旧作答的话，上一册的选择会被当成这一册的答案计入批改。
+if st.session_state.get("exam_book") != book:
+    _clear_answers(exam)
+    st.session_state["exam_book"] = book
+    st.session_state["exam_started"] = False
+    st.session_state.pop("exam_result", None)
+
 st.caption(f"{exam['title']}｜当前教材：{book}｜满分 100 分｜建议用时 {exam['duration']} 分钟")
 
 
@@ -32,20 +72,6 @@ def confirm_exam_dialog() -> None:
         st.session_state["exam_started"] = True
         st.session_state.pop("exam_result", None)
         st.rerun(scope="app")
-
-
-def _objective_question_ids() -> list[str]:
-    """收集当前试卷所有客观题 id（用于重置答题状态）。"""
-    ids = []
-    for section in exam["sections"]:
-        if section["key"].startswith("writing"):
-            continue
-        if section.get("passages"):
-            for p in section["passages"]:
-                ids.extend(q["id"] for q in p["questions"])
-        else:
-            ids.extend(q["id"] for q in section["questions"])
-    return ids
 
 
 def render_exam_paper() -> None:
@@ -137,13 +163,8 @@ def render_exam_result(result: dict) -> None:
         for note in result["writing_notes"]:
             st.markdown(f"- {note}")
 
-    if st.button("再考一次", key="exam_restart"):
-        st.session_state["exam_started"] = False
-        st.session_state.pop("exam_result", None)
-        for qid in _objective_question_ids():
-            st.session_state.pop(f"exam_{qid}", None)
-        st.session_state.pop("exam_writing_practical", None)
-        st.session_state.pop("exam_writing_continuation", None)
+    if st.button("再考一次（换新卷）", key="exam_restart"):
+        _new_paper()
         st.rerun()
 
 
@@ -159,14 +180,19 @@ elif not st.session_state.get("exam_started"):
             "- 演示版本的计时功能仅作展示，不会自动交卷\n"
             "- 写作部分按词数、句数、连接词使用与语法错误四个角度评分"
         )
-        if st.button("开始模拟考试", type="primary", key="exam_start"):
+        col_start, col_reshuffle = st.columns([2, 1])
+        if col_start.button("开始模拟考试", type="primary", key="exam_start", width="stretch"):
             confirm_exam_dialog()
+        if col_reshuffle.button("换一套试卷", key="exam_reshuffle", width="stretch"):
+            _new_paper()
+            st.toast("已从当前教材题库重新随机组卷", icon="🔀")
+            st.rerun()
 else:
     render_exam_paper()
     if st.button("交卷", type="primary", key="exam_submit", width="stretch"):
         answers = {
             qid: st.session_state.get(f"exam_{qid}")
-            for qid in _objective_question_ids()
+            for qid in _objective_question_ids(exam)
         }
         writings = {
             "writing_practical": st.session_state.get("exam_writing_practical", ""),

@@ -136,8 +136,13 @@ def is_available() -> bool:
     return bool(_providers())
 
 
-def _chat_once(provider: dict, payload: dict) -> str | None:
-    """对单个 provider 发一次请求，成功返回文本内容，失败/限流返回 None。"""
+def _chat_once(provider: dict, payload: dict, timeout: int = 60) -> str | None:
+    """对单个 provider 发一次请求，成功返回文本内容，失败/限流返回 None。
+
+    timeout 按用途区分：批改类要求快速响应（默认 60s），
+    而题库生成的长篇题型（阅读/完形/七选五）输出上千 token，常需 1~3 分钟，
+    用 60s 会被中途掐断，必须放宽（见 generate_questions）。
+    """
     headers = {
         "Authorization": f"Bearer {provider['api_key']}",
         "Content-Type": "application/json",
@@ -147,7 +152,7 @@ def _chat_once(provider: dict, payload: dict) -> str | None:
             f"{provider['base_url']}/chat/completions",
             json=payload,
             headers=headers,
-            timeout=60,
+            timeout=timeout,
         )
     except Exception:
         return None
@@ -162,7 +167,7 @@ def _chat_once(provider: dict, payload: dict) -> str | None:
     return content
 
 
-def _chat(payload: dict, model_key: str = "model") -> str | None:
+def _chat(payload: dict, model_key: str = "model", timeout: int = 60) -> str | None:
     """按轮询顺序尝试各 provider，失败自动换下一个 key，全部失败返回 None。"""
     providers = _providers()
     if not providers:
@@ -171,7 +176,7 @@ def _chat(payload: dict, model_key: str = "model") -> str | None:
     for offset in range(len(providers)):
         provider = providers[(start + offset) % len(providers)]
         req = {**payload, "model": provider.get(model_key) or payload.get("model")}
-        content = _chat_once(provider, req)
+        content = _chat_once(provider, req, timeout=timeout)
         if content is not None:
             return content
     return None
@@ -493,9 +498,11 @@ def generate_questions(system: str, user: str) -> list[dict] | None:
             {"role": "user", "content": user},
         ],
         "temperature": 0.7,
-        "max_tokens": 3000,
+        "max_tokens": 8192,
     }
-    content = _chat(payload)
+    # 长篇题型（阅读 3 篇 / 完形 2 篇）输出可达数千 token，实测单次 90~200 秒，
+    # 并发时更久；用默认 60s 会被掐断，4096 上限也容易截断成非法 JSON。
+    content = _chat(payload, timeout=600)
     if not content:
         return None
 
@@ -527,7 +534,8 @@ def structure(system: str, user: str, temperature: float = 0.2, max_tokens: int 
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
-    content = _chat(payload)
+    # 离线脚本使用（教材单词表/句型解析），输入较长，放宽超时
+    content = _chat(payload, timeout=180)
     if not content:
         return None
     return _parse_json(content)
