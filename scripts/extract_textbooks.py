@@ -318,9 +318,9 @@ def extract_book(book: dict, use_llm: bool) -> dict:
             "theme": theme,
             "words": words,
             "sentence_patterns": patterns,
-            "passages": [],
-            "knowledge": _demo_knowledge(theme),
-            "vocab_stats": {"mastered": 0, "to_review": len(words)},
+            # passages / knowledge / vocab_stats.mastered 为空或样板，按压缩约定剔除，
+            # 由 core/tutor_ai._normalize_content 用默认值兜底（见 scripts/compress_textbooks.py）。
+            "vocab_stats": {"to_review": len(words)},
         })
 
     return {
@@ -350,7 +350,9 @@ def main() -> int:
         if args.no_llm:
             continue
         out_path = OUT_DIR / f"{book['key']}.json"
-        out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        out_path.write_text(
+            json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+        )
         print(f"  → 写入 {out_path.relative_to(REPO_ROOT)}")
 
     if not args.no_llm:
@@ -371,7 +373,7 @@ def _load_index_from_disk() -> list[dict]:
 def _write_index() -> None:
     index = _load_index_from_disk()
     (OUT_DIR / "index.json").write_text(
-        json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(index, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
     )
 
 
