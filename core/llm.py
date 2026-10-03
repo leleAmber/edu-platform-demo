@@ -14,6 +14,7 @@ import itertools
 import json
 import os
 import re
+import time
 from collections import OrderedDict
 
 import requests
@@ -136,8 +137,30 @@ def is_available() -> bool:
     return bool(_providers())
 
 
-def _chat_once(provider: dict, payload: dict, timeout: int = 60) -> str | None:
-    """对单个 provider 发一次请求，成功返回文本内容，失败/限流返回 None。
+# --------------------------------------------------------------------------- #
+# 重试策略：免费 API 最常见的是限流，而不是额度耗尽
+# 暂时性失败（429 / 5xx / 超时 / 网络抖动）退避后重试大概率能救回来；
+# 确定性失败（401 key 失效 / 400 参数错误）重试同一个 key 没有意义，直接换下一个。
+# --------------------------------------------------------------------------- #
+_RETRYABLE_STATUS = frozenset({408, 429, 500, 502, 503, 504})
+_DEFAULT_ATTEMPTS = 3      # 每个 key 的总尝试次数（含首次）
+_RETRY_BASE_DELAY = 1.5    # 指数退避基数（秒）：1.5 / 3.0 ...
+_RETRY_MAX_DELAY = 8.0
+
+# 用户在页面上实时等结果的调用（识别图片 / 批改作业）的总时间预算（秒）。
+# 光靠 attempts × timeout 会把最坏耗时叠成好几分钟，必须再压一个总上限：
+# 预算内尽量退避重试（限流 429 秒回，重试几乎不耗时），预算耗尽就收手。
+_INTERACTIVE_DEADLINE = 150
+
+# 视觉识别一张图正常 3~15 秒，30 秒足够宽裕；真卡住了早点换 key 比干等划算。
+_VISION_TIMEOUT = 30
+
+
+def _chat_once(provider: dict, payload: dict, timeout: int = 60) -> tuple[str | None, bool]:
+    """对单个 provider 发一次请求，返回 (文本内容, 是否值得重试)。
+
+    成功时第一个元素是文本（可能为空串，例如图片里确实没有文字），此时不值得重试；
+    失败时第一个元素为 None，第二个元素表示这次失败是否属于暂时性、值得退避重试。
 
     timeout 按用途区分：批改类要求快速响应（默认 60s），
     而题库生成的长篇题型（阅读/完形/七选五）输出上千 token，常需 1~3 分钟，
@@ -155,30 +178,71 @@ def _chat_once(provider: dict, payload: dict, timeout: int = 60) -> str | None:
             timeout=timeout,
         )
     except Exception:
-        return None
+        return None, True  # 超时 / 连接失败，多半是暂时性的
     if resp.status_code != 200:
-        return None  # 含 429 限流 / 401 无效 key 等，交给上层换下一个
+        # 429 限流、5xx 服务端故障值得重试；401 / 403 是 key 失效，只有换 key 才有用
+        return None, resp.status_code in _RETRYABLE_STATUS
     try:
         content = resp.json()["choices"][0]["message"]["content"]
     except Exception:
-        return None
+        return None, True  # 200 但响应体不合法，通常是网关或服务端抽风
     if not isinstance(content, str):
-        return None
-    return content
+        return None, True
+    return content, False
 
 
-def _chat(payload: dict, model_key: str = "model", timeout: int = 60) -> str | None:
-    """按轮询顺序尝试各 provider，失败自动换下一个 key，全部失败返回 None。"""
+def _chat(
+    payload: dict,
+    model_key: str = "model",
+    timeout: int = 60,
+    attempts: int = _DEFAULT_ATTEMPTS,
+    deadline: float | None = None,
+) -> str | None:
+    """按轮询顺序尝试各 provider，失败自动换下一个 key，全部失败返回 None。
+
+    同一个 key 上的暂时性失败（限流 / 网络抖动 / 5xx）会指数退避重试；
+    确定性失败（key 无效等）立即换下一个 key，不做无谓等待。
+
+    attempts  每个 key 的总尝试次数上限。
+    deadline  整个调用的总时间预算（秒）。给用户实时等结果的路径必须设：
+              timeout × attempts × key 数 叠出来的最坏耗时用户等不起。
+              预算快耗尽时会自动缩短单次超时，保证总耗时不超过预算。
+    """
     providers = _providers()
     if not providers:
         return None
+    total = max(1, attempts)
+    started = time.monotonic()
+
+    def _left() -> float | None:
+        """剩余预算（秒）；未设 deadline 时返回 None。"""
+        return None if deadline is None else deadline - (time.monotonic() - started)
+
     start = next(_request_counter) % len(providers)
     for offset in range(len(providers)):
+        left = _left()
+        if left is not None and left <= 1:
+            break  # 预算耗尽，换 key 也没有意义了
         provider = providers[(start + offset) % len(providers)]
         req = {**payload, "model": provider.get(model_key) or payload.get("model")}
-        content = _chat_once(provider, req, timeout=timeout)
-        if content is not None:
-            return content
+        for attempt in range(total):
+            left = _left()
+            if left is not None and left <= 1:
+                break
+            # 预算不够时把这次超时压短，避免最后一把把总耗时顶穿
+            call_timeout = timeout if left is None else max(1, int(min(timeout, left)))
+            content, retryable = _chat_once(provider, req, timeout=call_timeout)
+            if content is not None:
+                return content
+            if not retryable:
+                break  # 确定性失败，重试同一个 key 没有意义
+            if attempt + 1 >= total:
+                break
+            delay = min(_RETRY_BASE_DELAY * 2**attempt, _RETRY_MAX_DELAY)
+            left = _left()
+            if left is not None and delay >= left:
+                break  # 退避都睡不起了，省下时间做最后一次尝试
+            time.sleep(delay)
     return None
 
 
@@ -268,7 +332,7 @@ def grade_homework(text: str, question_type: str) -> dict | None:
         "temperature": 0.2,
         "max_tokens": 2000,
     }
-    content = _chat(payload)
+    content = _chat(payload, deadline=_INTERACTIVE_DEADLINE)
     if not content:
         return None
 
@@ -307,7 +371,7 @@ def grade_sentence(sentence: str) -> dict | None:
         "temperature": 0.0,
         "max_tokens": 300,
     }
-    content = _chat(payload)
+    content = _chat(payload, timeout=30, deadline=_INTERACTIVE_DEADLINE)
     if not content:
         return None
 
@@ -404,7 +468,7 @@ def grade_writing_overall(text: str) -> dict | None:
         "temperature": 0.3,
         "max_tokens": 300,
     }
-    content = _chat(payload)
+    content = _chat(payload, timeout=30, deadline=_INTERACTIVE_DEADLINE)
     if not content:
         return None
 
@@ -473,7 +537,12 @@ def recognize_image(image_bytes: bytes) -> str | None:
         "temperature": 0.0,
         "max_tokens": 1000,
     }
-    content = _chat(payload, model_key="vision_model")
+    content = _chat(
+        payload,
+        model_key="vision_model",
+        timeout=_VISION_TIMEOUT,
+        deadline=_INTERACTIVE_DEADLINE,
+    )
     if not content:
         return None
     result = content.strip()
@@ -502,7 +571,8 @@ def generate_questions(system: str, user: str) -> list[dict] | None:
     }
     # 长篇题型（阅读 3 篇 / 完形 2 篇）输出可达数千 token，实测单次 90~200 秒，
     # 并发时更久；用默认 60s 会被掐断，4096 上限也容易截断成非法 JSON。
-    content = _chat(payload, timeout=600)
+    # 单次失败代价太高（一次就是十分钟），重试次数收敛到 2，避免定时任务被拖垮。
+    content = _chat(payload, timeout=600, attempts=2, deadline=900)
     if not content:
         return None
 
@@ -534,8 +604,8 @@ def structure(system: str, user: str, temperature: float = 0.2, max_tokens: int 
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
-    # 离线脚本使用（教材单词表/句型解析），输入较长，放宽超时
-    content = _chat(payload, timeout=180)
+    # 离线脚本使用（教材单词表/句型解析），输入较长，放宽超时；同样收敛重试次数
+    content = _chat(payload, timeout=180, attempts=2, deadline=300)
     if not content:
         return None
     return _parse_json(content)

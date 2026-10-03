@@ -8,7 +8,7 @@ from __future__ import annotations
 import streamlit as st
 
 from components.cards import goto_page
-from core import auth, database, llm, ocr, tutor_ai, vip
+from core import auth, database, llm, tutor_ai, vip
 
 PAGE_MEMBER = "pages/6_membership.py"
 PAGE_DIAGNOSIS = "pages/7_diagnosis.py"
@@ -19,9 +19,9 @@ is_vip = vip.is_vip(user)
 st.title("✍️ 作业中心")
 st.caption("键盘输入或上传作业图片，AI 自动识别题目并批改（作文 / 选择题 / 填空题均可）。")
 
-# OCR 识别结果回填到输入框
-if st.session_state.pop("_ocr_to_fill", False):
-    st.session_state["homework_text"] = st.session_state.pop("_ocr_text", "")
+# 图片识别结果回填到输入框
+if st.session_state.pop("_image_to_fill", False):
+    st.session_state["homework_text"] = st.session_state.pop("_image_text", "")
 
 column_input, column_result = st.columns([1, 1], gap="large")
 
@@ -37,7 +37,7 @@ with column_input:
         placeholder="键盘粘贴作业，或上传图片后点「识别图片」自动填入",
     )
     st.caption("支持打印题 + 手写答案的照片，也可直接粘贴文字。")
-    if st.session_state.get("homework_from_ocr"):
+    if st.session_state.get("homework_from_image"):
         st.caption("⚠️ 图片识别结果可能有误、顺序可能错乱，批改前请先检查并修正上面的内容。")
 
     st.divider()
@@ -70,31 +70,25 @@ with column_input:
         st.warning(f"最多只能识别 5 张图片，当前共 {len(images)} 张，仅识别前 5 张。")
         images = images[:5]
 
-    if st.button("🔍 识别图片", key="homework_ocr", width="stretch"):
+    if st.button("🔍 识别图片", key="homework_recognize", width="stretch"):
         if not images:
             st.toast("请先上传或拍摄作业图片", icon="⚠️")
-        elif not ocr.is_available() and not llm.vision_available():
-            st.toast("识别组件不可用：本地 OCR 未安装且未配置视觉大模型", icon="⚠️")
+        elif not llm.vision_available():
+            st.toast("识别组件不可用：未配置视觉大模型（LLM_VISION_MODEL）", icon="⚠️")
         else:
             with st.spinner(f"正在识别 {len(images)} 张图片…"):
                 parts = []
                 for img in images:
-                    raw = img.getvalue()
-                    # AI 优先：先用视觉大模型识别，识别不到再退回本地 OCR
-                    text_part = ""
-                    if llm.vision_available():
-                        text_part = (llm.recognize_image(raw) or "").strip()
-                    if not text_part:
-                        text_part = ocr.recognize(raw).strip()
+                    text_part = (llm.recognize_image(img.getvalue()) or "").strip()
                     if text_part:
                         parts.append(text_part)
                 text = "\n\n".join(parts)
             if not text:
                 st.toast("未识别到文字，请换更清晰的图片或手动输入", icon="⚠️")
             else:
-                st.session_state["_ocr_text"] = text
-                st.session_state["_ocr_to_fill"] = True
-                st.session_state["homework_from_ocr"] = True
+                st.session_state["_image_text"] = text
+                st.session_state["_image_to_fill"] = True
+                st.session_state["homework_from_image"] = True
                 st.rerun()
 
     st.divider()
