@@ -517,6 +517,9 @@ DROP TABLE IF EXISTS users, orders, messages, learning_records;
 
 ### 部署（三模块）
 
+> Ubuntu 24.04 上的完整部署步骤（systemd + nginx）见 **[deploy/README.md](deploy/README.md)**，
+> 里面含现成的 service 文件、nginx 配置和一键更新脚本。
+
 11. **`.streamlit/secrets.toml` 不会随代码下来**（已被 `.gitignore` 忽略）。服务器上必须手动放一份，或改用同名环境变量注入——否则网页版和 `api/` 都连不上数据库。这是最常漏的一步。
 12. **移动端 API 地址**：`mobile/src/config.js` 的 `BASE_URL` 默认指向 `http://127.0.0.1:8000`，上线前必须改成已备案的 HTTPS 域名（可用 `VITE_API_BASE` 环境变量覆盖，不必改文件）。
 13. **微信小程序**：`mobile/src/manifest.json` 的 `mp-weixin.appid` 待填；并在微信公众平台配置 `request` 合法域名（HTTPS + 已备案），否则小程序里请求会被运行时拦掉。

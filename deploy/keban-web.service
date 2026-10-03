@@ -1,0 +1,34 @@
+[Unit]
+Description=课伴AI 网页版（Streamlit）
+Documentation=https://github.com/leleAmber/edu-platform-demo
+After=network-online.target mysql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=keban
+Group=keban
+
+# 必须是仓库根目录：app.py 与 pages/ 依赖它作为工作目录、
+# core/ 也在这一层，Streamlit 不会自动加 sys.path。
+WorkingDirectory=/srv/edu-platform
+
+# Streamlit 会在 HOME 下写 .streamlit/，指到应用目录避免 $HOME 不可写
+Environment=HOME=/srv/edu-platform
+Environment=PYTHONUNBUFFERED=1
+
+# 只监听 127.0.0.1：对外由 nginx 反代，8501 不对公网开放
+ExecStart=/srv/edu-platform/.venv/bin/python -m streamlit run app.py \
+    --server.headless=true \
+    --server.address=127.0.0.1 \
+    --server.port=8501
+
+Restart=on-failure
+RestartSec=5
+
+# 日志走 journald：journalctl -u keban-web -f
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

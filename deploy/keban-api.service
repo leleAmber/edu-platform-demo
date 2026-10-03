@@ -1,0 +1,34 @@
+[Unit]
+Description=课伴AI 移动端后端（FastAPI）
+Documentation=https://github.com/leleAmber/edu-platform-demo
+After=network-online.target mysql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=keban
+Group=keban
+WorkingDirectory=/srv/edu-platform/api
+
+# 移动端独有的配置放这里（API_CORS_ORIGINS / API_JWT_SECRET 等）。
+# 数据库与大模型配置不在这里，api 会自动读 ../.streamlit/secrets.toml。
+EnvironmentFile=-/srv/edu-platform/api/.env
+Environment=PYTHONUNBUFFERED=1
+
+# --workers 必须是 1：异步任务的结果存在进程内存里（app/jobs.py），
+# 多 worker 时轮询可能落到另一个进程，查不到刚提交的任务。
+ExecStart=/srv/edu-platform/.venv/bin/python -m uvicorn app.main:app \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 1 \
+    --proxy-headers \
+    --forwarded-allow-ips=127.0.0.1
+
+Restart=on-failure
+RestartSec=5
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

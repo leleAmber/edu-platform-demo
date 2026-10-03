@@ -10,6 +10,10 @@ PyJWT>=2.8.0
 # 作业图片上传（multipart 直传）
 python-multipart>=0.0.9
 
+# MySQL 8 默认 caching_sha2_password：认证缓存未命中时 PyMySQL 需要它完成
+# RSA 握手，缺了会抛一个很难懂的错（且时好时坏——缓存一刷就复发）。
+cryptography>=42.0.0
+
 # —— 以下与网页版共用，版本保持一致 ——
 streamlit>=1.64.0
 plotly>=5.18.0
