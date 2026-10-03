@@ -1,0 +1,73 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarTitleText": "课伴AI",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/preview/preview",
+      "style": { "navigationBarTitleText": "课本预习" }
+    },
+    {
+      "path": "pages/review/review",
+      "style": { "navigationBarTitleText": "课本复习" }
+    },
+    {
+      "path": "pages/homework/homework",
+      "style": { "navigationBarTitleText": "作业中心" }
+    },
+    {
+      "path": "pages/mine/mine",
+      "style": { "navigationBarTitleText": "我的" }
+    },
+    {
+      "path": "pages/login/login",
+      "style": { "navigationBarTitleText": "登录" }
+    },
+    {
+      "path": "pages/register/register",
+      "style": { "navigationBarTitleText": "注册" }
+    },
+    {
+      "path": "pages/exam/exam",
+      "style": { "navigationBarTitleText": "模拟试卷" }
+    },
+    {
+      "path": "pages/membership/membership",
+      "style": { "navigationBarTitleText": "会员中心" }
+    },
+    {
+      "path": "pages/diagnosis/diagnosis",
+      "style": { "navigationBarTitleText": "学情诊断" }
+    },
+    {
+      "path": "pages/messages/messages",
+      "style": {
+        "navigationBarTitleText": "客服留言",
+        "enablePullDownRefresh": true
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#8a94a6",
+    "selectedColor": "#2a78d6",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "首页" },
+      { "pagePath": "pages/preview/preview", "text": "预习" },
+      { "pagePath": "pages/review/review", "text": "复习" },
+      { "pagePath": "pages/homework/homework", "text": "作业" },
+      { "pagePath": "pages/mine/mine", "text": "我的" }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "课伴AI",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f5f7fb"
+  }
+}

@@ -1,0 +1,35 @@
+/**
+ * 全局 SCSS 变量。
+ *
+ * uni-app 会在每个 <style lang="scss"> 里自动注入这份变量，页面无需 import。
+ * 颜色对齐 Streamlit 网页版的主题色，两端观感保持一致。
+ */
+
+$brand: #2a78d6;
+$brand-dark: #1d5ba8;
+$brand-light: #e8f1fc;
+
+$success: #1f9d55;
+$warning: #d97706;
+$danger: #dc2626;
+
+$text-main: #1f2937;
+$text-sub: #6b7280;
+$text-muted: #9ca3af;
+
+$bg-page: #f5f7fb;
+$bg-card: #ffffff;
+$border: #e5e8ef;
+
+$radius-sm: 8rpx;
+$radius: 16rpx;
+$radius-lg: 24rpx;
+
+$gap-sm: 12rpx;
+$gap: 24rpx;
+$gap-lg: 32rpx;
+
+$font-sm: 24rpx;
+$font-base: 28rpx;
+$font-lg: 32rpx;
+$font-title: 36rpx;

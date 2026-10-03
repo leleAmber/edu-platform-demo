@@ -1,8 +1,8 @@
 # 课伴AI｜英语课本智能学习助手
 
-面向初高中学生的英语课本学习 Web 应用，覆盖 **课本预习复习 → AI 作业批改 → 模拟试卷 → 学情诊断 → 会员开通 → 管理后台** 的完整闭环。
+面向初高中学生的英语课本学习应用，覆盖 **课本预习复习 → AI 作业批改 → 模拟试卷 → 学情诊断 → 会员开通 → 管理后台** 的完整闭环，提供 **Streamlit 网页版** 与 **微信小程序（uni-app）** 两端。
 
-技术栈为 Python + Streamlit + MySQL，数据通过 SQLAlchemy 连接池持久化到 MySQL，AI 批改与学情分析为本地规则模拟（**不依赖外部大模型 API**）。
+仓库含三个模块——**网页版**（Python + Streamlit，仓库根）、**移动端后端**（FastAPI，`api/`）、**移动端前端**（uni-app 微信小程序，`mobile/`）——三者共用同一份 `core/` 业务逻辑与同一个 MySQL，详见[仓库结构与三模块](#仓库结构与三模块)。数据通过 SQLAlchemy 连接池持久化到 MySQL。
 
 `index.html` 保留为早期交互与视觉稿参考，当前可运行入口是 `app.py`。
 
@@ -14,6 +14,7 @@
 - [快速开始](#快速开始)
 - [演示账号](#演示账号)
 - [页面与访问路径](#页面与访问路径)
+- [仓库结构与三模块](#仓库结构与三模块)
 - [目录结构](#目录结构)
 - [核心模块说明](#核心模块说明)
 - [模拟 AI 的实现方式](#模拟-ai-的实现方式)
@@ -167,10 +168,34 @@ python -c "from core import database; print(database.health_check())"
 
 ---
 
+## 仓库结构与三模块
+
+三个模块同处一个仓库，`core/`（业务逻辑）**只有一份**，移动端后端通过 `sys.path` 复用它，不复制、不分叉：
+
+| 模块 | 位置 | 技术栈 | 启动 |
+| --- | --- | --- | --- |
+| 网页版 | 仓库根 | Streamlit | `streamlit run app.py`（8501） |
+| 移动端后端 | `api/` | FastAPI + uvicorn | `cd api && python run.py`（8000） |
+| 移动端前端 | `mobile/` | uni-app（Vue 3 + Vite） | `cd mobile && npm run dev:h5`（5173） |
+
+- 三者连同一个 MySQL，共用 `.streamlit/secrets.toml` 里的数据库与大模型配置。
+- **网页版独立运行**，不依赖另外两个；**移动端前端依赖移动端后端**（先起 `api/`）。
+- `core/runtime.py` 已内建运行时适配：网页版走 `st.session_state`，API 走请求级上下文，同一份代码两端行为各自正确。
+
+**一把起三个**（本地开发）：
+
+```bash
+./dev.sh          # 网页版 8501 + API 8000 + 移动端 H5 5173，Ctrl-C 一次全退
+```
+
+单独的启动方式、移动端真机联调与小程序的配置，见 [mobile/README.md](mobile/README.md)。
+
+---
+
 ## 目录结构
 
 ```
-edu-platform-demo/
+edu-platform-demo/              # 仓库根 = 网页版
 ├── app.py                      # 入口：全局初始化、登录/注册页、按角色组装侧边导航
 ├── requirements.txt            # streamlit / plotly / pandas / SQLAlchemy / PyMySQL
 ├── schema.sql                  # 建表 DDL（应用会自动建表，此文件供 DBA 手工执行）
@@ -210,6 +235,17 @@ edu-platform-demo/
 │   ├── extract_textbooks.py    # 从 7 册教材 PDF 提取单词/句型 → data/textbooks/*.json
 │   ├── generate_questions.py   # 批量生成原创题库（按教材隔离），幂等
 │   └── scheduled_generate.sh   # 每日 cron 增量生成题库
+│
+├── api/                        # 移动端后端（FastAPI），复用根目录的 core/
+│   ├── app/                    # 应用包：main / config / deps / jobs / middleware / routers/
+│   ├── tests/test_api.py       # 端到端接口测试（打真服务，先起 api/run.py）
+│   ├── run.py                  # 开发启动脚本（生产用 uvicorn，--workers 必须为 1）
+│   └── requirements.txt        # fastapi / uvicorn / PyJWT（其余依赖与网页版共用）
+│
+├── mobile/                     # 移动端前端（uni-app：微信小程序 / H5 / App）
+│   ├── src/                    # config.js（API 地址）、pages/、components/、api/、store/
+│   ├── scripts/smoke-h5.mjs    # H5 冒烟测试（无头 Chrome 走一遍主要页面）
+│   └── package.json            # dev:h5 / dev:mp-weixin / build:* / smoke:h5
 │
 ├── data/textbooks/             # 教材静态内容（JSON，由 extract_textbooks.py 生成）
 │
@@ -478,3 +514,11 @@ DROP TABLE IF EXISTS users, orders, messages, learning_records;
 
 9. **登录风控**：补充登录失败次数限制（锁定 / 验证码）、验证码发送频率限制、会话过期时间。
 10. **密钥管理**：`.streamlit/secrets.toml` 不入库，线上用环境变量或密钥管理服务注入；`AUTH_OTP_SECRET` 要是随机生成的长串，不能用默认值。定期更换数据库密码与邮箱授权码。
+
+### 部署（三模块）
+
+11. **`.streamlit/secrets.toml` 不会随代码下来**（已被 `.gitignore` 忽略）。服务器上必须手动放一份，或改用同名环境变量注入——否则网页版和 `api/` 都连不上数据库。这是最常漏的一步。
+12. **移动端 API 地址**：`mobile/src/config.js` 的 `BASE_URL` 默认指向 `http://127.0.0.1:8000`，上线前必须改成已备案的 HTTPS 域名（可用 `VITE_API_BASE` 环境变量覆盖，不必改文件）。
+13. **微信小程序**：`mobile/src/manifest.json` 的 `mp-weixin.appid` 待填；并在微信公众平台配置 `request` 合法域名（HTTPS + 已备案），否则小程序里请求会被运行时拦掉。
+14. **API 侧环境变量**：`API_HOST=0.0.0.0`（对外）、`API_JWT_SECRET`（独立于 OTP 密钥，便于轮换）、`API_CORS_ORIGINS`（H5 域名，逗号分隔）。`run.py` 的 `--workers` 必须是 1（异步任务结果存在进程内存里）。
+15. **进程与反代**：网页版 `streamlit run app.py --server.port 8501`、API `uvicorn app.main:app --port 8000`，移动端 H5 用 `npm run build:h5` 出静态产物交 nginx 托管，统一由 nginx 反代到 80/443 并配 HTTPS 证书。

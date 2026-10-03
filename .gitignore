@@ -12,9 +12,16 @@ lerna-debug.log*
 # 密钥：线上用环境变量注入时可能存在本地 .env，同样不能提交
 .env
 .env.*
+# 但配置模板要进仓库，否则新机器不知道要配哪些项
+!**/.env.example
 
 # 虚拟环境与 Python 缓存
 .venv/
+venv/
 __pycache__/
 *.py[cod]
+
+# 移动端（uni-app）：依赖与构建产物都不入库
+node_modules/
+mobile/dist/
 

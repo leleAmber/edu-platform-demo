@@ -1,0 +1,20 @@
+# 课伴AI 移动端后端
+# 业务逻辑复用 ../core（同一份代码，网页版与小程序共用）
+
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# 登录态：无状态 JWT（网页版用 st.session_state，API 版用 token）
+PyJWT>=2.8.0
+
+# 作业图片上传（multipart 直传）
+python-multipart>=0.0.9
+
+# —— 以下与网页版共用，版本保持一致 ——
+streamlit>=1.64.0
+plotly>=5.18.0
+pandas>=2.1.0
+SQLAlchemy>=2.0.0
+PyMySQL>=1.1.0
+pymupdf>=1.24.0
+requests>=2.31.0
