@@ -10,10 +10,7 @@ from __future__ import annotations
 import random
 import re
 
-import streamlit as st
-from streamlit import runtime
-
-from core import auth, database, textbook
+from core import auth, database, runtime, textbook
 
 # --------------------------------------------------------------------------- #
 # 单元内容（人教版必修一 4 个单元，课文为贴合单元主题的改编选段）
@@ -422,26 +419,15 @@ CONTENT: dict[str, dict] = {
 
 DEFAULT_UNIT = UNITS[0]
 
-# 缓存必须挂在「用户会话」上，不能挂模块全局。
-# 模块常驻 sys.modules，模块级字典在整个服务进程内共享：一份练习/试卷只要生成过一次，
-# 所有用户直到服务重启看到的都是同一份（2026-10-02 报的「每次点模拟试卷都是同一张卷」即此因）。
-# 缓存本身是必要的——渲染题目与批改必须用同一组题（两者都走 get_unit_content / get_mock_exam）。
-_FALLBACK_STORE: dict = {}
-
-
 def _session_store():
-    """当前用户的会话级缓存容器；离线脚本（无 Streamlit 运行时）退回模块字典。
+    """当前用户的会话级缓存容器（实现见 core/runtime.py）。
 
-    脚本只跑一次进程，回退不会造成跨用户串题。
-    这里显式判断运行时：bare 模式下访问 st.session_state 不会抛异常，而是每次
-    读写都打一条 "Session state does not function" 警告，靠 try/except 兜不住。
+    缓存必须挂在「用户」而不是模块全局：模块常驻 sys.modules，模块级字典在整个服务
+    进程内共享，一份练习/试卷只要生成过一次，所有用户直到服务重启看到的都是同一份
+    （2026-10-02 报的「每次点模拟试卷都是同一张卷」即此因）。
+    缓存本身是必要的——渲染题目与批改必须用同一组题，两者都走 get_unit_content / get_mock_exam。
     """
-    try:
-        if runtime.exists():
-            return st.session_state
-    except Exception:
-        pass
-    return _FALLBACK_STORE
+    return runtime.session_store()
 
 
 def _quiz_cache_key(book: str | None, unit: str, quiz_type: str) -> str:

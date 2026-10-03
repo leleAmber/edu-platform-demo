@@ -212,10 +212,12 @@ _SCHEMA_STATEMENTS = (
       role       VARCHAR(20)     NOT NULL DEFAULT 'student',
       vip_until  DATETIME        NULL,
       vip_plan   VARCHAR(20)     NULL,
+      openid     VARCHAR(64)     NULL,
       created_at DATETIME        NOT NULL,
       PRIMARY KEY (id),
       UNIQUE KEY uk_users_username (username),
       UNIQUE KEY uk_users_email (email),
+      UNIQUE KEY uk_users_openid (openid),
       KEY idx_users_role (role),
       KEY idx_users_vip_until (vip_until)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
@@ -295,6 +297,18 @@ _SCHEMA_STATEMENTS = (
       KEY idx_qb_status (status)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     """,
+    """
+    CREATE TABLE IF NOT EXISTS otp_codes (
+      email      VARCHAR(120) NOT NULL,
+      code_hash  CHAR(64)     NOT NULL,
+      sent_at    DOUBLE       NOT NULL,
+      expires_at DOUBLE       NOT NULL,
+      attempts   INT          NOT NULL DEFAULT 0,
+      dev_mode   TINYINT(1)   NOT NULL DEFAULT 0,
+      PRIMARY KEY (email),
+      KEY idx_otp_expires (expires_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    """,
 )
 
 
@@ -305,6 +319,7 @@ def init_schema() -> None:
         for statement in _SCHEMA_STATEMENTS:
             conn.execute(text(statement))
         _migrate_question_bank(conn)
+        _migrate_users(conn)
         _seed_accounts(conn)
     _SCHEMA_READY = True
 
@@ -317,6 +332,18 @@ def _migrate_question_bank(conn) -> None:
         pass
     try:
         conn.execute(text("ALTER TABLE question_bank ADD KEY idx_qb_book (book)"))
+    except Exception:
+        pass
+
+
+def _migrate_users(conn) -> None:
+    """给已存在的 users 表补 openid 列（微信登录用）。"""
+    try:
+        conn.execute(text("ALTER TABLE users ADD COLUMN openid VARCHAR(64) NULL AFTER vip_plan"))
+    except Exception:
+        pass
+    try:
+        conn.execute(text("ALTER TABLE users ADD UNIQUE KEY uk_users_openid (openid)"))
     except Exception:
         pass
 
@@ -367,6 +394,8 @@ def _user_row(row) -> dict:
         "role": data["role"],
         "vip_until": _to_text(data["vip_until"]),
         "vip_plan": data["vip_plan"],
+        # 老库可能还没跑迁移，取不到 openid 列时按未绑定处理
+        "openid": data.get("openid"),
         "created_at": _to_text(data["created_at"]),
     }
 
@@ -504,8 +533,8 @@ def add_new_user(user_info: dict) -> dict | None:
         with _connect() as conn:
             result = conn.execute(
                 text(
-                    "INSERT INTO users (username, email, password, role, vip_until, vip_plan, created_at) "
-                    "VALUES (:username, :email, :password, :role, :vip_until, :vip_plan, :created_at)"
+                    "INSERT INTO users (username, email, password, role, vip_until, vip_plan, openid, created_at) "
+                    "VALUES (:username, :email, :password, :role, :vip_until, :vip_plan, :openid, :created_at)"
                 ),
                 {
                     "username": username,
@@ -514,6 +543,7 @@ def add_new_user(user_info: dict) -> dict | None:
                     "role": user_info.get("role", "student"),
                     "vip_until": _to_datetime(user_info.get("vip_until")),
                     "vip_plan": user_info.get("vip_plan"),
+                    "openid": user_info.get("openid") or None,
                     "created_at": datetime.now(),
                 },
             )
@@ -521,6 +551,18 @@ def add_new_user(user_info: dict) -> dict | None:
     except IntegrityError:
         return None
     return get_user_by_id(new_id)
+
+
+def get_user_by_openid(openid: str) -> dict | None:
+    """按微信 openid 查询用户（微信一键登录用）。"""
+    target = (openid or "").strip()
+    if not target:
+        return None
+    with _connect() as conn:
+        row = conn.execute(
+            text("SELECT * FROM users WHERE openid = :openid LIMIT 1"), {"openid": target}
+        ).mappings().first()
+    return _user_row(row) if row else None
 
 
 def get_user_by_id(user_id: int) -> dict | None:
@@ -853,3 +895,77 @@ def count_questions(
     where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
     with _connect() as conn:
         return conn.execute(text(f"SELECT COUNT(*) FROM question_bank{where}"), params).scalar()
+
+
+# --------------------------------------------------------------------------- #
+# 邮箱验证码（API 模式用；网页版仍存 session_state，不落库）
+# --------------------------------------------------------------------------- #
+def get_otp(email: str) -> dict | None:
+    """读取某邮箱的验证码记录，不存在返回 None。"""
+    _ensure_schema()
+    with _connect() as conn:
+        row = conn.execute(
+            text("SELECT * FROM otp_codes WHERE email = :email"), {"email": email}
+        ).mappings().first()
+    if row is None:
+        return None
+    return {
+        "hash": row["code_hash"],
+        "sent_at": float(row["sent_at"]),
+        "expires_at": float(row["expires_at"]),
+        "attempts": int(row["attempts"]),
+        "dev_mode": bool(row["dev_mode"]),
+    }
+
+
+def set_otp(email: str, record: dict) -> None:
+    """写入/覆盖某邮箱的验证码记录（同邮箱只保留最新一条）。"""
+    _ensure_schema()
+    with _connect() as conn:
+        conn.execute(
+            text(
+                "INSERT INTO otp_codes (email, code_hash, sent_at, expires_at, attempts, dev_mode) "
+                "VALUES (:email, :hash, :sent_at, :expires_at, :attempts, :dev_mode) "
+                "ON DUPLICATE KEY UPDATE code_hash = VALUES(code_hash), sent_at = VALUES(sent_at), "
+                "expires_at = VALUES(expires_at), attempts = VALUES(attempts), dev_mode = VALUES(dev_mode)"
+            ),
+            {
+                "email": email,
+                "hash": record["hash"],
+                "sent_at": float(record["sent_at"]),
+                "expires_at": float(record["expires_at"]),
+                "attempts": int(record.get("attempts", 0)),
+                "dev_mode": 1 if record.get("dev_mode") else 0,
+            },
+        )
+
+
+def bump_otp_attempts(email: str) -> int:
+    """校验失败时累加错误次数，返回累加后的值。记录已不存在时返回 0。"""
+    _ensure_schema()
+    with _connect() as conn:
+        conn.execute(
+            text("UPDATE otp_codes SET attempts = attempts + 1 WHERE email = :email"),
+            {"email": email},
+        )
+        value = conn.execute(
+            text("SELECT attempts FROM otp_codes WHERE email = :email"), {"email": email}
+        ).scalar()
+    return int(value or 0)
+
+
+def clear_otp(email: str) -> None:
+    """校验通过或作废时删除记录。"""
+    _ensure_schema()
+    with _connect() as conn:
+        conn.execute(text("DELETE FROM otp_codes WHERE email = :email"), {"email": email})
+
+
+def purge_expired_otp(now: float) -> int:
+    """清理过期验证码，返回删除条数（供定时任务调用，避免表无限增长）。"""
+    _ensure_schema()
+    with _connect() as conn:
+        result = conn.execute(
+            text("DELETE FROM otp_codes WHERE expires_at < :now"), {"now": float(now)}
+        )
+    return int(result.rowcount or 0)

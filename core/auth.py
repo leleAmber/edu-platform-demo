@@ -1,7 +1,12 @@
 """认证层：注册（邮箱验证码）、登录、登出、会话用户。
 
-邮箱验证码直接复用项目已有的 .streamlit/secrets.toml 配置（163 SMTP），
 验证码只保存 HMAC 摘要，10 分钟过期，同一邮箱 60 秒内只能发一次，最多校验 5 次。
+
+存储分两种运行时（见 core/runtime.py）：
+- 网页版：验证码与登录态都放 st.session_state，不落盘；
+- API 版：登录态改为无状态（调用方签发 JWT），验证码必须落 otp_codes 表——
+  注册是「发码」与「提交」两次独立 HTTP 请求，进程内存储活不过请求边界，
+  不落库的话任何验证码都校验不过。
 """
 
 from __future__ import annotations
@@ -14,9 +19,7 @@ import smtplib
 import time
 from email.message import EmailMessage
 
-import streamlit as st
-
-from core import database
+from core import database, runtime
 
 # --------------------------------------------------------------------------- #
 # 常量
@@ -40,11 +43,8 @@ _EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$
 # 配置读取
 # --------------------------------------------------------------------------- #
 def _secret(name: str, default: str = "") -> str:
-    """读取 secrets，缺文件或缺字段时返回默认值，不让应用崩溃。"""
-    try:
-        return str(st.secrets.get(name, default))
-    except Exception:
-        return default
+    """读配置（环境变量优先，回落 secrets），缺文件或缺字段时返回默认值，不让应用崩溃。"""
+    return runtime.secret(name, default)
 
 
 def _is_dev_mode() -> bool:
@@ -70,10 +70,52 @@ def get_smtp_config() -> dict | None:
 
 
 # --------------------------------------------------------------------------- #
-# 验证码存储（会话级，不落盘）
+# 验证码存储
 # --------------------------------------------------------------------------- #
-def _otp_store() -> dict:
-    return st.session_state.setdefault(_OTP_STORE_KEY, {})
+class _SessionOTP:
+    """网页版后端：验证码存当前会话，不落盘（原有行为）。"""
+
+    @staticmethod
+    def _store() -> dict:
+        return runtime.session_store().setdefault(_OTP_STORE_KEY, {})
+
+    def get(self, email: str) -> dict | None:
+        return self._store().get(email)
+
+    def set(self, email: str, record: dict) -> None:
+        self._store()[email] = record
+
+    def pop(self, email: str) -> dict | None:
+        return self._store().pop(email, None)
+
+    def bump_attempts(self, email: str) -> int:
+        record = self._store().get(email)
+        if record is None:
+            return 0
+        record["attempts"] = int(record.get("attempts", 0)) + 1
+        return record["attempts"]
+
+
+class _DatabaseOTP:
+    """API 版后端：验证码落 otp_codes 表，重启与多进程都不丢。"""
+
+    def get(self, email: str) -> dict | None:
+        return database.get_otp(email)
+
+    def set(self, email: str, record: dict) -> None:
+        database.set_otp(email, record)
+
+    def pop(self, email: str) -> dict | None:
+        record = database.get_otp(email)
+        database.clear_otp(email)
+        return record
+
+    def bump_attempts(self, email: str) -> int:
+        return database.bump_otp_attempts(email)
+
+
+def _otp() -> _SessionOTP | _DatabaseOTP:
+    return _DatabaseOTP() if runtime.in_api() else _SessionOTP()
 
 
 def _hash_code(email: str, code: str) -> str:
@@ -130,8 +172,8 @@ def send_verification_code(email: str) -> tuple[bool, str, str | None]:
     if not _EMAIL_PATTERN.match(email):
         return False, "请输入正确的邮箱地址", None
 
-    store = _otp_store()
-    record = store.get(email)
+    backend = _otp()
+    record = backend.get(email)
     now = time.time()
     if record and now - record["sent_at"] < SEND_INTERVAL_SECONDS:
         wait = int(SEND_INTERVAL_SECONDS - (now - record["sent_at"])) + 1
@@ -139,13 +181,13 @@ def send_verification_code(email: str) -> tuple[bool, str, str | None]:
 
     dev_mode = _is_dev_mode()
     code = DEV_CODE if dev_mode else f"{secrets.randbelow(1_000_000):06d}"
-    store[email] = {
+    backend.set(email, {
         "hash": _hash_code(email, code),
         "sent_at": now,
         "expires_at": now + CODE_TTL_SECONDS,
         "attempts": 0,
         "dev_mode": dev_mode,
-    }
+    })
 
     if dev_mode:
         return True, "本地演示模式：验证码已生成", DEV_CODE
@@ -155,7 +197,7 @@ def send_verification_code(email: str) -> tuple[bool, str, str | None]:
     except Exception as exc:  # noqa: BLE001 - 统一转成可读提示
         # 发送失败：作废本次验证码并只回报错误，绝不把验证码返回给调用方。
         # 同时清掉发送记录，让用户可以立即重试而不必等满 60 秒限流。
-        store.pop(email, None)
+        backend.pop(email)
         return False, f"验证码发送失败：{_short_error(exc)}，请稍后重试", None
 
     return True, f"验证码已发送至 {email}，{CODE_TTL_SECONDS // 60} 分钟内有效", None
@@ -165,23 +207,24 @@ def verify_code(email: str, code: str) -> tuple[bool, str]:
     """校验验证码，成功后立即失效。返回 (是否通过, 提示文字)。"""
     email = (email or "").strip().lower()
     code = (code or "").strip()
-    store = _otp_store()
-    record = store.get(email)
+    backend = _otp()
+    record = backend.get(email)
 
     if not record:
         return False, "请先点击「获取验证码」"
     if time.time() > record["expires_at"]:
-        store.pop(email, None)
+        backend.pop(email)
         return False, "验证码已过期，请重新获取"
     if record["attempts"] >= MAX_VERIFY_ATTEMPTS:
-        store.pop(email, None)
+        backend.pop(email)
         return False, "验证码错误次数过多，请重新获取"
     if not hmac.compare_digest(record["hash"], _hash_code(email, code)):
-        record["attempts"] += 1
-        left = MAX_VERIFY_ATTEMPTS - record["attempts"]
+        # 经 backend 累加：API 后端每次读的是数据库新行，就地把 record 改掉不会持久化
+        attempts = backend.bump_attempts(email)
+        left = max(0, MAX_VERIFY_ATTEMPTS - attempts)
         return False, f"验证码不正确，还可以尝试 {left} 次"
 
-    store.pop(email, None)
+    backend.pop(email)
     return True, "验证成功"
 
 
@@ -189,11 +232,14 @@ def verify_code(email: str, code: str) -> tuple[bool, str]:
 # 登录 / 注册 / 登出
 # --------------------------------------------------------------------------- #
 def login(username: str, password: str) -> bool:
-    """校验账号密码，成功写入 st.session_state["current_user"]。"""
+    """校验账号密码，成功写入当前用户。
+
+    网页版写入 st.session_state；API 版只设置请求级上下文，调用方需据此签发 JWT。
+    """
     user = database.get_user_by_username(username)
     if not user or not database.verify_password(password, user.get("password", "")):
         return False
-    st.session_state["current_user"] = dict(user)
+    runtime.set_current_user(dict(user))
     return True
 
 
@@ -242,32 +288,45 @@ def register(username: str, email: str, password: str, confirm_pwd: str, code: s
 
 def logout() -> None:
     """清空登录态与相关的会话标记。"""
-    st.session_state.pop("current_user", None)
-    for key in list(st.session_state.keys()):
+    # 必须趁登录态还在时取到会话容器：API 模式下清掉用户后 session_store() 就换了容器
+    store = runtime.session_store()
+    user = runtime.current_user()
+
+    for key in list(store.keys()):
         if str(key).startswith(GATE_FLAG_PREFIX) or key == _OTP_STORE_KEY:
-            st.session_state.pop(key, None)
+            store.pop(key, None)
+
+    runtime.set_current_user(None)
+
+    # API 模式下丢弃该用户的整份缓存（含抽题/组卷结果），下次登录重新开始
+    if user and user.get("username"):
+        runtime.clear_user_store(str(user["username"]))
 
 
 def get_current_user() -> dict | None:
     """读取当前登录用户，未登录返回 None。"""
-    user = st.session_state.get("current_user")
-    return dict(user) if user else None
+    return runtime.current_user()
 
 
 def refresh_current_user() -> dict | None:
     """会员开通等场景下重新从数据表同步会话用户，保证界面立即更新。"""
-    user = get_current_user()
+    user = runtime.current_user()
     if not user:
         return None
     latest = database.get_user_by_username(user["username"])
     if latest:
-        st.session_state["current_user"] = dict(latest)
+        runtime.set_current_user(dict(latest))
         return dict(latest)
     return user
 
 
 def require_login() -> dict:
-    """页面级登录守卫：未登录时中止渲染，避免直接输入 URL 绕过登录页。"""
+    """页面级登录守卫（仅网页版）：未登录时中止渲染，避免直接输入 URL 绕过登录页。
+
+    API 版用依赖注入做鉴权，不要调用本函数。
+    """
+    import streamlit as st
+
     user = get_current_user()
     if user is None:
         st.error("登录状态已失效，请返回首页重新登录。")
