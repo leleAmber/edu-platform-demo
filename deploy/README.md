@@ -30,6 +30,13 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
+> 服务器在大陆的话，给 npm 换个国内源，否则第 8 步装前端依赖会很慢
+> （`npm ci` 要装 250MB 左右的包）：
+>
+> ```bash
+> sudo -u keban npm config set registry https://registry.npmmirror.com
+> ```
+
 验证：`python3 -V`（应为 3.12）、`node -v`（应为 v22）。
 
 ## 2. 建运行用户并把代码放到位
@@ -40,10 +47,17 @@ sudo useradd --system --create-home --shell /usr/sbin/nologin keban
 sudo mkdir -p /srv/edu-platform
 sudo chown keban:keban /srv/edu-platform
 
-sudo -u keban git clone https://github.com/leleAmber/edu-platform-demo.git /srv/edu-platform
-cd /srv/edu-platform
-sudo -u keban git checkout release-python
+# 必须用浅克隆，见下方说明
+sudo -u keban git clone --depth 1 --single-branch --branch release-python \
+    https://github.com/leleAmber/edu-platform-demo.git /srv/edu-platform
 ```
+
+> **为什么是浅克隆**：仓库历史里曾经提交过 7 份教材 PDF（合计约 230MB，现已从
+> 工作区移除但仍留在历史中），完整 `git clone` 要拉 **215MB**。当前代码快照本身
+> 只有 **14.8MB**，`--depth 1` 只拉最新一版，**能省掉 93% 的流量和时间**。
+>
+> 这对境外的服务器无所谓，但对**大陆的机器几乎是必须的**——从 GitHub 拉 215MB
+> 经常慢到超时。浅克隆下 `git pull --ff-only`（`update.sh` 用的）照常工作。
 
 ## 3. 建数据库和账号
 
