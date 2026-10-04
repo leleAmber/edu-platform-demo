@@ -12,11 +12,36 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-# 对外访问地址：默认取本机第一个 IP。有域名后改成 PUBLIC_ORIGIN=https://your-domain.com
-PUBLIC_ORIGIN="${PUBLIC_ORIGIN:-http://$(hostname -I 2>/dev/null | awk '{print $1}')}"
+# 对外访问地址：显式传 PUBLIC_ORIGIN=http://你的域名 最稳。
+# 不传则自动探测——注意云服务器（腾讯云轻量等）网卡上只有内网 IP，公网是 NAT 的，
+# 直接把 hostname -I 的结果写进 H5 会让手机端白屏，所以内网地址会被替换成公网探测结果。
+is_private_ip() {
+    [[ "$1" =~ ^(10\.|127\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.) ]]
+}
 
-echo "==> 1/5 拉取最新代码"
-git pull --ff-only
+if [[ -z "${PUBLIC_ORIGIN:-}" ]]; then
+    _ip="$(hostname -I 2>/dev/null | awk '{print $1}')"
+    if [[ -z "$_ip" ]] || is_private_ip "$_ip"; then
+        for _url in https://api.ipify.org https://ifconfig.me/ip https://ipinfo.io/ip; do
+            _ip="$(curl -fsS --max-time 5 "$_url" 2>/dev/null | tr -d '[:space:]')" || continue
+            [[ "$_ip" =~ ^[0-9]+(\.[0-9]+){3}$ ]] && break
+            _ip=""
+        done
+        [ -n "$_ip" ] || { echo "!! 探测不到公网 IP，请显式指定 PUBLIC_ORIGIN=http://你的地址" >&2; exit 1; }
+    fi
+    PUBLIC_ORIGIN="http://$_ip"
+    echo "==> 对外地址自动探测为 ${PUBLIC_ORIGIN}（要改就显式传 PUBLIC_ORIGIN=...）"
+fi
+
+echo "==> 1/5 更新代码"
+if [[ -d "$ROOT/.git" ]]; then
+    git pull --ff-only
+else
+    # 大陆机器常因拉不动 GitHub 而改用 rsync 传代码，那样服务器上没有 .git。
+    # 此时不能直接 git pull（在非 git 目录里会因 set -e 让整个脚本退出）。
+    echo "    服务器上无 .git —— 代码是用 rsync 传的，跳过 git pull"
+    echo "    更新方式：在本机重跑 rsync 推送，或改用 git 克隆的部署方式"
+fi
 
 echo "==> 2/5 安装 Python 依赖"
 "$ROOT/.venv/bin/pip" install -q -r requirements.txt -r api/requirements.txt

@@ -19,6 +19,26 @@ MySQL 走 apt 安装。全程不需要 Docker。
 
 ---
 
+## 想省事：跑 `bootstrap.sh`
+
+下面第 1~8 步全自动做完，幂等、可重复执行：
+
+```bash
+# 服务器上以 root 执行
+SERVER_IP=你的服务器公网IP ./deploy/bootstrap.sh
+```
+
+它额外替你做了几件手工容易漏的事：小内存机器自动加 2G swap（npm 构建会 OOM）、
+自动生成数据库密码并同时写进 MySQL 和 `secrets.toml`、api 起不来直接打印 Traceback、
+**探测公网 IP**（云服务器网卡上只有内网地址，直接用 `hostname -I` 会让 H5 白屏）。
+
+跑完还剩两件手工事，脚本结尾会再提醒一次：填 `LLM_API_KEYS`、控制台放行 80 端口。
+
+想分步理解、或者要自定义配置（比如改路径、加 systemd 之外的进程管理器），
+就按下面的 1~8 步手工来。
+
+---
+
 ## 1. 装系统依赖
 
 ```bash
@@ -198,17 +218,53 @@ sudo PUBLIC_ORIGIN=http://你的服务器IP ./deploy/update.sh
 
 ## 日常更新
 
+**在你自己电脑上跑**（不是服务器上），一条命令完成推代码 + 部署 + 从公网验收：
+
+```bash
+./deploy/release.sh            # 全量：推代码 → 装依赖 → 重建 H5 → 重启 → 验收
+./deploy/release.sh --fast     # 只改了 Python 后端：跳过 apt 与 H5 构建
+```
+
+**什么时候不能用 `--fast`**：改了 `mobile/` 下任何前端代码，或者换了域名 / IP ——
+H5 的 API 地址是构建时写死的，必须重新构建。脚本结尾会自己发现这一点并提示。
+
+服务器上直接跑（比如你 ssh 进去手动操作）也可以：
+
 ```bash
 cd /srv/edu-platform
 sudo PUBLIC_ORIGIN=http://你的地址 ./deploy/update.sh
 ```
 
-只改了 Python 代码（网页版 / api）时可以省掉 H5 构建：
+> **注意本项目的实际部署方式**：某些大陆节点（例如本机在用的腾讯云轻量深圳）
+> 拉 GitHub 是完全不通的，那种情况下代码是用 `rsync` 推的，**服务器上没有 `.git`**，
+> `update.sh` 里的 `git pull` 会被自动跳过。详见下面「数据同步」一节的说明。
+
+---
+
+## 数据同步（把本机开发数据搬到服务器）
+
+服务器刚部署好时是个**空库**——应用会自动建表，但只有种子账号，没有题库等内容数据。
+所以首次上线后必须跑一次：
 
 ```bash
-sudo -u keban git pull --ff-only
-sudo -u keban .venv/bin/pip install -q -r requirements.txt -r api/requirements.txt
-sudo systemctl restart keban-web keban-api
+./deploy/sync-data.sh --dry-run   # 先看看会同步哪些表、各多少行
+./deploy/sync-data.sh             # 确认后执行
+```
+
+它做的事：本机 `mysqldump` → 压缩传到服务器 → 用 **root** 导入（应用账号 `keban_app`
+的授权里没有 DROP，带 `DROP TABLE` 的全量 dump 用它导入会失败）→ 重启服务 →
+逐表比对两边行数。**这是覆盖式同步**：服务器上同名表的现有数据会先被 DROP 掉。
+
+### 用户账号不会被删
+
+默认**保留服务器上独有的账号**：线上随时可能有人注册，全量覆盖会把他们删掉，而且不可逆。
+脚本会在导入前把服务器的 `users` 表备份到临时表，导入后把本机没有的账号补回去
+（靠 `username` 唯一键去重，同名以本机为准）。执行前它会先把这些账号列出来给你看。
+
+只有明确要让「服务器上的用户也以本机为准」时才加 `--replace-users`：
+
+```bash
+./deploy/sync-data.sh --replace-users --yes    # 危险：服务器独有账号会永久丢失
 ```
 
 ## 排错
