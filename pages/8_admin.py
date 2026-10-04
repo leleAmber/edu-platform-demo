@@ -65,6 +65,7 @@ with tab_users:
         user_rows = [
             {
                 "用户名": item.get("username", ""),
+                "中文名": item.get("chinese_name") or "—",
                 "邮箱": item.get("email", ""),
                 "角色": ROLE_LABELS.get(item.get("role"), "学生"),
                 "VIP到期时间": vip.vip_until_text(item) if vip.is_vip(item) else "暂未开通",

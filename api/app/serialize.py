@@ -59,6 +59,7 @@ def user_payload(user: dict) -> dict:
     is_member = vip.is_vip(user)
     return {
         "username": user.get("username", ""),
+        "chinese_name": user.get("chinese_name") or "",
         "email": user.get("email", ""),
         "role": user.get("role", "student"),
         "is_vip": is_member,

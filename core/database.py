@@ -44,7 +44,7 @@ _SCHEMA_READY = False
 _SCHEMA_LOCK = threading.Lock()
 
 # 允许通过 update_user 修改的列，防止外部传入任意列名
-_UPDATABLE_USER_COLUMNS = frozenset({"username", "email", "password", "role", "vip_until", "vip_plan"})
+_UPDATABLE_USER_COLUMNS = frozenset({"username", "chinese_name", "email", "password", "role", "vip_until", "vip_plan"})
 
 
 # --------------------------------------------------------------------------- #
@@ -205,15 +205,16 @@ def verify_password(password: str, stored: str) -> bool:
 _SCHEMA_STATEMENTS = (
     """
     CREATE TABLE IF NOT EXISTS users (
-      id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-      username   VARCHAR(50)     NOT NULL,
-      email      VARCHAR(120)    NOT NULL,
-      password   VARCHAR(255)    NOT NULL,
-      role       VARCHAR(20)     NOT NULL DEFAULT 'student',
-      vip_until  DATETIME        NULL,
-      vip_plan   VARCHAR(20)     NULL,
-      openid     VARCHAR(64)     NULL,
-      created_at DATETIME        NOT NULL,
+      id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+      username     VARCHAR(50)     NOT NULL,
+      chinese_name VARCHAR(50)     NULL,
+      email        VARCHAR(120)    NOT NULL,
+      password     VARCHAR(255)    NOT NULL,
+      role         VARCHAR(20)     NOT NULL DEFAULT 'student',
+      vip_until    DATETIME        NULL,
+      vip_plan     VARCHAR(20)     NULL,
+      openid       VARCHAR(64)     NULL,
+      created_at   DATETIME        NOT NULL,
       PRIMARY KEY (id),
       UNIQUE KEY uk_users_username (username),
       UNIQUE KEY uk_users_email (email),
@@ -337,13 +338,24 @@ def _migrate_question_bank(conn) -> None:
 
 
 def _migrate_users(conn) -> None:
-    """给已存在的 users 表补 openid 列（微信登录用）。"""
+    """给已存在的 users 表补列（CREATE TABLE IF NOT EXISTS 不会改已有表）。
+
+    每条 ALTER 单独 try/except：列已存在时 MySQL 会报错，吞掉即可——
+    这正是让迁移可以重复执行的方式。
+    """
     try:
         conn.execute(text("ALTER TABLE users ADD COLUMN openid VARCHAR(64) NULL AFTER vip_plan"))
     except Exception:
         pass
     try:
         conn.execute(text("ALTER TABLE users ADD UNIQUE KEY uk_users_openid (openid)"))
+    except Exception:
+        pass
+    # 注册时填写的真实中文姓名。老用户为 NULL —— 登录不校验它，所以不影响老账号。
+    try:
+        conn.execute(
+            text("ALTER TABLE users ADD COLUMN chinese_name VARCHAR(50) NULL AFTER username")
+        )
     except Exception:
         pass
 
@@ -394,8 +406,9 @@ def _user_row(row) -> dict:
         "role": data["role"],
         "vip_until": _to_text(data["vip_until"]),
         "vip_plan": data["vip_plan"],
-        # 老库可能还没跑迁移，取不到 openid 列时按未绑定处理
+        # 老库可能还没跑迁移，取不到 openid / chinese_name 列时都按空处理
         "openid": data.get("openid"),
+        "chinese_name": data.get("chinese_name"),
         "created_at": _to_text(data["created_at"]),
     }
 
@@ -533,11 +546,12 @@ def add_new_user(user_info: dict) -> dict | None:
         with _connect() as conn:
             result = conn.execute(
                 text(
-                    "INSERT INTO users (username, email, password, role, vip_until, vip_plan, openid, created_at) "
-                    "VALUES (:username, :email, :password, :role, :vip_until, :vip_plan, :openid, :created_at)"
+                    "INSERT INTO users (username, chinese_name, email, password, role, vip_until, vip_plan, openid, created_at) "
+                    "VALUES (:username, :chinese_name, :email, :password, :role, :vip_until, :vip_plan, :openid, :created_at)"
                 ),
                 {
                     "username": username,
+                    "chinese_name": (user_info.get("chinese_name") or "").strip() or None,
                     "email": str(user_info.get("email", "")).strip(),
                     "password": user_info.get("password", ""),
                     "role": user_info.get("role", "student"),

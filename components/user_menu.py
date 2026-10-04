@@ -18,8 +18,12 @@ def render_sidebar_user() -> None:
 
     with st.sidebar:
         with st.container(border=True):
-            st.markdown(f"**👤 {user.get('username', '')}**")
-            st.caption(f"角色：{ROLE_LABELS.get(user.get('role'), '学生')}")
+            # 注册时填了中文名就优先显示它，老账号 / 微信建号没有中文名则回退用户名
+            chinese_name = (user.get("chinese_name") or "").strip()
+            account = user.get("username", "")
+            st.markdown(f"**👤 {chinese_name or account}**")
+            role_text = f"角色：{ROLE_LABELS.get(user.get('role'), '学生')}"
+            st.caption(f"账号：{account}　｜　{role_text}" if chinese_name else role_text)
 
             if vip.is_vip(user):
                 status_tag("👑 VIP 会员", "vip")

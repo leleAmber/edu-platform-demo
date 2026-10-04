@@ -50,6 +50,7 @@ def send_code(payload: SendCodeRequest) -> dict:
 def register(payload: RegisterRequest) -> dict:
     ok, message = auth.register(
         payload.username,
+        payload.chinese_name,
         payload.email,
         payload.password,
         payload.confirm_password,

@@ -122,6 +122,7 @@ def _handle_register() -> None:
     username = (st.session_state.get("reg_username") or "").strip()
     ok, message = auth.register(
         username,
+        st.session_state.get("reg_chinese_name", ""),
         st.session_state.get("reg_email", ""),
         st.session_state.get("reg_password", ""),
         st.session_state.get("reg_confirm", ""),
@@ -136,6 +137,7 @@ def _handle_register() -> None:
         {
             "auth_tab": "登录",
             "login_username": username,
+            "reg_chinese_name": "",
             "reg_code": "",
             "reg_password": "",
             "reg_confirm": "",
@@ -173,7 +175,8 @@ def render_auth_page() -> None:
                 _forgot_password_dialog()
 
     with tab_register:
-        st.text_input("用户名", key="reg_username", placeholder="2~20 个字符")
+        st.text_input("用户名（英文名）", key="reg_username", placeholder="2~20 位英文字母")
+        st.text_input("中文名", key="reg_chinese_name", placeholder="真实姓名，如：张三")
         st.text_input("邮箱", key="reg_email", placeholder="用于接收注册验证码")
 
         col_code, col_send = st.columns([2, 1], vertical_alignment="bottom")
@@ -183,7 +186,7 @@ def render_auth_page() -> None:
             if st.button("获取验证码", use_container_width=True, key="reg_send_code"):
                 _handle_send_code()
 
-        st.text_input("密码", key="reg_password", type="password", placeholder="至少 6 位")
+        st.text_input("密码", key="reg_password", type="password", placeholder="至少 6 位，需含字母和数字")
         st.text_input("确认密码", key="reg_confirm", type="password", placeholder="请再次输入密码")
 
         if st.button("提交注册", type="primary", use_container_width=True, key="reg_submit"):

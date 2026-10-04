@@ -16,17 +16,20 @@
 -- 用户表
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
-  id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '内部主键',
-  username   VARCHAR(50)     NOT NULL                COMMENT '用户名，唯一，大小写不敏感',
-  email      VARCHAR(120)    NOT NULL                COMMENT '注册邮箱，唯一',
-  password   VARCHAR(255)    NOT NULL                COMMENT 'PBKDF2-SHA256 哈希，绝不存明文',
-  role       VARCHAR(20)     NOT NULL DEFAULT 'student' COMMENT 'student 学生 / admin 管理员',
-  vip_until  DATETIME        NULL                    COMMENT '会员到期时间，NULL 表示未开通',
-  vip_plan   VARCHAR(20)     NULL                    COMMENT '最近一次开通的套餐名',
-  created_at DATETIME        NOT NULL                COMMENT '注册时间',
+  id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '内部主键',
+  username     VARCHAR(50)     NOT NULL                COMMENT '用户名（注册时的英文名），唯一，仅大小写英文字母',
+  chinese_name VARCHAR(50)     NULL                    COMMENT '中文名，注册时填写；老数据 / 微信建号为 NULL',
+  email        VARCHAR(120)    NOT NULL                COMMENT '注册邮箱，唯一',
+  password     VARCHAR(255)    NOT NULL                COMMENT 'PBKDF2-SHA256 哈希，绝不存明文',
+  role         VARCHAR(20)     NOT NULL DEFAULT 'student' COMMENT 'student 学生 / admin 管理员',
+  vip_until    DATETIME        NULL                    COMMENT '会员到期时间，NULL 表示未开通',
+  vip_plan     VARCHAR(20)     NULL                    COMMENT '最近一次开通的套餐名',
+  openid       VARCHAR(64)     NULL                    COMMENT '微信 openid，用于一键登录',
+  created_at   DATETIME        NOT NULL                COMMENT '注册时间',
   PRIMARY KEY (id),
   UNIQUE KEY uk_users_username (username),
   UNIQUE KEY uk_users_email (email),
+  UNIQUE KEY uk_users_openid (openid),
   KEY idx_users_role (role),
   KEY idx_users_vip_until (vip_until)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';

@@ -18,7 +18,8 @@ class SendCodeRequest(BaseModel):
 
 
 class RegisterRequest(BaseModel):
-    username: str = Field(..., min_length=2, max_length=20)
+    username: str = Field(..., min_length=2, max_length=20, description="英文名，仅大小写字母")
+    chinese_name: str = Field(..., min_length=1, max_length=50, description="中文名")
     email: str = Field(..., max_length=120)
     password: str = Field(..., min_length=6, max_length=64)
     confirm_password: str = Field(..., max_length=64)

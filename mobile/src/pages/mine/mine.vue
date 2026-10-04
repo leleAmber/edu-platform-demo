@@ -4,7 +4,7 @@
     <view class="card profile">
       <view class="profile__avatar">{{ avatarText }}</view>
       <view class="profile__info">
-        <text class="profile__name">{{ userStore.user?.username || '未登录' }}</text>
+        <text class="profile__name">{{ userStore.user?.chinese_name || userStore.user?.username || '未登录' }}</text>
         <text class="profile__account">
           {{ userStore.user?.has_wechat ? '微信登录' : userStore.user?.email || '—' }}
         </text>
@@ -103,7 +103,9 @@ const orders = ref([])
 const totalAmount = ref(0)
 
 const avatarText = computed(() => {
-  const name = (userStore.user && userStore.user.username) || '?'
+  // 优先用中文名首字做头像（老账号没有中文名时回退用户名首字母）
+  const user = userStore.user || {}
+  const name = user.chinese_name || user.username || '?'
   return name.slice(0, 1).toUpperCase()
 })
 

@@ -34,6 +34,12 @@ GATE_FLAG_PREFIX = "_vip_gate_shown_"
 
 USERNAME_MIN, USERNAME_MAX = 2, 20
 PASSWORD_MIN = 6
+CHINESE_NAME_MAX = 50
+
+# 用户名只允许大小写英文字母（即注册时的「英文名」），禁止中文、数字、空格等
+USERNAME_PATTERN = re.compile(rf"^[A-Za-z]{{{USERNAME_MIN},{USERNAME_MAX}}}$")
+_HAS_LETTER = re.compile(r"[A-Za-z]")
+_HAS_DIGIT = re.compile(r"[0-9]")
 
 _OTP_STORE_KEY = "_otp_store"
 _EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
@@ -243,18 +249,31 @@ def login(username: str, password: str) -> bool:
     return True
 
 
-def register(username: str, email: str, password: str, confirm_pwd: str, code: str) -> tuple[bool, str]:
+def register(
+    username: str,
+    chinese_name: str,
+    email: str,
+    password: str,
+    confirm_pwd: str,
+    code: str,
+) -> tuple[bool, str]:
     """注册校验：全部通过才写入用户表，返回 (是否成功, 提示文字)。"""
     username = (username or "").strip()
+    chinese_name = (chinese_name or "").strip()
     email = (email or "").strip().lower()
     password = password or ""
     confirm_pwd = confirm_pwd or ""
     code = (code or "").strip()
 
-    if not (USERNAME_MIN <= len(username) <= USERNAME_MAX):
-        return False, f"用户名长度需为 {USERNAME_MIN}~{USERNAME_MAX} 个字符"
-    if " " in username:
-        return False, "用户名不能包含空格"
+    if not USERNAME_PATTERN.match(username):
+        return False, (
+            f"用户名需为 {USERNAME_MIN}~{USERNAME_MAX} 位英文字母"
+            "（不能含中文、数字、空格）"
+        )
+    if not chinese_name:
+        return False, "请填写中文名"
+    if len(chinese_name) > CHINESE_NAME_MAX:
+        return False, f"中文名不能超过 {CHINESE_NAME_MAX} 个字"
     if database.get_user_by_username(username):
         return False, "该用户名已被注册，换一个试试"
     if not _EMAIL_PATTERN.match(email):
@@ -263,6 +282,8 @@ def register(username: str, email: str, password: str, confirm_pwd: str, code: s
         return False, "该邮箱已被注册，可直接登录或更换邮箱"
     if len(password) < PASSWORD_MIN:
         return False, f"密码至少 {PASSWORD_MIN} 位"
+    if not (_HAS_LETTER.search(password) and _HAS_DIGIT.search(password)):
+        return False, "密码需同时包含英文字母和数字"
     if password != confirm_pwd:
         return False, "两次输入的密码不一致"
     if not code:
@@ -275,6 +296,7 @@ def register(username: str, email: str, password: str, confirm_pwd: str, code: s
     created = database.add_new_user(
         {
             "username": username,
+            "chinese_name": chinese_name,
             "email": email,
             "password": database.hash_password(password),
             "role": "student",

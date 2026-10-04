@@ -2,8 +2,13 @@
   <view class="page">
     <view class="card">
       <view class="field">
-        <text class="field__label">用户名</text>
-        <input v-model="form.username" class="field__input" placeholder="2~20 个字符" placeholder-class="ph" />
+        <text class="field__label">用户名（英文名）</text>
+        <input v-model="form.username" class="field__input" placeholder="2~20 位英文字母" placeholder-class="ph" />
+      </view>
+
+      <view class="field">
+        <text class="field__label">中文名</text>
+        <input v-model="form.chinese_name" class="field__input" placeholder="真实姓名，如：张三" placeholder-class="ph" />
       </view>
 
       <view class="field">
@@ -27,7 +32,7 @@
 
       <view class="field">
         <text class="field__label">密码</text>
-        <input v-model="form.password" class="field__input" password placeholder="至少 6 位" placeholder-class="ph" />
+        <input v-model="form.password" class="field__input" password placeholder="至少 6 位，需含字母和数字" placeholder-class="ph" />
       </view>
 
       <view class="field">
@@ -67,6 +72,7 @@ import { setAuth } from '../../store/user'
 
 const form = reactive({
   username: '',
+  chinese_name: '',
   email: '',
   code: '',
   password: '',
@@ -120,7 +126,13 @@ function stopCountdown() {
 onUnmounted(stopCountdown)
 
 async function submit() {
-  if (!form.username.trim() || !form.email.trim() || !form.code.trim() || !form.password) {
+  if (
+    !form.username.trim() ||
+    !form.chinese_name.trim() ||
+    !form.email.trim() ||
+    !form.code.trim() ||
+    !form.password
+  ) {
     uni.showToast({ title: '请把信息填写完整', icon: 'none' })
     return
   }
@@ -132,6 +144,7 @@ async function submit() {
   try {
     const res = await authApi.register({
       username: form.username.trim(),
+      chinese_name: form.chinese_name.trim(),
       email: form.email.trim(),
       password: form.password,
       confirm_password: form.confirm_password,

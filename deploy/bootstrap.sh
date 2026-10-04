@@ -124,14 +124,24 @@ if [[ -f "$APP_DIR/app.py" ]]; then
     if [[ -d "$APP_DIR/.git" ]]; then
         echo "    已有代码，git pull 更新"
         sudo -u "$APP_USER" git -C "$APP_DIR" pull --ff-only
+    elif [[ -f "$HERE/app.py" && "$HERE" != "$APP_DIR" ]]; then
+        # 本机跑 release.sh 时，代码先 rsync 到暂存目录（/tmp/edu-platform），再由
+        # 本脚本部署——所以这里必须把暂存目录的代码同步过来。**不能跳过**：这台
+        # 服务器没有 .git（拉不动 GitHub），跳过的话发版会「成功」但服务器跑的还是旧代码。
+        echo "    无 .git（rsync 部署）：从 $HERE 同步代码到 $APP_DIR"
+        rsync -a --exclude 'venv' --exclude '.venv' --exclude 'node_modules' \
+                  --exclude '__pycache__' --exclude 'mobile/dist' \
+                  --exclude '.streamlit/secrets.toml' \
+                  "$HERE"/ "$APP_DIR"/
     else
-        echo "    已有代码（无 .git，跳过更新）"
+        echo "    已有代码（无 .git 且不在暂存目录），跳过更新"
     fi
 elif [[ -f "$HERE/app.py" && "$HERE" != "$APP_DIR" ]]; then
     # 代码是 rsync/scp 上来的：直接搬进去，绕开大陆拉 GitHub 慢的问题
     echo "    从 $HERE 复制代码到 $APP_DIR"
     rsync -a --exclude 'venv' --exclude '.venv' --exclude 'node_modules' \
               --exclude '__pycache__' --exclude 'mobile/dist' \
+              --exclude '.streamlit/secrets.toml' \
               "$HERE"/ "$APP_DIR"/
 else
     echo "    从 GitHub 浅克隆（--depth 1，只需 ~15MB）"
